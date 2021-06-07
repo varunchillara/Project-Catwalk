@@ -1,19 +1,16 @@
-import React from "react";
+import React from 'react';
+import Overview from './overview/Overview.jsx';
+import RelatedProducts from './related_products/RelatedProducts.jsx';
+import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      message: "Check out this bundle.js"
-    }
-  }
-  render(){
-    return(
-      <div className="App">
-        <h1>{this.state.message}</h1>
-      </div>
-    );
-  }
+function App () {
+  return(
+    <div className="App">
+      <Overview />
+      <RelatedProducts />
+      <RatingsAndReviews />
+    </div>
+  );
 }
 
 export default App;
