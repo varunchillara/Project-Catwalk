@@ -1,0 +1,6 @@
+## Node ##
+node_modules
+public/bundle.js
+
+## API keys ##
+client/env/config.js
