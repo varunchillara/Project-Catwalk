@@ -122,7 +122,7 @@ const Card = (props) => {
     <div>
       <hr></hr>
       <div><strong>An image</strong></div>
-      {JSON.stringify(props.photo)}
+      {JSON.stringify(props.data.photo)}
       <div><strong>Category</strong></div>
       {JSON.stringify(props.data.category)}
       <div><strong>Expanded Product Name with extra text</strong></div>
