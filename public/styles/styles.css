@@ -1,5 +1,30 @@
 .ratingsAndReviews {
-  background-color: white;
+  display: flex;
+}
+.ratingsAndReviews .metaReview {
+  width: 300px;
+  background-color: #cacaca;
+  margin-right: 10px;
+}
+.ratingsAndReviews .review {
+  width: 600px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+}
+.ratingsAndReviews .review .summary {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #464646;
+}
+.ratingsAndReviews .topOfReview {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.ratingsAndReviews .topOfReview .reviewerName {
+  font-size: small;
 }
 
 /*# sourceMappingURL=styles.css.map */
