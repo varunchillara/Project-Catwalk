@@ -9,7 +9,7 @@ function RatingsAndReviews() {
   return (
   <div className="ratingsAndReviews">
     {/* <p>{currentProduct.name}</p> */}
-    <p>rating and reviews!!</p>
+    <p1>rating and reviews!!</p1>
   </div>
   );
 }
