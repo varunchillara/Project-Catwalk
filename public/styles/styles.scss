@@ -1,1 +1,12 @@
 @import './ratings';
+
+.stars {
+  color: rgb(204, 204, 204);
+  font-size: 15px;
+  .checked {
+    color: rgb(73, 73, 73);
+  }
+  .star{
+    margin-right: 3px;
+  }
+}
