@@ -12,7 +12,7 @@ function RelatedProducts() {
       'Content-Type': 'application/json',
       Authorization: token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11004`)
     .then((result) => {
       console.log('result.data', result.data);
       dispatch(update(result.data));

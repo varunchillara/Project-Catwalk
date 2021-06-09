@@ -1,5 +1,85 @@
 .ratingsAndReviews {
+  display: flex;
+  font-family: Cormorant;
+  justify-content: center;
+}
+.ratingsAndReviews .metaReview {
+  width: 300px;
+  background-color: #cacaca;
+  margin-right: 30px;
+}
+.ratingsAndReviews .reviewsHeader {
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #494949;
+}
+.ratingsAndReviews .review {
+  width: 600px;
+  margin-bottom: 25px;
+}
+.ratingsAndReviews .review .summary {
+  margin-bottom: 15px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #494949;
+}
+.ratingsAndReviews .review .body {
+  margin-bottom: 15px;
+}
+.ratingsAndReviews .review .recommendation {
+  margin-bottom: 15px;
+}
+.ratingsAndReviews .review .recommendation .checkMark {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #494949;
+}
+.ratingsAndReviews .topOfReview {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.ratingsAndReviews .topOfReview .reviewerName {
+  font-size: small;
+}
+.ratingsAndReviews .actions {
+  display: flex;
+  font-size: small;
+  margin-bottom: 15px;
+}
+.ratingsAndReviews .actions .helpful {
+  margin-right: 10px;
+}
+
+.stars {
+  font-family: Cormorant;
+  color: #cccccc;
+  font-size: 15px;
+}
+.stars .checked {
+  color: #494949;
+}
+.stars .star {
+  margin-right: 3px;
+}
+
+.button {
+  margin-top: 10px;
+  font-family: Cormorant;
+  margin-right: 20px;
+  font-size: 18px;
+  color: #494949;
+  font-weight: bolder;
+  border: 1px solid #494949;
   background-color: white;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #f3f3f3;
 }
 
 .parent {
