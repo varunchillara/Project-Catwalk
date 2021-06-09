@@ -8,6 +8,12 @@
   background-color: #cacaca;
   margin-right: 30px;
 }
+.ratingsAndReviews .reviewsHeader {
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #494949;
+}
 .ratingsAndReviews .review {
   width: 600px;
   margin-bottom: 25px;
@@ -48,6 +54,7 @@
 }
 
 .stars {
+  font-family: Cormorant;
   color: #cccccc;
   font-size: 15px;
 }
@@ -56,6 +63,23 @@
 }
 .stars .star {
   margin-right: 3px;
+}
+
+.button {
+  margin-top: 10px;
+  font-family: Cormorant;
+  margin-right: 20px;
+  font-size: 18px;
+  color: #494949;
+  font-weight: bolder;
+  border: 1px solid #494949;
+  background-color: white;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #f3f3f3;
 }
 
 /*# sourceMappingURL=styles.css.map */

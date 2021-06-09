@@ -19,7 +19,7 @@ function ListOfReviews() {
       page: 1,
       count: 4,
       sort: 'newest',
-      product_id: currentProduct.id || 11001
+      product_id: currentProduct.id || 11004
     }
   })
   .then((result) => {
@@ -30,9 +30,16 @@ function ListOfReviews() {
 
   return (
     <div className="Reviews">
+      <header className="reviewsHeader">
+        3 reviews, sorted by newest
+      </header>
       {reviews.map((review) => {
         return <Review review={review} />
       })}
+      <div className="buttons">
+        <button className="button">MORE REVIEWS</button>
+        <button className="button">ADD A REVIEW +</button>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 @import './ratings';
 
 .stars {
+  font-family: Cormorant;
   color: rgb(204, 204, 204);
   font-size: 15px;
   .checked {
@@ -9,4 +10,22 @@
   .star{
     margin-right: 3px;
   }
+}
+
+.button {
+  margin-top: 10px;
+  font-family: Cormorant;
+  margin-right: 20px;
+  font-size: 18px;
+  color: rgb(73, 73, 73);
+  font-weight: bolder;
+
+  border: 1px solid rgb(73, 73, 73);
+  background-color: white;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: rgb(243, 243, 243);
 }
