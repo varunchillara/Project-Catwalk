@@ -1,3 +1,57 @@
 .ratingsAndReviews {
-  background-color: white;
+  display: flex;
+  font-family: Cormorant;
+  justify-content: center;
+  .metaReview {
+    width: 300px;
+    background-color: rgb(202, 202, 202);
+    margin-right: 30px;
+  }
+
+  .reviewsHeader {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: bolder;
+    color: rgb(73, 73, 73);
+  }
+
+  .review {
+    width: 600px;
+    margin-bottom: 25px;
+    .summary {
+      margin-bottom: 15px;
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bolder;
+      color: rgb(73, 73, 73);
+    }
+    .body {
+      margin-bottom: 15px;
+    }
+    .recommendation {
+      margin-bottom: 15px;
+      .checkMark {
+        font-size: 20px;
+        margin-right: 10px;
+        color: rgb(73, 73, 73);
+      }
+    }
+  }
+  .topOfReview {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    .reviewerName {
+      font-size: small;
+    }
+  }
+  .actions {
+    display: flex;
+    font-size: small;
+    margin-bottom: 15px;
+    .helpful {
+      margin-right: 10px;
+    }
+  }
 }
+

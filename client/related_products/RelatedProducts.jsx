@@ -5,6 +5,31 @@ import axios from 'axios';
 import token from '../env/config.js';
 
 
+
+function initiateStore() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.defaults.headers = {
+      'Content-Type': 'application/json',
+      Authorization : token
+    };
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
+    .then((result) => {
+      console.log('result.data', result.data);
+      dispatch(update(result.data));
+    })
+    .catch(error => {
+      console.error(error)
+    })
+  })
+
+  return (
+  <div className="inititateStore">
+  </div>
+  );
+}
+
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -137,48 +162,5 @@ const Card = (props) => {
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// function RelatedProducts() {
-
-
-//   //useDispatch
-
-
-
-
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     axios.defaults.headers = {
-//       'Content-Type': 'application/json',
-//       Authorization : token
-//     };
-//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
-//     .then((result) => {
-//       console.log('result.data', result.data);
-//       dispatch(update(result.data));
-//     })
-//     .catch(error => {
-//       console.error(error)
-//     })
-//   })
-
-//   return (
-//   <div className="relatedProducts">
-//     <p>related products!!!</p>
-//   </div>
-//   );
-// }
 
 export default cardTemplate;

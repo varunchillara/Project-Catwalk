@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {update} from '../../store/actions/product.js';
-
+import MetaReview from './components/MetaReview.jsx'
+import ListOfReviews from './components/ListOfReviews.jsx';
 
 function RatingsAndReviews() {
-  const currentProduct = useSelector(state => state.currentProduct);
-
   return (
   <div className="ratingsAndReviews">
-    {/* <p>{currentProduct.name}</p> */}
-    <p1>rating and reviews!!</p1>
+    <MetaReview />
+    <ListOfReviews />
   </div>
   );
 }
