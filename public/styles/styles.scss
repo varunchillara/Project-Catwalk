@@ -1,5 +1,6 @@
 @import './ratings';
 
+
 .stars {
   font-family: Cormorant;
   color: rgb(204, 204, 204);
@@ -29,3 +30,6 @@
 .button:hover {
   background-color: rgb(243, 243, 243);
 }
+
+@import './overview';
+

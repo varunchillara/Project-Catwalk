@@ -82,4 +82,137 @@
   background-color: #f3f3f3;
 }
 
+.parent {
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.child1 {
+  width: 100%;
+  height: 120px;
+  background: #a9dbfc;
+  display: flex;
+}
+
+.subchild1-1 {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.subchild1-2 {
+  width: 400px;
+  height: 35px;
+  align-self: flex-end;
+  flex-grow: 1;
+}
+
+.subchild1-3 {
+  width: 100px;
+  height: 35px;
+  align-self: flex-end;
+}
+
+.child2 {
+  width: 100%;
+  height: 50px;
+  background: rgba(252, 114, 114, 0.678);
+  text-align: center;
+  line-height: 10px;
+}
+
+.child3 {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.subchild3-1 {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex: 1 auto;
+}
+
+.subchild3-2 {
+  width: 500px;
+  height: 600px;
+  background: #26fdfd;
+  display: flex;
+  flex-direction: column;
+}
+
+.subchild3-2-1 {
+  width: 200px;
+  height: 50px;
+}
+
+.subchild3-2-2 {
+  width: 200px;
+  height: 50px;
+}
+
+.subchild3-2-3 {
+  width: 200px;
+  height: 50px;
+}
+
+.subchild3-2-4 {
+  width: 200px;
+  height: 40px;
+}
+
+.subchild3-2-5 {
+  width: 400px;
+  height: 60px;
+}
+
+.subchild3-2-6 {
+  width: 400px;
+  height: 20px;
+}
+
+.subchild3-2-7 {
+  width: 400px;
+  height: 20px;
+}
+
+.subchild3-2-8 {
+  width: 400px;
+  height: 20px;
+}
+
+.subchild3-2-9 {
+  width: 400px;
+  height: 20px;
+}
+
+.child4 {
+  width: 100%;
+  height: 40px;
+  display: flex;
+}
+
+.subchild4-1 {
+  width: 400px;
+  height: 200px;
+}
+
+.subchild4-2 {
+  width: 400px;
+  height: 200px;
+}
+
+.child5 {
+  width: 100%;
+  height: 120px;
+  display: flex;
+}
+
 /*# sourceMappingURL=styles.css.map */
