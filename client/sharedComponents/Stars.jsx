@@ -1,13 +1,22 @@
 import React from 'react';
 
-function Stars() {
+function Stars(props) {
+  let checkedStars = [];
+  let uncheckedStars = [];
+  for (var i = 0; i < props.rating; i++) {
+    checkedStars.push(1);
+  }
+  for (var i = 0; i < (5 - props.rating); i++) {
+    uncheckedStars.push(1);
+  }
   return (
     <div className="stars">
-      <span class="fa fa-star checked star"></span>
-      <span class="fa fa-star checked star"></span>
-      <span class="fa fa-star checked star"></span>
-      <span class="fa fa-star star"></span>
-      <span class="fa fa-star star"></span>
+      {checkedStars.map((star) => {
+        return (<span class="fa fa-star checked star"></span>);
+      })}
+      {uncheckedStars.map((star) => {
+        return (<span class="fa fa-star star"></span>)
+      })}
     </div>
   );
 }

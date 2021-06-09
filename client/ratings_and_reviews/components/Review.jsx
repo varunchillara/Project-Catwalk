@@ -7,7 +7,7 @@ function Review(props) {
     <div className="review">
       <div className="topOfReview">
         {/* <div className="rating">rating={props.review.rating}</div> */}
-        <Stars />
+        <Stars rating={props.review.rating} />
         <div className="reivewRightSide">
           <div className="reviewerName">{props.review.reviewer_name}, {`${new Date(props.review.date).toDateString()}`}</div>
         </div>
