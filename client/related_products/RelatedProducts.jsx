@@ -131,7 +131,6 @@ const Card = (props) => {
     justifyContent:'center',
     marginBottom: '10px',
     position: 'relative',
-    // backgroundColor: 'rgb(242, 234, 211)',
     backgroundColor: 'rgb(240, 237, 228)',
   }
   let actionButtonInlineStyle = {
