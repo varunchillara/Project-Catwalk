@@ -3,32 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
-
-
-
-function initiateStore() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization : token
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
-    .then((result) => {
-      console.log('result.data', result.data);
-      dispatch(update(result.data));
-    })
-    .catch(error => {
-      console.error(error)
-    })
-  })
-
-  return (
-  <div className="inititateStore">
-  </div>
-  );
-}
+import averageReviewsCalculator from './helperFunctions.js'
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -44,25 +19,6 @@ class cardTemplate extends React.Component {
     }
 
     this.populateCard = this.populateCard.bind(this);
-    this.getAverageRating = this.getAverageRating.bind(this);
-  }
-
-  getAverageRating = (reviews) => {
-    let getTotalReviews = (reviews) => {
-      let total = 0;
-      for (let key in reviews) {
-        total += Number(reviews[key]);
-      }
-      return total;
-    }
-      let getTotalRatings = (reviews) => {
-        let total = 0;
-        for (let key in reviews) {
-          total += Number(key) * Number(reviews[key]);
-        }
-      return total;
-    }
-    return getTotalReviews(reviews) / getTotalRatings(reviews);
   }
 
   populateCard () {
@@ -77,15 +33,9 @@ class cardTemplate extends React.Component {
           axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
             product_id: relatedProduct
           }}))
-        // let relatedProductsReviews = dummyRelatedProductIds.map(relatedProduct =>
-        //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/reviews`))
         return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
         })
       .then(results => {
-
-
-
-
         let allRelatedProducts = {}
         for (let i = 0; i < results.length; i++) {
           let data = results[i].data;
@@ -98,7 +48,7 @@ class cardTemplate extends React.Component {
           }
           //IF IS RATING
           if (data.ratings) {
-            allRelatedProducts[id].rating = this.getAverageRating(results[i].data.ratings)
+            allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
           //ELSE IF STYLES
           } else if (data.product_id) {
             let defaultStyleIndex = 0;
@@ -164,3 +114,30 @@ const Card = (props) => {
 }
 
 export default cardTemplate;
+
+
+
+
+// function initiateStore() {
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     axios.defaults.headers = {
+//       'Content-Type': 'application/json',
+//       Authorization : token
+//     };
+//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
+//     .then((result) => {
+//       console.log('result.data', result.data);
+//       dispatch(update(result.data));
+//     })
+//     .catch(error => {
+//       console.error(error)
+//     })
+//   })
+
+//   return (
+//   <div className="inititateStore">
+//   </div>
+//   );
+// }

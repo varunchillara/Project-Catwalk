@@ -23,7 +23,6 @@ function ListOfReviews() {
     }
   })
   .then((result) => {
-    console.log('result.data!!!!', result.data.results);
     setReviews(result.data.results);
   })
   }, [currentProduct])
