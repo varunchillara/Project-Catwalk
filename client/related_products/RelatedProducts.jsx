@@ -94,10 +94,20 @@ class CardTemplate extends React.Component {
 
 const Card = (props) => {
   let cardInlineStyle = {
+    display: 'flex',
+    flexDirection: 'column',
     border: '1px solid grey'
   }
-  let imageInlineStyle = {
+  let imageContainerInlineStyle = {
+    flex: '5',
+    display:'flex',
+    justifyContent:'center',
     marginBottom: '10px',
+    backgroundColor: 'rgb(242, 234, 211)',
+    // backgroundColor: 'rgb(240, 237, 228)',
+  }
+  let imageInlineStyle = {
+    alignSelf: 'center',
     width: '170px'
   }
   let productInfoInlineStyle = {
@@ -123,8 +133,8 @@ const Card = (props) => {
 
   return (
     <div className="card" style={cardInlineStyle}>
-      <div className="image" style={imageInlineStyle}>
-        <img src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
+      <div className="image-container" style={imageContainerInlineStyle}>
+        <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
       </div>
       <div className="product-info" style={productInfoInlineStyle}>
         <div className="category" style={categoryInlineStyle}>
