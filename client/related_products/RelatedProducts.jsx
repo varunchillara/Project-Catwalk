@@ -4,6 +4,8 @@ import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from './helperFunctions.js'
+import Stars from './Stars2.jsx'
+// import {starInlineStyle, Stars, Star_75, Star_50, Star_25, Star_FULL, Star_EMPTY} from './Stars2.jsx'
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -38,16 +40,13 @@ class CardTemplate extends React.Component {
         for (let i = 0; i < results.length; i++) {
           let data = results[i].data;
           let id = data.id || Number(data.product_id);
-          //SET THE ID IF IT DOESN'T YET EXIST
           if (allRelatedProducts[id] === undefined) {
             allRelatedProducts[id] = {
               id: id
             }
           }
-          //IF IS RATING
           if (data.ratings) {
             allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
-          //ELSE IF STYLES
           } else if (data.product_id) {
             let defaultStyleIndex = 0;
             let defaultFound = false
@@ -58,7 +57,6 @@ class CardTemplate extends React.Component {
             allRelatedProducts[id].original_price = `$${Number(data.results[defaultStyleIndex].original_price)}`;
             allRelatedProducts[id].sale_price = data.results[defaultStyleIndex].sale_price;
             allRelatedProducts[id].photo = data.results[defaultStyleIndex].photos[0].url;
-            //ELSE IF PRODUCT_INFO
           } else {
             allRelatedProducts[id].category = data.category;
             allRelatedProducts[id].nameWithText = data.name;
@@ -75,18 +73,29 @@ class CardTemplate extends React.Component {
 
   render () {
 
+    let relatedProductsTileInlineStyle = {
+      fontFamily : 'Helvetica',
+      fontWeight : 'normal',
+      fontSize : '12px'
+    }
+
     let carouselInlineStyle = {
+      marginTop: '20px',
       marginBottom: '70px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',
 
-
     }
 
     return (
-    <div className="related-products-carousel" style={carouselInlineStyle}>
-      {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product}/>)}
+    <div>
+      <div className="related-products-title" style={relatedProductsTileInlineStyle}>
+        RELATED PRODUCTS
+      </div>
+      <div className="related-products-carousel" style={carouselInlineStyle}>
+        {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product}/>)}
+      </div>
     </div>
     )
   }
@@ -103,8 +112,8 @@ const Card = (props) => {
     display:'flex',
     justifyContent:'center',
     marginBottom: '10px',
-    backgroundColor: 'rgb(242, 234, 211)',
-    // backgroundColor: 'rgb(240, 237, 228)',
+    // backgroundColor: 'rgb(242, 234, 211)',
+    backgroundColor: 'rgb(240, 237, 228)',
   }
   let imageInlineStyle = {
     alignSelf: 'center',
@@ -155,58 +164,6 @@ const Card = (props) => {
   )
 }
 
-const Stars = (props) => {
-  let rating = props.rating
-  let stars = [];
-  for (let i = 0; i < 5; i++) {
-    if (rating <= 0) {
-      stars.push(<Star_EMPTY/>);
-    } else if (rating === .25) {
-      stars.push(<Star_25/>);
-    } else if (rating === .5) {
-      stars.push(<Star_50/>);
-    } else if (rating === .75) {
-      stars.push(<Star_75/>);
-    } else {
-      stars.push(<Star_FULL/>)
-    }
-    rating -= 1;
-  }
-  return (
-    <div>
-     {stars.map(star => star)}
-    </div>
-  )
-}
-
-let starInlineStyle = {
-  width: '20px'
-}
-const Star_EMPTY = (props) => {
-  return (
-    <span><img src="./assets/StarEMPTY.png" style={starInlineStyle}></img></span>
-  )
-}
-const Star_FULL = (props) => {
-  return (
-    <span><img src="./assets/StarFULL.png" style={starInlineStyle}></img></span>
-  )
-}
-const Star_25 = (props) => {
-  return (
-    <span><img src="./assets/Star25.png" style={starInlineStyle}></img></span>
-  )
-}
-const Star_50 = (props) => {
-  return (
-    <span><img src="./assets/Star50.png" style={starInlineStyle}></img></span>
-  )
-}
-const Star_75 = (props) => {
-  return (
-    <span><img src="./assets/Star75.png" style={starInlineStyle}></img></span>
-  )
-}
 
 export default CardTemplate;
 
