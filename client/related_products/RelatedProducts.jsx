@@ -16,12 +16,14 @@ class CardTemplate extends React.Component {
     super(props)
     this.state = {
       dummyCurrentProductId : 11001,
-      dummyRelatedProductsData : [],
-      myOutfit: []
+      dummyRelatedProductsData : {},
+      myOutfit: {}
     }
     this.formatData = this.formatData.bind(this);
     this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
     this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
+    this.relatedProductsActionButtonHandler = this.relatedProductsActionButtonHandler.bind(this);
+    this.myOutfitActionButtonHandler = this.myOutfitActionButtonHandler.bind(this);
   }
 
   formatData (results) {
@@ -77,10 +79,30 @@ class CardTemplate extends React.Component {
       .then(results => this.fetchRelatedProducts(results))
       .then(results => {
         this.setState ({
-          dummyRelatedProductsData: Object.values(this.formatData(results))
+          dummyRelatedProductsData: this.formatData(results)
         })
       })
       .catch(error => console.error(error))
+  }
+
+  relatedProductsActionButtonHandler (e) {
+    let productId = e.target.id
+    let chosenOutfitDataCopy = this.state.dummyRelatedProductsData[productId]
+    let myOutfitCopy = this.state.myOutfit;
+    myOutfitCopy[`${productId}`] = chosenOutfitDataCopy;
+    this.setState({
+      myOutfit: myOutfitCopy
+    });
+  }
+
+  myOutfitActionButtonHandler (e) {
+    let productId = e.target.id
+    let myOutfitCopy = this.state.myOutfit;
+    delete myOutfitCopy[productId];
+    this.setState({
+      myOutfit: myOutfitCopy
+    });
+
   }
 
   render () {
@@ -94,6 +116,7 @@ class CardTemplate extends React.Component {
     let carouselInlineStyle = {
       marginTop: '20px',
       marginBottom: '70px',
+      minHeight: '356.5px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -101,25 +124,53 @@ class CardTemplate extends React.Component {
     }
     let relatedProductsActionButton = "./assets/relatedProductACTION.png"
     let myOutfitActionButton = "./assets/myOutfitACTION.png"
+    let relatedProducts = Object.values(this.state.dummyRelatedProductsData)
+    let myOutfit = Object.values(this.state.myOutfit)
 
+      if (relatedProducts.length) {
+        relatedProducts = relatedProducts.map(product => <Card
+          key={product.id}
+          data={product}
+          actionButton={relatedProductsActionButton}
+          actionButtonHandler={this.relatedProductsActionButtonHandler}
+          />)
+      }
+      if (myOutfit.length) {
+        myOutfit = myOutfit.map(product => <Card
+          key={product.id}
+          data={product}
+          actionButton={myOutfitActionButton}
+          actionButtonHandler={this.myOutfitActionButtonHandler}
+          />)
+      }
+
+      console.log(relatedProducts, myOutfit)
     return (
     <div>
       <div className="related-products-title" style={relatedProductsTileInlineStyle}>
         RELATED PRODUCTS
       </div>
       <div className="related-products-carousel" style={carouselInlineStyle}>
-        {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product} actionButton={relatedProductsActionButton}/>)}
+        {relatedProducts}
       </div>
       <div className="my-outfit" style={carouselInlineStyle}>
-      {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product} actionButton={myOutfitActionButton}/>)}
+      {myOutfit}
       </div>
     </div>
     )
   }
 }
 
+
+
+
+
+
+
+
+
+
 const Card = (props) => {
-  console.log(props.data)
   let cardInlineStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -163,12 +214,11 @@ const Card = (props) => {
     justifyContent : 'center',
     fontWeight : 'normal'
   }
-
   return (
     <div className="card" style={cardInlineStyle}>
       <div className="image-container" style={imageContainerInlineStyle}>
         <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
-        <img className="action" src={props.actionButton} style={actionButtonInlineStyle}></img>
+        <img id={props.data.id} className="action" src={props.actionButton} style={actionButtonInlineStyle} onClick={props.actionButtonHandler}></img>
       </div>
       <div className="product-info" style={productInfoInlineStyle}>
         <div className="category" style={categoryInlineStyle}>
