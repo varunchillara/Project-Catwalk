@@ -16,6 +16,7 @@ class cardTemplate extends React.Component {
     this.state = {
       dummyCurrentProductId : 11001,
       dummyRelatedProductsData : []
+
     }
 
     this.populateCard = this.populateCard.bind(this);
@@ -108,8 +109,63 @@ const Card = (props) => {
       {props.data.sale_price}
       <div><strong>Rating</strong></div>
       {props.data.rating}
+      <div><strong>Rating TEST</strong></div>
+      <Stars rating={props.data.rating}/>
       <hr></hr>
     </div>
+  )
+}
+
+const Stars = (props) => {
+  let rating = props.rating
+  let stars = [];
+  for (let i = 0; i < 5; i++) {
+    if (rating <= 0) {
+      stars.push(<Star_EMPTY/>);
+    } else if (rating === .25) {
+      stars.push(<Star_25/>);
+    } else if (rating === .5) {
+      stars.push(<Star_50/>);
+    } else if (rating === .75) {
+      stars.push(<Star_75/>);
+    } else {
+      stars.push(<Star_FULL/>)
+    }
+    rating -= 1;
+  }
+  return (
+    <div>
+     {stars.map(star => star)}
+    </div>
+  )
+}
+
+let starInlineStyle = {
+  width: '20px'
+}
+const Star_EMPTY = (props) => {
+  return (
+    <span><img src="./assets/StarEMPTY.png" style={starInlineStyle}></img></span>
+  )
+}
+const Star_FULL = (props) => {
+  return (
+    <span><img src="./assets/StarFULL.png" style={starInlineStyle}></img></span>
+  )
+}
+const Star_25 = (props) => {
+  return (
+    <span><img src="./assets/Star25.png" style={starInlineStyle}></img></span>
+  )
+}
+const Star_50 = (props) => {
+  return (
+    <span><img src="./assets/Star50.png" style={starInlineStyle}></img></span>
+  )
+}
+const Star_75 = (props) => {
+  return (
+    <span><img src="./assets/Star75.png" style={starInlineStyle}></img></span>
   )
 }
 
