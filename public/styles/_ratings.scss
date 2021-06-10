@@ -2,17 +2,75 @@
   display: flex;
   font-family: Cormorant;
   justify-content: center;
+  margin-top: 30px;
+
   .metaReview {
     width: 300px;
-    background-color: rgb(202, 202, 202);
-    margin-right: 30px;
+    margin-right: 20px;
+    .ratingsHeader {
+      font-size: 20px;
+      color: rgb(73, 73, 73);
+    }
+    .rating {
+      display: flex;
+      .overallRating {
+        font-size: 65px;
+        font-family: 'Cormorant', serif;
+        font-family: 'Roboto', sans-serif;
+        color: rgb(73, 73, 73);
+      }
+      .starsContainer {
+        margin-top: 10px;
+        margin-left: 15px;
+      }
+    }
+    .recommendPrecentage {
+      margin-top: 15px;
+    }
+    .starsCountContainer {
+      margin-top: 15px;
+    }
+  }
+
+  .starsCount {
+    display: flex;
+    margin-top: 8px;
+    .stars1 {
+      font-size: 17px;
+      margin-right: 10px;
+      font-weight: normal;
+    }
+    .bar {
+      background-color: rgb(233, 233, 233);
+      width: 200px;
+      height: 7px;
+      position: relative;
+      transition: width .5s linear;
+      margin-top: 8px;
+      .status {
+        background: rgb(73, 73, 73);
+        width: 50%;
+        height: 7px;
+        position: relative;
+        transition: width .5s linear;
+      }
+    }
   }
 
   .reviewsHeader {
+    margin-top: 80px;
     margin-bottom: 40px;
     font-size: 20px;
     font-weight: bolder;
     color: rgb(73, 73, 73);
+
+    .sortingOptions {
+      font-size: 17px;
+      color: rgb(73, 73, 73);
+      border-top: 1px;
+      border-left: 1px;
+      border-right: 1px;
+    }
   }
 
   .review {

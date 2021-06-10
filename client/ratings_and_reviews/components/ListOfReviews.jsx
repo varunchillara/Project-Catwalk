@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
 import Review from './Review.jsx';
+import SortOptions from './SortOptions.jsx';
 
 function ListOfReviews() {
   const currentProduct = useSelector(state => state.currentProduct);
@@ -31,10 +32,10 @@ function ListOfReviews() {
   return (
     <div className="Reviews">
       <header className="reviewsHeader">
-        3 reviews, sorted by newest
+        3 reviews, sorted by<SortOptions />
       </header>
-      {reviews.map((review) => {
-        return <Review review={review} />
+      {reviews.map((review, i) => {
+        return <Review key={i} review={review} />
       })}
       <div className="buttons">
         <button className="button">MORE REVIEWS</button>

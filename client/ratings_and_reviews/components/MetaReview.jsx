@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
+import Rating from './Rating.jsx';
+import StarsCount from './StarsCount.jsx';
+import Size from './Size.jsx';
+import Comfort from './Comfort.jsx';
 
 
 function MetaReview() {
@@ -15,7 +19,7 @@ function MetaReview() {
     };
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
       params: {
-        product_id: currentProduct.id || 11001
+        product_id: currentProduct.id || 11004
       }
     })
     .then((result) => {
@@ -26,7 +30,16 @@ function MetaReview() {
   return (
     <div className="metaReview">
       <h4 className="ratingsHeader">Ratings & Reviews</h4>
-      <p>{JSON.stringify(metaReview.product_id)}</p>
+      <Rating />
+      <div className="recommendPrecentage">
+        100% of reviews recommend this product
+      </div>
+      <StarsCount />
+      {console.log('metareview!!', metaReview)}
+      <div className="SizeAndComfort">
+        <Size />
+        <Comfort />
+      </div>
     </div>
   )
 }
