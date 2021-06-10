@@ -10,19 +10,16 @@ axios.defaults.headers = {
   Authorization : token
 };
 
-class cardTemplate extends React.Component {
+class CardTemplate extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       dummyCurrentProductId : 11001,
       dummyRelatedProductsData : []
-
     }
-
-    this.populateCard = this.populateCard.bind(this);
   }
 
-  populateCard () {
+  componentDidMount () {
     return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${this.state.dummyCurrentProductId}/related`)
       .then((result) => {
         let dummyRelatedProductIds = result.data
@@ -37,7 +34,6 @@ class cardTemplate extends React.Component {
         return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
         })
       .then(results => {
-        console.log(results)
         let allRelatedProducts = {}
         for (let i = 0; i < results.length; i++) {
           let data = results[i].data;
@@ -71,7 +67,6 @@ class cardTemplate extends React.Component {
         this.setState ({
           dummyRelatedProductsData: Object.values(allRelatedProducts)
         })
-        console.log('current State', this.state.dummyRelatedProductsData)
       })
       .catch(error => {
         console.error(error)
@@ -79,11 +74,18 @@ class cardTemplate extends React.Component {
   }
 
   render () {
-    if (Object.keys(this.state.dummyRelatedProductsData).length === 0) {
-      this.populateCard();
+
+    let carouselInlineStyle = {
+      marginBottom: '70px',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+
+
     }
+
     return (
-    <div className="related-products-carousel">
+    <div className="related-products-carousel" style={carouselInlineStyle}>
       {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product}/>)}
     </div>
     )
@@ -91,10 +93,19 @@ class cardTemplate extends React.Component {
 }
 
 const Card = (props) => {
-  let imageInlineStyle = {
-    width: '150px'
+  let cardInlineStyle = {
+    border: '1px solid grey'
   }
-  let productNameInlineStyle = {
+  let imageInlineStyle = {
+    marginBottom: '10px',
+    width: '170px'
+  }
+  let productInfoInlineStyle = {
+    marginLeft : '8px',
+    marginRight : '8px',
+    marginBottom: '10px'
+  }
+  let nameInlineStyle = {
     fontFamily : 'Cormorant',
     justifyContent : 'center',
     fontWeight : 900
@@ -111,25 +122,25 @@ const Card = (props) => {
   }
 
   return (
-    <div>
-      <hr></hr>
-      <div className="image">
+    <div className="card" style={cardInlineStyle}>
+      <div className="image" style={imageInlineStyle}>
         <img src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
       </div>
-      <div className="category" style={categoryInlineStyle}>
-        {props.data.category}
+      <div className="product-info" style={productInfoInlineStyle}>
+        <div className="category" style={categoryInlineStyle}>
+          {props.data.category}
+        </div>
+        <div className="name" style={nameInlineStyle}>
+          {props.data.nameWithText}
+        </div>
+        <div className="price" style={priceInlineStyle}>
+          {props.data.original_price}
+          {props.data.sale_price}
+        </div>
+        <div className="rating">
+          <Stars rating={props.data.rating}/>
+        </div>
       </div>
-      <div className="product-name" style={productNameInlineStyle}>
-        {props.data.nameWithText}
-      </div>
-      <div className="price" style={priceInlineStyle}>
-        {props.data.original_price}
-        {props.data.sale_price}
-      </div>
-      <div className="rating">
-        <Stars rating={props.data.rating}/>
-      </div>
-      <hr></hr>
     </div>
   )
 }
@@ -187,7 +198,7 @@ const Star_75 = (props) => {
   )
 }
 
-export default cardTemplate;
+export default CardTemplate;
 
 
 
