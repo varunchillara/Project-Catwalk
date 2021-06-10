@@ -37,6 +37,7 @@ class cardTemplate extends React.Component {
         return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
         })
       .then(results => {
+        console.log(results)
         let allRelatedProducts = {}
         for (let i = 0; i < results.length; i++) {
           let data = results[i].data;
@@ -58,12 +59,12 @@ class cardTemplate extends React.Component {
               style['default?'] ? (defaultStyleIndex = index, defaultFound = true) : defaultFound;
               return defaultFound;
             })
-            allRelatedProducts[id].original_price = data.results[defaultStyleIndex].original_price
-            allRelatedProducts[id].sale_price = data.results[defaultStyleIndex].sale_price
-            allRelatedProducts[id].photo = data.results[defaultStyleIndex].photos[0].url
+            allRelatedProducts[id].original_price = `$${Number(data.results[defaultStyleIndex].original_price)}`;
+            allRelatedProducts[id].sale_price = data.results[defaultStyleIndex].sale_price;
+            allRelatedProducts[id].photo = data.results[defaultStyleIndex].photos[0].url;
             //ELSE IF PRODUCT_INFO
           } else {
-            allRelatedProducts[id].category = data.category
+            allRelatedProducts[id].category = data.category;
             allRelatedProducts[id].nameWithText = data.name;
           }
         }
@@ -78,13 +79,11 @@ class cardTemplate extends React.Component {
   }
 
   render () {
-
     if (Object.keys(this.state.dummyRelatedProductsData).length === 0) {
       this.populateCard();
     }
-
     return (
-    <div>
+    <div className="related-products-carousel">
       {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product}/>)}
     </div>
     )
@@ -92,25 +91,44 @@ class cardTemplate extends React.Component {
 }
 
 const Card = (props) => {
-  let inlineStyle = {
+  let imageInlineStyle = {
     width: '150px'
   }
+  let productNameInlineStyle = {
+    fontFamily : 'Cormorant',
+    justifyContent : 'center',
+    fontWeight : 900
+  }
+  let categoryInlineStyle = {
+    fontFamily : 'Cormorant',
+    justifyContent : 'center',
+    fontWeight : 'normal'
+  }
+  let priceInlineStyle = {
+    fontFamily : 'Cormorant',
+    justifyContent : 'center',
+    fontWeight : 'normal'
+  }
+
   return (
     <div>
       <hr></hr>
-      <div><strong>An image</strong></div>
-      <img src={props.data.photo} alt="NO THUMBNAIL" style={inlineStyle}></img>
-      <div><strong>Category</strong></div>
-      {props.data.category}
-      <div><strong>Expanded Product Name with extra text</strong></div>
-      {props.data.nameWithText}
-      <div><strong>Price</strong></div>
-      {props.data.original_price}
-      {props.data.sale_price}
-      <div><strong>Rating</strong></div>
-      {props.data.rating}
-      <div><strong>Rating TEST</strong></div>
-      <Stars rating={props.data.rating}/>
+      <div className="image">
+        <img src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
+      </div>
+      <div className="category" style={categoryInlineStyle}>
+        {props.data.category}
+      </div>
+      <div className="product-name" style={productNameInlineStyle}>
+        {props.data.nameWithText}
+      </div>
+      <div className="price" style={priceInlineStyle}>
+        {props.data.original_price}
+        {props.data.sale_price}
+      </div>
+      <div className="rating">
+        <Stars rating={props.data.rating}/>
+      </div>
       <hr></hr>
     </div>
   )

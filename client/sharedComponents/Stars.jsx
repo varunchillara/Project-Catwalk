@@ -12,10 +12,10 @@ function Stars(props) {
   return (
     <div className="stars">
       {checkedStars.map((star) => {
-        return (<span class="fa fa-star checked star"></span>);
+        return (<span className="fa fa-star checked star"></span>);
       })}
       {uncheckedStars.map((star) => {
-        return (<span class="fa fa-star star"></span>)
+        return (<span className="fa fa-star star"></span>)
       })}
     </div>
   );
