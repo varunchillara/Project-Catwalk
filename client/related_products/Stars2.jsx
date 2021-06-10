@@ -1,7 +1,7 @@
 import React from 'react';
 
 let starInlineStyle = {
-  width: '20px'
+  width: '15px'
 }
 
 const Star_EMPTY = (props) => {

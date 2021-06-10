@@ -5,7 +5,6 @@ import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from './helperFunctions.js'
 import Stars from './Stars2.jsx'
-// import {starInlineStyle, Stars, Star_75, Star_50, Star_25, Star_FULL, Star_EMPTY} from './Stars2.jsx'
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -17,14 +16,51 @@ class CardTemplate extends React.Component {
     super(props)
     this.state = {
       dummyCurrentProductId : 11001,
-      dummyRelatedProductsData : []
+      dummyRelatedProductsData : [],
+      myOutfit: []
     }
+    this.formatData = this.formatData.bind(this);
+    this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
+    this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
   }
 
-  componentDidMount () {
-    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${this.state.dummyCurrentProductId}/related`)
-      .then((result) => {
-        let dummyRelatedProductIds = result.data
+  formatData (results) {
+    let allRelatedProducts = {}
+    for (let i = 0; i < results.length; i++) {
+      let data = results[i].data;
+      let id = data.id || Number(data.product_id);
+      if (allRelatedProducts[id] === undefined) {
+        allRelatedProducts[id] = {
+          id: id
+        }
+      }
+      if (data.ratings) {
+        allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
+      } else if (data.product_id) {
+        let styleIndex = this.findDefaultStyleIndex(data)
+        allRelatedProducts[id].original_price = `$${Number(data.results[styleIndex].original_price)}`;
+        allRelatedProducts[id].sale_price = data.results[styleIndex].sale_price;
+        allRelatedProducts[id].photo = data.results[styleIndex].photos[0].url;
+      } else {
+        allRelatedProducts[id].category = data.category;
+        allRelatedProducts[id].nameWithText = data.name;
+      }
+    }
+    return allRelatedProducts;
+  }
+
+  findDefaultStyleIndex (data) {
+    let defaultStyleIndex = 0;
+    let defaultFound = false
+    data.results.some((style, index)=> {
+      style['default?'] ? (defaultStyleIndex = index, defaultFound = true) : defaultFound;
+      return defaultFound;
+    })
+    return defaultStyleIndex
+  }
+
+  fetchRelatedProducts (results) {
+    let dummyRelatedProductIds = results.data
         let relatedProductsData = dummyRelatedProductIds.map(relatedProduct =>
           axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
         let relatedProductsThumbnails = dummyRelatedProductIds.map(relatedProduct =>
@@ -34,41 +70,17 @@ class CardTemplate extends React.Component {
             product_id: relatedProduct
           }}))
         return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
-        })
+  }
+
+  componentDidMount () {
+    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${this.state.dummyCurrentProductId}/related`)
+      .then(results => this.fetchRelatedProducts(results))
       .then(results => {
-        let allRelatedProducts = {}
-        for (let i = 0; i < results.length; i++) {
-          let data = results[i].data;
-          let id = data.id || Number(data.product_id);
-          if (allRelatedProducts[id] === undefined) {
-            allRelatedProducts[id] = {
-              id: id
-            }
-          }
-          if (data.ratings) {
-            allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
-          } else if (data.product_id) {
-            let defaultStyleIndex = 0;
-            let defaultFound = false
-            data.results.some((style, index)=> {
-              style['default?'] ? (defaultStyleIndex = index, defaultFound = true) : defaultFound;
-              return defaultFound;
-            })
-            allRelatedProducts[id].original_price = `$${Number(data.results[defaultStyleIndex].original_price)}`;
-            allRelatedProducts[id].sale_price = data.results[defaultStyleIndex].sale_price;
-            allRelatedProducts[id].photo = data.results[defaultStyleIndex].photos[0].url;
-          } else {
-            allRelatedProducts[id].category = data.category;
-            allRelatedProducts[id].nameWithText = data.name;
-          }
-        }
         this.setState ({
-          dummyRelatedProductsData: Object.values(allRelatedProducts)
+          dummyRelatedProductsData: Object.values(this.formatData(results))
         })
       })
-      .catch(error => {
-        console.error(error)
-      })
+      .catch(error => console.error(error))
   }
 
   render () {
@@ -87,6 +99,8 @@ class CardTemplate extends React.Component {
       justifyContent: 'space-around',
 
     }
+    let relatedProductsActionButton = "./assets/relatedProductACTION.png"
+    let myOutfitActionButton = "./assets/myOutfitACTION.png"
 
     return (
     <div>
@@ -94,7 +108,10 @@ class CardTemplate extends React.Component {
         RELATED PRODUCTS
       </div>
       <div className="related-products-carousel" style={carouselInlineStyle}>
-        {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product}/>)}
+        {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product} actionButton={relatedProductsActionButton}/>)}
+      </div>
+      <div className="my-outfit" style={carouselInlineStyle}>
+      {this.state.dummyRelatedProductsData.map(product => <Card key={product.id} data={product} actionButton={myOutfitActionButton}/>)}
       </div>
     </div>
     )
@@ -102,6 +119,7 @@ class CardTemplate extends React.Component {
 }
 
 const Card = (props) => {
+  console.log(props.data)
   let cardInlineStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -112,8 +130,15 @@ const Card = (props) => {
     display:'flex',
     justifyContent:'center',
     marginBottom: '10px',
+    position: 'relative',
     // backgroundColor: 'rgb(242, 234, 211)',
     backgroundColor: 'rgb(240, 237, 228)',
+  }
+  let actionButtonInlineStyle = {
+    position: 'absolute',
+    top:'5%',
+    left:'80%',
+    width: '23px'
   }
   let imageInlineStyle = {
     alignSelf: 'center',
@@ -144,6 +169,7 @@ const Card = (props) => {
     <div className="card" style={cardInlineStyle}>
       <div className="image-container" style={imageContainerInlineStyle}>
         <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
+        <img className="action" src={props.actionButton} style={actionButtonInlineStyle}></img>
       </div>
       <div className="product-info" style={productInfoInlineStyle}>
         <div className="category" style={categoryInlineStyle}>
