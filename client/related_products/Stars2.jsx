@@ -33,6 +33,8 @@ const Star_75 = (props) => {
     <span><img src="./assets/Star75.png" style={starInlineStyle}></img></span>
   )
 }
+//Stars component requires props.rating to be a number representing the average rating of the product to the quarter decimal
+//To calculate rating at the quarter decimal, import averageReviewsCalculator() from related_products/helperFunctions.js
 
 const Stars = (props) => {
     let rating = props.rating
