@@ -3,9 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
-import averageReviewsCalculator from './helperFunctions.js'
-import Stars from './Stars2.jsx'
-
+import averageReviewsCalculator from '../helperFunctions.js'
+import Stars from '../Stars2.jsx';
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -16,26 +15,47 @@ class CardTemplate extends React.Component {
     super(props)
     this.state = {
       dummyCurrentProductId : 11001,
+      dummyCurrentProductData: {
+        id: '11001',
+        category: "Jackets",
+        nameWithText: "Camo Onesie",
+        photo: "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        original_price: '$140',
+        sale_price: null,
+        comparableAspect1: 'Made from Animals',
+        comparableAspect2: 'Edible',
+        comparableAspect3: 'Electrically conducive',
+        comparableAspect4: 'Rather snazzy'
+      },
       dummyRelatedProductsData : {},
       myOutfit: {}
     }
     this.formatData = this.formatData.bind(this);
     this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
     this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
-    this.relatedProductsActionButtonHandler = this.relatedProductsActionButtonHandler.bind(this);
-    this.myOutfitActionButtonHandler = this.myOutfitActionButtonHandler.bind(this);
+    this.modalCompareHandler = this.modalCompareHandler.bind(this);
+    this.removeOutfitHandler = this.removeOutfitHandler.bind(this);
+    this.addToOutfitHandler = this.addToOutfitHandler.bind(this);
+    this.thumbnailCarouselHandler = this.thumbnailCarouselHandler.bind(this);
+    this.onMouseEnterColorHandler = this.onMouseEnterColorHandler.bind(this);
+    this.onMouseLeaveColorHandler = this.onMouseLeaveColorHandler.bind(this);
   }
 
   formatData (results) {
     let allRelatedProducts = {}
     for (let i = 0; i < results.length; i++) {
       let data = results[i].data;
-      let id = data.id || Number(data.product_id);
+      let id = data.product_id || data.id.toString();
       if (allRelatedProducts[id] === undefined) {
         allRelatedProducts[id] = {
           id: id
         }
       }
+      //DUMMY DATA!!!!!!
+      allRelatedProducts[id].comparableAspect1 = 'Edible';
+      allRelatedProducts[id].comparableAspect2 = 'Electrically conducive';
+      allRelatedProducts[id].comparableAspect3 = 'Rather unattractive';
+      //END OF DUMMY DATA
       if (data.ratings) {
         allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
       } else if (data.product_id) {
@@ -85,45 +105,99 @@ class CardTemplate extends React.Component {
       .catch(error => console.error(error))
   }
 
-  relatedProductsActionButtonHandler (e) {
+  modalCompareHandler (e) {
     let productId = e.target.id
-    let chosenOutfitDataCopy = this.state.dummyRelatedProductsData[productId]
-    let myOutfitCopy = this.state.myOutfit;
-    myOutfitCopy[`${productId}`] = chosenOutfitDataCopy;
-    this.setState({
-      myOutfit: myOutfitCopy
-    });
+    console.log('LAUNCH COMPAIRSON MODAL')
   }
 
-  myOutfitActionButtonHandler (e) {
+  thumbnailCarouselHandler (e) {
+    console.log('LAUNCH THUMBNAIL CAROUSEL')
+  }
+
+  removeOutfitHandler (e) {
     let productId = e.target.id
-    let myOutfitCopy = this.state.myOutfit;
-    delete myOutfitCopy[productId];
+    let myOutfit_Copy = this.state.myOutfit;
+    delete myOutfit_Copy[productId];
     this.setState({
-      myOutfit: myOutfitCopy
+      myOutfit: myOutfit_Copy
     });
 
+  }
+
+  addToOutfitHandler (e) {
+    let id = this.state.dummyCurrentProductData.id
+    let chosenOutfitData_Copy = this.state.dummyCurrentProductData
+    let myOutfit_Copy = this.state.myOutfit;
+    myOutfit_Copy[id] = chosenOutfitData_Copy;
+    this.setState({
+      myOutfit: myOutfit_Copy
+    })
+  }
+
+  onMouseEnterColorHandler (e) {
+    if (e.target.className === 'action') {
+      e.target.style.opacity='100%'
+    } else {
+      let card = document.getElementById('addOutfitCard')
+      card.style.opacity='100%';
+    }
+  }
+  onMouseLeaveColorHandler (e) {
+    if (e.target.className === 'action') {
+      e.target.style.opacity='50%'
+    } else {
+      let card = document.getElementById('addOutfitCard')
+      card.style.opacity='50%';
+    }
   }
 
   render () {
+    let relatedProductsContainerInlineStyle = {
+      margin: 'auto',
+      width : '920px',
 
-    let relatedProductsTileInlineStyle = {
-      fontFamily : 'Helvetica',
-      fontWeight : 'normal',
-      fontSize : '12px'
+    }
+    let cardTitleInlineStyle = {
+      fontFamily : 'Cormorant',
+      fontWeight : 'bolder',
+      fontSize : '16px'
     }
 
     let carouselInlineStyle = {
-      marginTop: '20px',
-      marginBottom: '70px',
-      minHeight: '356.5px',
+      marginTop: '30px',
+      marginBottom: '50px',
+      // minHeight: '356.5px',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-around',
+      justifyContent: 'left',
+    }
+    let cardRowInlineStyle = {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'left',
+      gap: '10%'
+    }
+
+    let carouselLeftButton = {
+      width: '70px',
+      height: '70px',
+      alignSelf: 'center',
+      zIndex: '1',
+      position: 'absolute',
+      left: '10%'
+    }
+    let carouselRightButton = {
+      width: '70px',
+      height: '70px',
+      alignSelf: 'center',
+      zIndex: '1',
+      position: 'absolute',
+      right: '10%'
 
     }
-    let relatedProductsActionButton = "./assets/relatedProductACTION.png"
-    let myOutfitActionButton = "./assets/myOutfitACTION.png"
+
+    let modalCompareButton = "./assets/relatedProductACTION.png"
+    let removeOutfitButton = "./assets/myOutfitACTION.png"
     let relatedProducts = Object.values(this.state.dummyRelatedProductsData)
     let myOutfit = Object.values(this.state.myOutfit)
 
@@ -131,30 +205,55 @@ class CardTemplate extends React.Component {
         relatedProducts = relatedProducts.map(product => <Card
           key={product.id}
           data={product}
-          actionButton={relatedProductsActionButton}
-          actionButtonHandler={this.relatedProductsActionButtonHandler}
+          actionButton={modalCompareButton}
+          thumbnailCarouselHandler={this.thumbnailCarouselHandler}
+          actionButtonHandler={this.modalCompareHandler}
+          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
+          outfitAdder={false}
           />)
       }
       if (myOutfit.length) {
         myOutfit = myOutfit.map(product => <Card
           key={product.id}
           data={product}
-          actionButton={myOutfitActionButton}
-          actionButtonHandler={this.myOutfitActionButtonHandler}
+          actionButton={removeOutfitButton}
+          actionButtonHandler={this.removeOutfitHandler}
+          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
+          outfitAdder={false}
           />)
       }
 
-      console.log(relatedProducts, myOutfit)
     return (
+
     <div>
-      <div className="related-products-title" style={relatedProductsTileInlineStyle}>
-        RELATED PRODUCTS
-      </div>
-      <div className="related-products-carousel" style={carouselInlineStyle}>
-        {relatedProducts}
-      </div>
-      <div className="my-outfit" style={carouselInlineStyle}>
-      {myOutfit}
+      <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
+        <div className="related-products-title" style={cardTitleInlineStyle}>
+          RELATED PRODUCTS
+        </div>
+        <div className="related-products-carousel" style={carouselInlineStyle}>
+          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
+          <div className="card-row" style={cardRowInlineStyle}>{relatedProducts}</div>
+          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
+        </div>
+        <div className="my-outfit-title" style={cardTitleInlineStyle}>
+          MY OUTFIT
+        </div>
+        <div className="my-outfit" style={carouselInlineStyle}>
+          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
+          <Card
+            //subject to change
+            key={this.state.dummyCurrentProductData.product_id}
+            data={this.state.dummyCurrentProductData}
+            addToOutfitHandler={this.addToOutfitHandler}
+            onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+            onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
+            outfitAdder={true}
+            />
+          {myOutfit}
+          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
+        </div>
       </div>
     </div>
     )
@@ -166,33 +265,48 @@ class CardTemplate extends React.Component {
 
 
 
-
-
-
-
 const Card = (props) => {
+  let wholeCardClick = null;
+  let wholeCardMouseEnter = null
+  let wholeCardMouseLeave = null
+  let actionButtonMouseEnter = props.onMouseEnterColorHandler
+  let actionButtonMouseLeave = props.onMouseLeaveColorHandler
+  let thumbnailCarouselHandler = props.thumbnailCarouselHandler || null;
+  let actionButtonHandler = props.actionButtonHandler
+  let overlayButton = props.actionButton
+  let id = props.data.id
+  let category = props.data.category
+  let name = props.data.nameWithText
+  let originalPrice = props.data.original_price
+  let salePrice = props.data.sale_price
+  let rating = props.data.rating
+
   let cardInlineStyle = {
+    // flex: '1, '
     display: 'flex',
     flexDirection: 'column',
-    border: '1px solid grey'
+    border: '1px solid grey',
+    justifyContent: 'space-between'
   }
   let imageContainerInlineStyle = {
-    flex: '5',
+    flex:'1',
     display:'flex',
-    justifyContent:'center',
+    // justifyContent:'center',
     marginBottom: '10px',
     position: 'relative',
-    backgroundColor: 'rgb(240, 237, 228)',
+    // alignSelf: 'center',
+    backgroundColor: 'rgb(240, 237, 228)'
   }
   let actionButtonInlineStyle = {
     position: 'absolute',
     top:'5%',
     left:'80%',
-    width: '23px'
+    width: '23px',
+    opacity: '50%'
   }
   let imageInlineStyle = {
     alignSelf: 'center',
-    width: '170px'
+    width: '170px',
   }
   let productInfoInlineStyle = {
     marginLeft : '8px',
@@ -214,25 +328,48 @@ const Card = (props) => {
     justifyContent : 'center',
     fontWeight : 'normal'
   }
+  let ratingInlineStyle = {
+    color : 'white',
+  }
+
+  if (props.outfitAdder) {
+    id = "addOutfitCard"
+    wholeCardClick = props.addToOutfitHandler;
+    wholeCardMouseEnter = props.onMouseEnterColorHandler;
+    wholeCardMouseLeave = props.onMouseLeaveColorHandler;
+    actionButtonMouseEnter = null
+    actionButtonMouseLeave = null
+    cardInlineStyle.opacity = '50%'
+    categoryInlineStyle.textAlign = 'center'
+    nameInlineStyle.textAlign = 'center'
+    priceInlineStyle.textAlign = 'center'
+    category = 'ADD'
+    originalPrice = 'TO OUTFIT'
+    salePrice = null
+    rating = null
+
+
+
+  }
   return (
-    <div className="card" style={cardInlineStyle}>
+    <div id={id} className="card" style={cardInlineStyle} onClick={wholeCardClick} onMouseEnter={wholeCardMouseEnter} onMouseLeave={wholeCardMouseLeave} >
       <div className="image-container" style={imageContainerInlineStyle}>
-        <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle}></img>
-        <img id={props.data.id} className="action" src={props.actionButton} style={actionButtonInlineStyle} onClick={props.actionButtonHandler}></img>
+        <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle} onClick={thumbnailCarouselHandler}></img>
+        <img id={id} className="action" src={overlayButton} style={actionButtonInlineStyle} onClick={actionButtonHandler} onMouseEnter={actionButtonMouseEnter} onMouseLeave={actionButtonMouseLeave}></img>
       </div>
       <div className="product-info" style={productInfoInlineStyle}>
         <div className="category" style={categoryInlineStyle}>
-          {props.data.category}
+          {category}
         </div>
         <div className="name" style={nameInlineStyle}>
-          {props.data.nameWithText}
+          {name}
         </div>
         <div className="price" style={priceInlineStyle}>
-          {props.data.original_price}
-          {props.data.sale_price}
+          {originalPrice}
+          {salePrice}
         </div>
-        <div className="rating">
-          <Stars rating={props.data.rating}/>
+        <div className="rating" style={ratingInlineStyle}>
+          <Stars rating={rating}/>
         </div>
       </div>
     </div>

@@ -38,6 +38,11 @@ const Star_75 = (props) => {
 
 const Stars = (props) => {
     let rating = props.rating
+    if (rating === null) {
+      return (
+        <div>-----</div>
+      )
+    }
     let stars = [];
     for (let i = 0; i < 5; i++) {
       if (rating <= 0) {
@@ -53,13 +58,25 @@ const Stars = (props) => {
       }
       rating -= 1;
     }
+    let starInlineStyles = {
+      display: 'flex',
+      flexDirection: 'row'
+      }
     return (
-      <div>
-        {stars.map(star => star)}
+      <div style={starInlineStyles}>
+        {stars.map((star, i)=> <Star key={i} star={star}/>)}
       </div>
     )
 }
 
+const Star = (props) => {
 
+  return (
+    <div>
+      {props.star}
+    </div>
+
+  )
+}
 
 export default Stars;
