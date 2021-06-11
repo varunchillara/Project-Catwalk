@@ -5,7 +5,6 @@ import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from './helperFunctions.js'
 import Stars from './Stars2.jsx';
-import styles from './styles.jsx';
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -37,7 +36,9 @@ class CardTemplate extends React.Component {
     this.modalCompareHandler = this.modalCompareHandler.bind(this);
     this.removeOutfitHandler = this.removeOutfitHandler.bind(this);
     this.addToOutfitHandler = this.addToOutfitHandler.bind(this);
-    this.thumbnailCarouselHandler = this.thumbnailCarouselHandler.bind(this)
+    this.thumbnailCarouselHandler = this.thumbnailCarouselHandler.bind(this);
+    this.onMouseEnterColorHandler = this.onMouseEnterColorHandler.bind(this);
+    this.onMouseLeaveColorHandler = this.onMouseLeaveColorHandler.bind(this);
   }
 
   formatData (results) {
@@ -133,12 +134,33 @@ class CardTemplate extends React.Component {
     })
   }
 
-  render () {
+  onMouseEnterColorHandler (e) {
+    if (e.target.className === 'action') {
+      e.target.style.opacity='100%'
+    } else {
+      let card = document.getElementById('addOutfitCard')
+      card.style.opacity='100%';
+    }
+  }
+  onMouseLeaveColorHandler (e) {
+    if (e.target.className === 'action') {
+      e.target.style.opacity='70%'
+    } else {
+      let card = document.getElementById('addOutfitCard')
+      card.style.opacity='50%';
+    }
+  }
 
+  render () {
+    let relatedProductsContainerInlineStyle = {
+      margin: 'auto',
+      width : '920px',
+
+    }
     let cardTitleInlineStyle = {
-      fontFamily : 'Helvetica',
-      fontWeight : 'normal',
-      fontSize : '12px'
+      fontFamily : 'Cormorant',
+      fontWeight : 'bolder',
+      fontSize : '16px'
     }
 
     let carouselInlineStyle = {
@@ -147,9 +169,7 @@ class CardTemplate extends React.Component {
       minHeight: '356.5px',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-start',
-      gap: '100px'
-
+      justifyContent: 'space-between',
     }
 
     let modalCompareButton = "./assets/relatedProductACTION.png"
@@ -164,6 +184,8 @@ class CardTemplate extends React.Component {
           actionButton={modalCompareButton}
           thumbnailCarouselHandler={this.thumbnailCarouselHandler}
           actionButtonHandler={this.modalCompareHandler}
+          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
           outfitAdder={false}
           />)
       }
@@ -173,13 +195,16 @@ class CardTemplate extends React.Component {
           data={product}
           actionButton={removeOutfitButton}
           actionButtonHandler={this.removeOutfitHandler}
+          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
           outfitAdder={false}
           />)
       }
 
     return (
+
     <div>
-      <div>
+      <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
         <div className="related-products-title" style={cardTitleInlineStyle}>
           RELATED PRODUCTS
         </div>
@@ -195,6 +220,8 @@ class CardTemplate extends React.Component {
             key={this.state.dummyCurrentProductData.product_id}
             data={this.state.dummyCurrentProductData}
             addToOutfitHandler={this.addToOutfitHandler}
+            onMouseEnterColorHandler={this.onMouseEnterColorHandler}
+            onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
             outfitAdder={true}
             />
           {myOutfit}
@@ -212,6 +239,10 @@ class CardTemplate extends React.Component {
 
 const Card = (props) => {
   let wholeCardClick = null;
+  let wholeCardMouseEnter = null
+  let wholeCardMouseLeave = null
+  let actionButtonMouseEnter = props.onMouseEnterColorHandler
+  let actionButtonMouseLeave = props.onMouseLeaveColorHandler
   let thumbnailCarouselHandler = props.thumbnailCarouselHandler || null;
   let actionButtonHandler = props.actionButtonHandler
   let overlayButton = props.actionButton
@@ -240,7 +271,8 @@ const Card = (props) => {
     position: 'absolute',
     top:'5%',
     left:'80%',
-    width: '23px'
+    width: '23px',
+    opacity: '70%'
   }
   let imageInlineStyle = {
     alignSelf: 'center',
@@ -266,46 +298,48 @@ const Card = (props) => {
     justifyContent : 'center',
     fontWeight : 'normal'
   }
+  let ratingInlineStyle = {
+    color : 'white',
+    textAlign : 'center'
+  }
 
   if (props.outfitAdder) {
+    id = "addOutfitCard"
     wholeCardClick = props.addToOutfitHandler;
+    wholeCardMouseEnter = props.onMouseEnterColorHandler;
+    wholeCardMouseLeave = props.onMouseLeaveColorHandler;
+    actionButtonMouseEnter = null
+    actionButtonMouseLeave = null
+    cardInlineStyle.opacity = '50%'
     categoryInlineStyle.textAlign = 'center'
     nameInlineStyle.textAlign = 'center'
-    overlayButton = "./assets/addToOutfit.png"
-    category = 'ADD TO'
-    name = 'OUTFIT'
-    originalPrice = null
+    priceInlineStyle.textAlign = 'center'
+    category = 'ADD'
+    originalPrice = 'TO OUTFIT'
     salePrice = null
     rating = null
 
-    imageContainerInlineStyle.opacity = '50%';
-    actionButtonInlineStyle = {
-      position: 'absolute',
-      top:'00%',
-      width: '200',
-      opacity: '80%'
-    }
+
+
   }
-
   return (
-
-    <div id={id} className="card" style={cardInlineStyle} onClick={wholeCardClick}>
-      <div id={id} className="image-container" style={imageContainerInlineStyle}>
-        <img id={id} className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle} onClick={thumbnailCarouselHandler}></img>
-        <img id={id} className="action" src={overlayButton} style={actionButtonInlineStyle} onClick={actionButtonHandler}></img>
+    <div id={id} className="card" style={cardInlineStyle} onClick={wholeCardClick} onMouseEnter={wholeCardMouseEnter} onMouseLeave={wholeCardMouseLeave} >
+      <div className="image-container" style={imageContainerInlineStyle}>
+        <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle} onClick={thumbnailCarouselHandler}></img>
+        <img id={id} className="action" src={overlayButton} style={actionButtonInlineStyle} onClick={actionButtonHandler} onMouseEnter={actionButtonMouseEnter} onMouseLeave={actionButtonMouseLeave}></img>
       </div>
-      <div id={id} className="product-info" style={productInfoInlineStyle}>
-        <div id={id} className="category" style={categoryInlineStyle}>
+      <div className="product-info" style={productInfoInlineStyle}>
+        <div className="category" style={categoryInlineStyle}>
           {category}
         </div>
-        <div id={id} className="name" style={nameInlineStyle}>
+        <div className="name" style={nameInlineStyle}>
           {name}
         </div>
-        <div id={id} className="price" style={priceInlineStyle}>
+        <div className="price" style={priceInlineStyle}>
           {originalPrice}
           {salePrice}
         </div>
-        <div id={id} className="rating">
+        <div className="rating" style={ratingInlineStyle}>
           <Stars rating={rating}/>
         </div>
       </div>

@@ -40,7 +40,7 @@ const Stars = (props) => {
     let rating = props.rating
     if (rating === null) {
       return (
-        <div></div>
+        <div>-----</div>
       )
     }
     let stars = [];
