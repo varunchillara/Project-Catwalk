@@ -38,6 +38,11 @@ const Star_75 = (props) => {
 
 const Stars = (props) => {
     let rating = props.rating
+    if (rating === null) {
+      return (
+        <div></div>
+      )
+    }
     let stars = [];
     for (let i = 0; i < 5; i++) {
       if (rating <= 0) {
