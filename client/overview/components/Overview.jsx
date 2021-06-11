@@ -7,7 +7,7 @@ import axios from 'axios';
 import Announcement from './Announcement.jsx';
 import Carousel from './Carousel-Main.jsx';
 import Description from './Description.jsx';
-import Features from './Features.jsx';
+// import Features from './Features.jsx';
 import LogoSearch from './Logo-Search.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
@@ -22,10 +22,7 @@ import ProductInfo from './ProductInfo.jsx';
 				<Carousel />
 				<ProductInfo />
 			</div>
-			<div className="description-features">
 			  <Description />
-				<Features />
-			</div>
 		</div>
 	)
 };

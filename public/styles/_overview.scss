@@ -20,10 +20,19 @@
       overflow: hidden;
       align-self: center;
     }
+    .companyName{
+      height: 50px;
+      font-family: Cormorant;
+      text-align: center;
+      font-size: 30px;
+      line-height: 50px;
+      margin-left: 75px;
+      // align-self: center;
+    }
     .searchBar {
       width: 300px;
       height: 38px;
-      margin-left: 700px;
+      margin-left: 360px;
       margin-bottom: 4px;
       align-self: flex-end;
     }
@@ -47,10 +56,18 @@
   //Image Carousel and Product Overview//
   .overview-main {
     display: flex;
-    background-color: rgb(202, 202, 202);
+    // background-color: rgb(202, 202, 202);
 
+    .imageThumb {
+      display: flex;
+      flex-direction: column;
+      margin: 5px;
+      margin-top: 4x;
+      margin-bottom: 4px;
+      align-self: flex-start;
+    }
     .imageMain {
-  border: 5px solid #555;
+      // border: 5px solid #555;
     }
 
     .styleSide {
@@ -58,179 +75,93 @@
       flex-direction: column;
       font-family: Cormorant;
       margin-left: 100px;
+      // border: 5px solid #555;
 
       .ratings {
-        // margin-bottom:
+        display: flex;
       }
       .productCategory {
-        // margin-bottom: 5px;
+        margin-bottom: -20px;
       }
       .productName {
-        // margin-bottom: 5px;
+        margin-bottom: -15px;
       }
       .productPriceDefault {
-        // margin-bottom: 5px;
+        margin-bottom: -15px;
       }
       .productStyleHeader {
 
       }
+
+      .styleThumbsMain {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .styleThumbs{
+          flex: 1 0 25%;
+          // border-radius: 50%;
+          // overflow: hidden;
+          margin: 5px;
+          margin-bottom: 20px;
+        }
+      }
+
       .size-quantity {
+        display: flex;
+
         .selectSize {
 
         }
         .selectQty {
-
+          margin-left: 30px;
         }
       }
       .bag-outfit {
+        display: flex;
+
         .addToBag {
 
         }
         .addToOutfit {
-
+          // margin-left: 30px;
         }
       }
       .share {
-
+        // width: 50px;
       }
     }
   }
 
-  .description-features {
+  //Description & Features//
+  .description-features{
     display: flex;
+    flex-direction: column;
     font-family: Cormorant;
+    margin-left: 80px;
 
-    .description{
+    .slogan-features {
       display: flex;
-      flex-direction: column;
+      // justify-content: center;
+      align-items: baseline;
 
       .productSlogan {
-
+        align-self: flex-end;
+        font-size: 24px;
+        font-weight: bold;
       }
-      .productDescription {
-
+      .productFeatures{
+        margin-left: 400px;
+        font-size: 20px;
       }
     }
-    .productFeatures{
-      margin-left: 300px;
+
+    .productDescription {
+      display: flex;
+      align-self: flex-start;
+      justify-content: center;
+      font-size: 20px;
+      width: 450px;
     }
   }
-
-}
-
-
-// .child1{
-//   width: 1200px;
-//   height: 120px;
-//   background: rgb(169, 219, 252);
-//   display: flex;
-//   justify-content: center;
-//   flex-wrap: wrap;
-// }
-// .subchild1-1{
-//   border-radius: 50%;
-//   width: 100px;
-//   height: 100px;
-//   // margin-left: -200px;
-//   // margin-right: 200px;
-//   overflow: hidden;
-//   align-self: center;
-// }
-// .subchild1-2{
-//   width: 400px;
-//   height: 35px;
-//   margin-left: 560px;
-//   margin-bottom: 4px;
-//   align-self: flex-end;
-//   // flex: 0 1 auto;
-// }
-// .subchild1-3{
-//   width: 100px;
-//   height: 35px;
-//   margin-bottom: 4px;
-//   align-self: flex-end;
-// }
-// .child2{
-//   width: 1200px;
-//   height: 50px;
-//   background: rgba(252, 114, 114, 0.678);
-//   text-align: center;
-//   line-height: 50px;
-// }
-// .child3{
-//   // width: 1200px;
-//   // height: 600px;
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-// .subchild3-1{
-//   width: 450px;
-//   height: 600px;
-//   flex: 1 auto;
-//   margin-right: 30px;
-// }
-// .subchild3-2{
-//   width: 750px;
-//   // height: -10px;
-//   background: rgb(38, 253, 253);
-//   display: flex;
-//   flex-direction: column;
-// }
-// .subchild3-2-1{
-//   width: 200px;
-//   height: 50px;
-// }
-// .subchild3-2-2{
-//   width: 200px;
-//   height: 50px;
-// }
-// .subchild3-2-3{
-//   width: 200px;
-//   height: 50px;
-// }
-// .subchild3-2-4{
-//   width: 200px;
-//   height: 40px;
-// }
-// .subchild3-2-5{
-//   width: 400px;
-//   height: 60px;
-// }
-// .subchild3-2-6{
-//   width: 400px;
-//   height: 20px;
-// }
-// .subchild3-2-7{
-//   width: 400px;
-//   height: 20px;
-// }
-// .subchild3-2-8{
-//   width: 400px;
-//   height: 20px;
-// }
-// .subchild3-2-9{
-//   width: 400px;
-//   height: 20px;
-// }
-// .child4{
-//   width: 100%;
-//   height: 40px;
-//   display: flex;
-// }
-// .subchild4-1{
-//   width: 400px;
-//   height: 200px;
-// }
-// .subchild4-2{
-//   width: 400px;
-//   height: 200px;
-// }
-// .child5{
-//   width: 100%;
-//   height: 120px;
-//   display: flex;
-// }
-// .child5-1{
-//   width: 400px;
-//   height: 200px;
-// }
+};

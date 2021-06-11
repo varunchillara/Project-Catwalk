@@ -103,10 +103,18 @@
   overflow: hidden;
   align-self: center;
 }
+.overview .topOfPage .companyName {
+  height: 50px;
+  font-family: Cormorant;
+  text-align: center;
+  font-size: 30px;
+  line-height: 50px;
+  margin-left: 75px;
+}
 .overview .topOfPage .searchBar {
   width: 300px;
   height: 38px;
-  margin-left: 700px;
+  margin-left: 360px;
   margin-bottom: 4px;
   align-self: flex-end;
 }
@@ -125,10 +133,14 @@
 }
 .overview .overview-main {
   display: flex;
-  background-color: #cacaca;
 }
-.overview .overview-main .imageMain {
-  border: 5px solid #555;
+.overview .overview-main .imageThumb {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  margin-top: 4x;
+  margin-bottom: 4px;
+  align-self: flex-start;
 }
 .overview .overview-main .styleSide {
   display: flex;
@@ -136,16 +148,62 @@
   font-family: Cormorant;
   margin-left: 100px;
 }
+.overview .overview-main .styleSide .ratings {
+  display: flex;
+}
+.overview .overview-main .styleSide .productCategory {
+  margin-bottom: -20px;
+}
+.overview .overview-main .styleSide .productName {
+  margin-bottom: -15px;
+}
+.overview .overview-main .styleSide .productPriceDefault {
+  margin-bottom: -15px;
+}
+.overview .overview-main .styleSide .styleThumbsMain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.overview .overview-main .styleSide .styleThumbsMain .styleThumbs {
+  flex: 1 0 25%;
+  margin: 5px;
+  margin-bottom: 20px;
+}
+.overview .overview-main .styleSide .size-quantity {
+  display: flex;
+}
+.overview .overview-main .styleSide .size-quantity .selectQty {
+  margin-left: 30px;
+}
+.overview .overview-main .styleSide .bag-outfit {
+  display: flex;
+}
 .overview .description-features {
   display: flex;
-  font-family: Cormorant;
-}
-.overview .description-features .description {
-  display: flex;
   flex-direction: column;
+  font-family: Cormorant;
+  margin-left: 80px;
 }
-.overview .description-features .productFeatures {
-  margin-left: 300px;
+.overview .description-features .slogan-features {
+  display: flex;
+  align-items: baseline;
+}
+.overview .description-features .slogan-features .productSlogan {
+  align-self: flex-end;
+  font-size: 24px;
+  font-weight: bold;
+}
+.overview .description-features .slogan-features .productFeatures {
+  margin-left: 400px;
+  font-size: 20px;
+}
+.overview .description-features .productDescription {
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  font-size: 20px;
+  width: 450px;
 }
 
 /*# sourceMappingURL=styles.css.map */
