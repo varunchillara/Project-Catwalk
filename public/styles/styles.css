@@ -31,6 +31,50 @@
 .ratingsAndReviews .metaReview .starsCountContainer {
   margin-top: 15px;
 }
+.ratingsAndReviews .sizeAndComfort {
+  font-size: 17px;
+  margin-top: 50px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating {
+  display: flex;
+  align-content: space-between;
+  font-size: 13px;
+  margin-top: 10px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating .perfect {
+  margin-left: 58px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating .tooLarge {
+  margin-left: 60px;
+}
+.ratingsAndReviews .sizeAndComfort .comfort {
+  margin-top: 15px;
+}
+.ratingsAndReviews .sizeAndComfort .perfect1 {
+  margin-left: 188px;
+}
+.ratingsAndReviews .arrowMakerBar {
+  display: flex;
+  align-items: flex-start;
+}
+.ratingsAndReviews .arrowMakerBar .arrow {
+  margin-top: 8px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #494949;
+  position: absolute;
+}
+.ratingsAndReviews .arrowMakerBar .bar1 {
+  background-color: #e9e9e9;
+  width: 78px;
+  height: 7px;
+  position: relative;
+  transition: width 0.5s linear;
+  margin-top: 8px;
+  margin-right: 8px;
+}
 .ratingsAndReviews .starsCount {
   display: flex;
   margin-top: 8px;

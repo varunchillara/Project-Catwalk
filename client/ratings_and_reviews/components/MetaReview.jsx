@@ -36,7 +36,7 @@ function MetaReview() {
       </div>
       <StarsCount />
       {console.log('metareview!!', metaReview)}
-      <div className="SizeAndComfort">
+      <div className="sizeAndComfort">
         <Size />
         <Comfort />
       </div>

@@ -32,6 +32,58 @@
     }
   }
 
+  .sizeAndComfort {
+    font-size: 17px;
+    margin-top: 50px;
+    .sizeRating {
+      display: flex;
+      align-content: space-between;
+      font-size: 13px;
+      margin-top: 10px;
+      .tooSmall {
+      }
+      .perfect {
+        margin-left: 58px;
+      }
+      .tooLarge {
+        margin-left: 60px;
+      }
+    }
+    .comfort {
+      margin-top: 15px;
+    }
+
+    .perfect1 {
+      margin-left: 188px;
+    }
+
+  }
+
+
+  .arrowMakerBar {
+    display: flex;
+    align-items: flex-start;
+    .arrow {
+      margin-top: 8px;
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 9px solid rgb(73, 73, 73);
+      position: absolute;
+      // transform: translate(235px, 0px);
+    }
+    .bar1 {
+      background-color: rgb(233, 233, 233);
+      width: 78px;
+      height: 7px;
+      position: relative;
+      transition: width .5s linear;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+  }
+
   .starsCount {
     display: flex;
     margin-top: 8px;
