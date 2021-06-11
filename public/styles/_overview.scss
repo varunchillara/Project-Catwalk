@@ -1,113 +1,167 @@
-.parent{
-  height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
+.overview {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-}
+  flex-wrap: wrap;
+  margin-left: 150px;
+  margin-right: 150px;
 
-.child1{
-  width: 100%;
-  height: 120px;
-  background: rgb(169, 219, 252);
-  display: flex;
-  // justify-content: flex-start;
-}
-.subchild1-1{
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-  align-self: center;
-}
-.subchild1-2{
-  width: 400px;
-  height: 35px;
-  align-self: flex-end;
-  flex-grow: 1;
-}
-.subchild1-3{
-  width: 100px;
-  height: 35px;
-  align-self: flex-end;
-}
-.child2{
-  width: 100%;
-  height: 50px;
-  background: rgba(252, 114, 114, 0.678);
-  text-align: center;
-  line-height: 10px;
-}
-.child3{
-  width: 100%;
-  height: 600px;
-  display: flex;
-  justify-content: flex-start;
-}
-.subchild3-1{
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex: 1 auto;
-}
-.subchild3-2{
-  width: 500px;
-  height: 600px;
-  background: rgb(38, 253, 253);
-  display: flex;
-  flex-direction: column;
-}
-.subchild3-2-1{
-  width: 200px;
-  height: 50px;
-}
-.subchild3-2-2{
-  width: 200px;
-  height: 50px;
-}
-.subchild3-2-3{
-  width: 200px;
-  height: 50px;
-}
-.subchild3-2-4{
-  width: 200px;
-  height: 40px;
-}
-.subchild3-2-5{
-  width: 400px;
-  height: 60px;
-}
-.subchild3-2-6{
-  width: 400px;
-  height: 20px;
-}
-.subchild3-2-7{
-  width: 400px;
-  height: 20px;
-}
-.subchild3-2-8{
-  width: 400px;
-  height: 20px;
-}
-.subchild3-2-9{
-  width: 400px;
-  height: 20px;
-}
-.child4{
-  width: 100%;
-  height: 40px;
-  display: flex;
-}
-.subchild4-1{
-  width: 400px;
-  height: 200px;
-}
-.subchild4-2{
-  width: 400px;
-  height: 200px;
-}
-.child5{
-  width: 100%;
-  height: 120px;
-  display: flex;
-}
+  //Top of Page - logo-search//
+  .topOfPage {
+    display: flex;
+    height: 120px;
+    background-color: rgb(202, 202, 202);
+
+    .logo {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      margin-left: 25px;
+      overflow: hidden;
+      align-self: center;
+    }
+    .companyName{
+      height: 50px;
+      font-family: Cormorant;
+      text-align: center;
+      font-size: 30px;
+      line-height: 50px;
+      margin-left: 75px;
+      // align-self: center;
+    }
+    .searchBar {
+      width: 300px;
+      height: 38px;
+      margin-left: 360px;
+      margin-bottom: 4px;
+      align-self: flex-end;
+    }
+    .search-button {
+      width: 60px;
+      margin-right: 30px;
+      margin-bottom: 4px;
+      align-self: flex-end;
+    }
+  }
+
+  //Announcements//
+  .announcements {
+    height: 50px;
+    background-color: rgb(236, 127, 127);
+    font-family: Cormorant;
+    text-align: center;
+    line-height: 12px;
+  }
+
+  //Image Carousel and Product Overview//
+  .overview-main {
+    display: flex;
+    // background-color: rgb(202, 202, 202);
+
+    .imageThumb {
+      display: flex;
+      flex-direction: column;
+      margin: 5px;
+      margin-top: 4x;
+      margin-bottom: 4px;
+      align-self: flex-start;
+    }
+    .imageMain {
+      // border: 5px solid #555;
+    }
+
+    .styleSide {
+      display: flex;
+      flex-direction: column;
+      font-family: Cormorant;
+      margin-left: 100px;
+      // border: 5px solid #555;
+
+      .ratings {
+        display: flex;
+      }
+      .productCategory {
+        margin-bottom: -20px;
+      }
+      .productName {
+        margin-bottom: -15px;
+      }
+      .productPriceDefault {
+        margin-bottom: -15px;
+      }
+      .productStyleHeader {
+
+      }
+
+      .styleThumbsMain {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .styleThumbs{
+          flex: 1 0 25%;
+          // border-radius: 50%;
+          // overflow: hidden;
+          margin: 5px;
+          margin-bottom: 20px;
+        }
+      }
+
+      .size-quantity {
+        display: flex;
+
+        .selectSize {
+
+        }
+        .selectQty {
+          margin-left: 30px;
+        }
+      }
+      .bag-outfit {
+        display: flex;
+
+        .addToBag {
+
+        }
+        .addToOutfit {
+          // margin-left: 30px;
+        }
+      }
+      .share {
+        // width: 50px;
+      }
+    }
+  }
+
+  //Description & Features//
+  .description-features{
+    display: flex;
+    flex-direction: column;
+    font-family: Cormorant;
+    margin-left: 80px;
+
+    .slogan-features {
+      display: flex;
+      // justify-content: center;
+      align-items: baseline;
+
+      .productSlogan {
+        align-self: flex-end;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .productFeatures{
+        margin-left: 400px;
+        font-size: 20px;
+      }
+    }
+
+    .productDescription {
+      display: flex;
+      align-self: flex-start;
+      justify-content: center;
+      font-size: 20px;
+      width: 450px;
+    }
+  }
+};
