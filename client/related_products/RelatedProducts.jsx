@@ -4,8 +4,8 @@ import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from './helperFunctions.js'
-import Stars from './Stars2.jsx'
-
+import Stars from './Stars2.jsx';
+import styles from './styles.jsx';
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -34,8 +34,8 @@ class CardTemplate extends React.Component {
     this.formatData = this.formatData.bind(this);
     this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
     this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
-    this.relatedProductsActionButtonHandler = this.relatedProductsActionButtonHandler.bind(this);
-    this.myOutfitActionButtonHandler = this.myOutfitActionButtonHandler.bind(this);
+    this.modalCompareHandler = this.modalCompareHandler.bind(this);
+    this.removeOutfitHandler = this.removeOutfitHandler.bind(this);
     this.addToOutfitHandler = this.addToOutfitHandler.bind(this);
     this.thumbnailCarouselHandler = this.thumbnailCarouselHandler.bind(this)
   }
@@ -104,7 +104,7 @@ class CardTemplate extends React.Component {
       .catch(error => console.error(error))
   }
 
-  relatedProductsActionButtonHandler (e) {
+  modalCompareHandler (e) {
     let productId = e.target.id
     console.log('LAUNCH COMPAIRSON MODAL')
   }
@@ -113,7 +113,7 @@ class CardTemplate extends React.Component {
     console.log('LAUNCH THUMBNAIL CAROUSEL')
   }
 
-  myOutfitActionButtonHandler (e) {
+  removeOutfitHandler (e) {
     let productId = e.target.id
     let myOutfit_Copy = this.state.myOutfit;
     delete myOutfit_Copy[productId];
@@ -152,14 +152,8 @@ class CardTemplate extends React.Component {
 
     }
 
-    let spaceInlineStyle = {
-      marginLeft: '70px',
-      marginRight: '70px'
-    }
-
-
-    let relatedProductsActionButton = "./assets/relatedProductACTION.png"
-    let myOutfitActionButton = "./assets/myOutfitACTION.png"
+    let modalCompareButton = "./assets/relatedProductACTION.png"
+    let removeOutfitButton = "./assets/myOutfitACTION.png"
     let relatedProducts = Object.values(this.state.dummyRelatedProductsData)
     let myOutfit = Object.values(this.state.myOutfit)
 
@@ -167,9 +161,9 @@ class CardTemplate extends React.Component {
         relatedProducts = relatedProducts.map(product => <Card
           key={product.id}
           data={product}
-          actionButton={relatedProductsActionButton}
+          actionButton={modalCompareButton}
           thumbnailCarouselHandler={this.thumbnailCarouselHandler}
-          actionButtonHandler={this.relatedProductsActionButtonHandler}
+          actionButtonHandler={this.modalCompareHandler}
           outfitAdder={false}
           />)
       }
@@ -177,8 +171,8 @@ class CardTemplate extends React.Component {
         myOutfit = myOutfit.map(product => <Card
           key={product.id}
           data={product}
-          actionButton={myOutfitActionButton}
-          actionButtonHandler={this.myOutfitActionButtonHandler}
+          actionButton={removeOutfitButton}
+          actionButtonHandler={this.removeOutfitHandler}
           outfitAdder={false}
           />)
       }
@@ -205,8 +199,6 @@ class CardTemplate extends React.Component {
             />
           {myOutfit}
         </div>
-      </div>
-      <div className="space-between-cards" style={spaceInlineStyle}>
       </div>
     </div>
     )
@@ -274,7 +266,6 @@ const Card = (props) => {
     justifyContent : 'center',
     fontWeight : 'normal'
   }
-  console.log(props)
 
   if (props.outfitAdder) {
     wholeCardClick = props.addToOutfitHandler;
@@ -297,6 +288,7 @@ const Card = (props) => {
   }
 
   return (
+
     <div id={id} className="card" style={cardInlineStyle} onClick={wholeCardClick}>
       <div id={id} className="image-container" style={imageContainerInlineStyle}>
         <img id={id} className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle} onClick={thumbnailCarouselHandler}></img>
