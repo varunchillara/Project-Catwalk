@@ -218,10 +218,6 @@ class CardTemplate extends React.Component {
 
 
 
-
-
-
-
 const Card = (props) => {
   let wholeCardClick = null;
   let thumbnailCarouselHandler = props.thumbnailCarouselHandler || null;
