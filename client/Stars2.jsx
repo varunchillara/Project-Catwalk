@@ -58,13 +58,25 @@ const Stars = (props) => {
       }
       rating -= 1;
     }
+    let starInlineStyles = {
+      display: 'flex',
+      flexDirection: 'row'
+      }
     return (
-      <div>
-        {stars.map(star => star)}
+      <div style={starInlineStyles}>
+        {stars.map((star, i)=> <Star key={i} star={star}/>)}
       </div>
     )
 }
 
+const Star = (props) => {
 
+  return (
+    <div>
+      {props.star}
+    </div>
+
+  )
+}
 
 export default Stars;

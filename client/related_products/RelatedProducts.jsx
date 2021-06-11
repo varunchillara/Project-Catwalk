@@ -3,8 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
-import averageReviewsCalculator from './helperFunctions.js'
-import Stars from './Stars2.jsx';
+import averageReviewsCalculator from '../helperFunctions.js'
+import Stars from '../Stars2.jsx';
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -144,7 +144,7 @@ class CardTemplate extends React.Component {
   }
   onMouseLeaveColorHandler (e) {
     if (e.target.className === 'action') {
-      e.target.style.opacity='70%'
+      e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')
       card.style.opacity='50%';
@@ -166,10 +166,34 @@ class CardTemplate extends React.Component {
     let carouselInlineStyle = {
       marginTop: '30px',
       marginBottom: '50px',
-      minHeight: '356.5px',
+      // minHeight: '356.5px',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'left',
+    }
+    let cardRowInlineStyle = {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'left',
+      gap: '10%'
+    }
+
+    let carouselLeftButton = {
+      width: '70px',
+      height: '70px',
+      alignSelf: 'center',
+      zIndex: '1',
+      position: 'absolute',
+      left: '10%'
+    }
+    let carouselRightButton = {
+      width: '70px',
+      height: '70px',
+      alignSelf: 'center',
+      zIndex: '1',
+      position: 'absolute',
+      right: '10%'
+
     }
 
     let modalCompareButton = "./assets/relatedProductACTION.png"
@@ -209,12 +233,15 @@ class CardTemplate extends React.Component {
           RELATED PRODUCTS
         </div>
         <div className="related-products-carousel" style={carouselInlineStyle}>
-          {relatedProducts}
+          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
+          <div className="card-row" style={cardRowInlineStyle}>{relatedProducts}</div>
+          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
         </div>
         <div className="my-outfit-title" style={cardTitleInlineStyle}>
           MY OUTFIT
         </div>
         <div className="my-outfit" style={carouselInlineStyle}>
+          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
           <Card
             //subject to change
             key={this.state.dummyCurrentProductData.product_id}
@@ -225,6 +252,7 @@ class CardTemplate extends React.Component {
             outfitAdder={true}
             />
           {myOutfit}
+          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
         </div>
       </div>
     </div>
@@ -254,17 +282,19 @@ const Card = (props) => {
   let rating = props.data.rating
 
   let cardInlineStyle = {
+    // flex: '1, '
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid grey',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between'
   }
   let imageContainerInlineStyle = {
-    flex: '5',
+    flex:'1',
     display:'flex',
-    justifyContent:'center',
+    // justifyContent:'center',
     marginBottom: '10px',
     position: 'relative',
+    // alignSelf: 'center',
     backgroundColor: 'rgb(240, 237, 228)'
   }
   let actionButtonInlineStyle = {
@@ -272,11 +302,11 @@ const Card = (props) => {
     top:'5%',
     left:'80%',
     width: '23px',
-    opacity: '70%'
+    opacity: '50%'
   }
   let imageInlineStyle = {
     alignSelf: 'center',
-    width: '170px'
+    width: '170px',
   }
   let productInfoInlineStyle = {
     marginLeft : '8px',
@@ -300,7 +330,6 @@ const Card = (props) => {
   }
   let ratingInlineStyle = {
     color : 'white',
-    textAlign : 'center'
   }
 
   if (props.outfitAdder) {
