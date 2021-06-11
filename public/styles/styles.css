@@ -181,137 +181,128 @@
   background-color: #f3f3f3;
 }
 
-.parent {
-  height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
+.overview {
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  flex-wrap: wrap;
+  margin-left: 150px;
+  margin-right: 150px;
 }
-
-.child1 {
-  width: 100%;
-  height: 120px;
-  background: #a9dbfc;
+.overview .topOfPage {
   display: flex;
+  height: 120px;
+  background-color: #cacaca;
 }
-
-.subchild1-1 {
+.overview .topOfPage .logo {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+  margin-left: 25px;
   overflow: hidden;
   align-self: center;
 }
-
-.subchild1-2 {
-  width: 400px;
-  height: 35px;
-  align-self: flex-end;
-  flex-grow: 1;
-}
-
-.subchild1-3 {
-  width: 100px;
-  height: 35px;
-  align-self: flex-end;
-}
-
-.child2 {
-  width: 100%;
+.overview .topOfPage .companyName {
   height: 50px;
-  background: rgba(252, 114, 114, 0.678);
+  font-family: Cormorant;
   text-align: center;
-  line-height: 10px;
+  font-size: 30px;
+  line-height: 50px;
+  margin-left: 75px;
 }
-
-.child3 {
-  width: 100%;
-  height: 600px;
+.overview .topOfPage .searchBar {
+  width: 300px;
+  height: 38px;
+  margin-left: 360px;
+  margin-bottom: 4px;
+  align-self: flex-end;
+}
+.overview .topOfPage .search-button {
+  width: 60px;
+  margin-right: 30px;
+  margin-bottom: 4px;
+  align-self: flex-end;
+}
+.overview .announcements {
+  height: 50px;
+  background-color: #ec7f7f;
+  font-family: Cormorant;
+  text-align: center;
+  line-height: 12px;
+}
+.overview .overview-main {
   display: flex;
-  justify-content: flex-start;
 }
-
-.subchild3-1 {
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex: 1 auto;
-}
-
-.subchild3-2 {
-  width: 500px;
-  height: 600px;
-  background: #26fdfd;
+.overview .overview-main .imageThumb {
   display: flex;
   flex-direction: column;
+  margin: 5px;
+  margin-top: 4x;
+  margin-bottom: 4px;
+  align-self: flex-start;
 }
-
-.subchild3-2-1 {
-  width: 200px;
-  height: 50px;
+.overview .overview-main .styleSide {
+  display: flex;
+  flex-direction: column;
+  font-family: Cormorant;
+  margin-left: 100px;
 }
-
-.subchild3-2-2 {
-  width: 200px;
-  height: 50px;
-}
-
-.subchild3-2-3 {
-  width: 200px;
-  height: 50px;
-}
-
-.subchild3-2-4 {
-  width: 200px;
-  height: 40px;
-}
-
-.subchild3-2-5 {
-  width: 400px;
-  height: 60px;
-}
-
-.subchild3-2-6 {
-  width: 400px;
-  height: 20px;
-}
-
-.subchild3-2-7 {
-  width: 400px;
-  height: 20px;
-}
-
-.subchild3-2-8 {
-  width: 400px;
-  height: 20px;
-}
-
-.subchild3-2-9 {
-  width: 400px;
-  height: 20px;
-}
-
-.child4 {
-  width: 100%;
-  height: 40px;
+.overview .overview-main .styleSide .ratings {
   display: flex;
 }
-
-.subchild4-1 {
-  width: 400px;
-  height: 200px;
+.overview .overview-main .styleSide .productCategory {
+  margin-bottom: -20px;
 }
-
-.subchild4-2 {
-  width: 400px;
-  height: 200px;
+.overview .overview-main .styleSide .productName {
+  margin-bottom: -15px;
 }
-
-.child5 {
-  width: 100%;
-  height: 120px;
+.overview .overview-main .styleSide .productPriceDefault {
+  margin-bottom: -15px;
+}
+.overview .overview-main .styleSide .styleThumbsMain {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.overview .overview-main .styleSide .styleThumbsMain .styleThumbs {
+  flex: 1 0 25%;
+  margin: 5px;
+  margin-bottom: 20px;
+}
+.overview .overview-main .styleSide .size-quantity {
+  display: flex;
+}
+.overview .overview-main .styleSide .size-quantity .selectQty {
+  margin-left: 30px;
+}
+.overview .overview-main .styleSide .bag-outfit {
+  display: flex;
+}
+.overview .description-features {
+  display: flex;
+  flex-direction: column;
+  font-family: Cormorant;
+  margin-left: 80px;
+}
+.overview .description-features .slogan-features {
+  display: flex;
+  align-items: baseline;
+}
+.overview .description-features .slogan-features .productSlogan {
+  align-self: flex-end;
+  font-size: 24px;
+  font-weight: bold;
+}
+.overview .description-features .slogan-features .productFeatures {
+  margin-left: 400px;
+  font-size: 20px;
+}
+.overview .description-features .productDescription {
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  font-size: 20px;
+  width: 450px;
 }
 
 /*# sourceMappingURL=styles.css.map */

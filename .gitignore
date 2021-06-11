@@ -4,3 +4,6 @@ public/bundle.js
 
 ## API keys ##
 client/env/config.js
+
+## styles ##
+public/styles/styles.css.maps
