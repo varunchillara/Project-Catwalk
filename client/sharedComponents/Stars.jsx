@@ -11,11 +11,11 @@ function Stars(props) {
   }
   return (
     <div className="stars">
-      {checkedStars.map((star) => {
-        return (<span className="fa fa-star checked star"></span>);
+      {checkedStars.map((star, i) => {
+        return (<span key={i} className="fa fa-star checked star"></span>);
       })}
-      {uncheckedStars.map((star) => {
-        return (<span className="fa fa-star star"></span>)
+      {uncheckedStars.map((star, i) => {
+        return (<span key={i + 5} className="fa fa-star star"></span>)
       })}
     </div>
   );

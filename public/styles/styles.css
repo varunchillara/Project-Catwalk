@@ -2,17 +2,116 @@
   display: flex;
   font-family: Cormorant;
   justify-content: center;
+  margin-top: 30px;
 }
 .ratingsAndReviews .metaReview {
   width: 300px;
-  background-color: #cacaca;
-  margin-right: 30px;
+  margin-right: 20px;
+}
+.ratingsAndReviews .metaReview .ratingsHeader {
+  font-size: 20px;
+  color: #494949;
+}
+.ratingsAndReviews .metaReview .rating {
+  display: flex;
+}
+.ratingsAndReviews .metaReview .rating .overallRating {
+  font-size: 65px;
+  font-family: "Cormorant", serif;
+  font-family: "Roboto", sans-serif;
+  color: #494949;
+}
+.ratingsAndReviews .metaReview .rating .starsContainer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.ratingsAndReviews .metaReview .recommendPrecentage {
+  margin-top: 15px;
+}
+.ratingsAndReviews .metaReview .starsCountContainer {
+  margin-top: 15px;
+}
+.ratingsAndReviews .sizeAndComfort {
+  font-size: 17px;
+  margin-top: 50px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating {
+  display: flex;
+  align-content: space-between;
+  font-size: 13px;
+  margin-top: 10px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating .perfect {
+  margin-left: 58px;
+}
+.ratingsAndReviews .sizeAndComfort .sizeRating .tooLarge {
+  margin-left: 60px;
+}
+.ratingsAndReviews .sizeAndComfort .comfort {
+  margin-top: 15px;
+}
+.ratingsAndReviews .sizeAndComfort .perfect1 {
+  margin-left: 188px;
+}
+.ratingsAndReviews .arrowMakerBar {
+  display: flex;
+  align-items: flex-start;
+}
+.ratingsAndReviews .arrowMakerBar .arrow {
+  margin-top: 8px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #494949;
+  position: absolute;
+}
+.ratingsAndReviews .arrowMakerBar .bar1 {
+  background-color: #e9e9e9;
+  width: 78px;
+  height: 7px;
+  position: relative;
+  transition: width 0.5s linear;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+.ratingsAndReviews .starsCount {
+  display: flex;
+  margin-top: 8px;
+}
+.ratingsAndReviews .starsCount .stars1 {
+  font-size: 17px;
+  margin-right: 10px;
+  font-weight: normal;
+}
+.ratingsAndReviews .starsCount .bar {
+  background-color: #e9e9e9;
+  width: 200px;
+  height: 7px;
+  position: relative;
+  transition: width 0.5s linear;
+  margin-top: 8px;
+}
+.ratingsAndReviews .starsCount .bar .status {
+  background: #494949;
+  width: 50%;
+  height: 7px;
+  position: relative;
+  transition: width 0.5s linear;
 }
 .ratingsAndReviews .reviewsHeader {
+  margin-top: 80px;
   margin-bottom: 40px;
   font-size: 20px;
   font-weight: bolder;
   color: #494949;
+}
+.ratingsAndReviews .reviewsHeader .sortingOptions {
+  font-size: 17px;
+  color: #494949;
+  border-top: 1px;
+  border-left: 1px;
+  border-right: 1px;
 }
 .ratingsAndReviews .review {
   width: 600px;
