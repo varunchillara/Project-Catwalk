@@ -5,10 +5,10 @@ import axios from 'axios';
 import Stars from '../../sharedComponents/Stars.jsx';
 import SelectStyle from './SelectStyle.jsx';
 
-const ProductInfo = () => {
+const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[productInfo, setProductInfo] = useState({ features: [] });
-  const[productStyle, setProductStyle] = useState( [] );
+  const[productStyle, setProductStyle] = useState(props.productStyles);
 
   useEffect(() => {
     axios.defaults.headers = {
@@ -29,53 +29,7 @@ const ProductInfo = () => {
     })
   }, [currentProduct])
 
-  useEffect(() => {
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization: token
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001/styles`, {
-      params: {
-        product_id: currentProduct.id,
-        results: currentProduct.results
-      }
-    })
-    .then((result) => {
-      setProductStyle(result.data.results)
-      console.log('results', result.data.results)
-    })
-  }, [currentProduct])
-
-  // const stylePreview = (results) => {
-  //   var firstFour = [];
-  //   var rest = [];
-
-  //   for (let i = 0; i < 3; i++) {
-  //     firstFour.push(results.photos[0].thumbnail_url);
-  //   }
-
-  //   for (let j = 4; j < results.length; j++) {
-  //     rest.push(results.photos[0].thumbnail_url);
-  //   }
-
-  //   return (
-  //     <>
-  //     <div className="styleThumbTop">
-  //       {firstFour.map(topPhoto =>
-  //         <img src={topPhoto} height="100px" width="80px"/>
-  //       )}
-  //     </div>
-  //     <div className="styleThumbBottom">
-  //       {rest.map(bottomPhoto =>
-  //         <img src={bottomPhoto} height="100px" width="80px"/>
-  //       )}
-  //     </div>
-  //     </>
-  //   )
-  // }
-
   const selectSize = () => {
-
     const sizes = ['XS', 'S', 'M', 'L', 'XL'];
     const makeList = (size) => {
       return <option>{size}</option>;
@@ -89,6 +43,12 @@ const ProductInfo = () => {
       return <option>{qty}</option>;
     };
     return <select>{qty.map(makeList)}</select>
+  }
+
+  const clickImage = (photo) => {
+    // console.log('clicked image: ', photo)
+    props.setStyle(photo)
+    // setImageUrl(url);
   }
 
   return (
@@ -107,15 +67,15 @@ const ProductInfo = () => {
         <h3>{productInfo.default_price}</h3>
       </div>
       <div className="productStyleHeader">
-        <h3>{"Selected Style: (Current Style Placeholder)"}</h3>
+        {/* {productStyle[0].name} */}
+        <h3>{`Selected Style: placeholder`}</h3>
       </div>
       <div className="styleThumbsMain">
-        {/* {stylePreview(productStyle)} */}
-         {productStyle.map((style, i) =>
-          <div className="styleThumbs">
-            <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px"/>
-          </div>
-         )}
+        {props.productStyles.map((style, i) =>
+        <div className="styleThumbs">
+          <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+        </div>
+        )}
       </div>
       <div className="size-quantity">
         <div className="selectSize">
