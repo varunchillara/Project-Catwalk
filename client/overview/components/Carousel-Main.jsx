@@ -23,17 +23,6 @@ const Carousel = (props) => {
     setImageUrl(url);
   }
 
-  // const enlargeImage = (image) => {
-  //   console.log('clicked main', enlargeImage)
-  //   img.style.transform = 'scale(1.5)';
-  //   img.style.transition = 'transform 0.25s ease';
-  // }
-
-  // const resetImg = () => {
-  //   img.style.transform = 'scale(1)';
-  //   img.style.transition = 'transform 0.25s ease';
-  // }
-
   return (
     <>
     <div className="imageThumb">
@@ -43,7 +32,6 @@ const Carousel = (props) => {
       )}
     </div>
     <div className="imageMain">
-    {/* <img src={imageUrl} height="600px" width="450px" /> */}
       <Image
         style={{ width: "450px", height: "auto"}}
         zoomed={zoomed}

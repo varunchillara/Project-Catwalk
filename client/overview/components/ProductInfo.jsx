@@ -61,7 +61,7 @@ const ProductInfo = (props) => {
   }
 
   const clickImage = (photo) => {
-    // console.log('clicked photp: ', photo)
+    // console.log('clicked photo: ', photo)
     props.setStyle(photo);
   }
 
@@ -70,21 +70,18 @@ const ProductInfo = (props) => {
       return (
         <>
         <span
-          style={{ 'textDecoration': 'line-through', 'textDecorationThickness': '2px', 'fontSize': '20px',}}>
+          style={{ 'textDecoration': 'line-through', 'textDecorationThickness': '2px', 'fontSize': '20px' }}>
           ${props.style.original_price}
         </span>
         <span
-          style={{ 'color': 'red', 'paddingLeft': '10px', 'fontSize': '24px', 'fontStyle': 'italic'}}>
+          style={{ 'color': 'red', 'paddingLeft': '10px', 'fontSize': '24px', 'fontStyle': 'italic' }}>
           ${productPrice}
         </span>
         </>
       )
     }
-    return <span style={{ 'fontSize': '20px',}}>${props.style.original_price}</span>;
+    return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
-
-        /* <span style={{ 'text-decoration': 'line-through' }}>${productInfo.default_price}</span> */
-        // rgb(81, 126, 221
 
   return (
     <div className="styleSide">
@@ -103,7 +100,7 @@ const ProductInfo = (props) => {
       </div>
       <div className="productStyleHeader">
         <span>Selected Style: </span>
-        <span style={{'color': 'rgb(81, 126, 221', 'fontWeight': 'bold'}}> {productStyle}</span>
+        <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
         {props.productStyles.map((style, i) =>
