@@ -101,6 +101,7 @@ class CardTemplate extends React.Component {
   }
 
   updateOverviewProduct (id) {
+  ///put in app
     let dummyCurrentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}`)
     let dummyCurrentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/styles`)
     let dummyCurrentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
@@ -118,7 +119,6 @@ class CardTemplate extends React.Component {
         })
       })
       .catch(error => console.error(error))
-
   }
 
   fetchRelatedProducts (results) {
@@ -213,7 +213,9 @@ class CardTemplate extends React.Component {
     let className = e.target.className;
     let productId = e.target.id;
     if (e.target.className.includes('overview-linked')) {
+      ///THIS FUNCTION IS PASSED DOWN FROM APP.
       this.updateOverviewProduct(e.target.id);
+      this.props.setCurrentAppId(e.target.id);
     } else if (className.includes('action')) {
       this.determineAction(className, productId)
     } else {
