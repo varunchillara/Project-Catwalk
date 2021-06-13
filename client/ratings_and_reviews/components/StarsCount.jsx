@@ -3,9 +3,10 @@ import Bar from './Bar.jsx';
 
 function StarsCount (props) {
   const totalRatings = props.ratings || {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+  const totalRatingsValues = Object.values(totalRatings).length === 0 ? [0] : Object.values(totalRatings);
 
   const reducer = (accumulator, currentValue) => {return (Number(accumulator) + Number(currentValue))};
-  const totalRatingsAdded = Object.values(totalRatings).reduce(reducer);
+  const totalRatingsAdded = totalRatingsValues.reduce(reducer);
 
   const fiveStar = totalRatings['5'] || 0;
   const fourStar = totalRatings['4'] || 0;

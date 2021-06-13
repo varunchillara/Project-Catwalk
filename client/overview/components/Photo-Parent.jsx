@@ -12,7 +12,7 @@ const PhotoParent = () => {
   const [style, setStyle] = useState( {} );
   const dispatch = useDispatch();
 
-  let currentProd = currentProduct.id;
+  let currentProd = currentProduct.id || 11004;
   useEffect(() => {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
