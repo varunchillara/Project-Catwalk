@@ -4,6 +4,7 @@ import token from '../../env/config.js';
 import axios from 'axios';
 import Review from './Review.jsx';
 import SortOptions from './SortOptions.jsx';
+import AddAReview from './AddAReview.jsx';
 
 function ListOfReviews() {
   const currentProduct = useSelector(state => state.currentProduct);
@@ -38,7 +39,7 @@ function ListOfReviews() {
       })}
       <div className="buttons">
         <button className="button">MORE REVIEWS</button>
-        <button className="button">ADD A REVIEW +</button>
+        <AddAReview />
       </div>
     </div>
   )

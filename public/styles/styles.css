@@ -59,6 +59,9 @@
 .ratingsAndReviews .comfortFitLengthQuality .perfect1 {
   margin-left: 188px;
 }
+.ratingsAndReviews .buttons {
+  display: flex;
+}
 .ratingsAndReviews .arrowMakerBar {
   display: flex;
   align-items: flex-start;
