@@ -4,7 +4,7 @@ const productReducer = (state = '', action) => {
     case 'UPDATE' :
       return action.payload;
     default:
-      return '';
+      return state;
   }
 }
 

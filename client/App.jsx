@@ -9,6 +9,7 @@ import {update} from '../store/actions/product.js';
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
+
   const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,9 +17,8 @@ function App () {
       'Content-Type': 'application/json',
       Authorization : token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11004`)
     .then((result) => {
-      console.log('*********did this run??', result.data);
       dispatch(update(result.data));
     })
     .catch(error => {

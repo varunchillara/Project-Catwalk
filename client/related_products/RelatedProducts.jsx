@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {update} from '../../store/actions/product.js';
+import {useUpdate} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js'
@@ -11,6 +11,18 @@ axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
 };
+
+
+
+const RelatedProductsContainer = () => {
+  const [communalState, setCommunalState] = useState()
+
+  return (
+    <></>
+  )
+}
+
+
 
 class CardTemplate extends React.Component {
   constructor (props) {
@@ -101,7 +113,6 @@ class CardTemplate extends React.Component {
   }
 
   updateOverviewProduct (id) {
-  ///put in app
     let dummyCurrentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}`)
     let dummyCurrentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/styles`)
     let dummyCurrentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
@@ -153,7 +164,6 @@ class CardTemplate extends React.Component {
 
   closeCompareModal (e) {
     let modals = document.getElementsByClassName('comparison-modal')
-    console.log(modals)
     e.target.style.display = 'none';
     this.setState({
       modalId: null
@@ -182,14 +192,10 @@ class CardTemplate extends React.Component {
 
   onMouseEnterHandler (e) {
     let id = this.state.dummyCurrentProductData.id
-    // if (this.state.myOutfit[id]) {
-    //   console.log('in here')
-    //   return;
-    // }
     if (e.target.className.includes('overview-linked')) {
       // console.log('OPEN THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      console.log('OVER ACTION')
+      // console.log('OVER ACTION')
       e.target.style.opacity='100%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -201,7 +207,7 @@ class CardTemplate extends React.Component {
     if (e.target.className.includes('overview-linked')) {
       // console.log('CLOSE THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      console.log('EXIT ACTION')
+      // console.log('EXIT ACTION')
       e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -352,41 +358,5 @@ class CardTemplate extends React.Component {
   }
 }
 
-
-
-
-
 export default CardTemplate;
-
-
-
-
-
-// function initiateStore() {
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     axios.defaults.headers = {
-//       'Content-Type': 'application/json',
-//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
-//       Authorization : token
-//     };
-//     .then((result) => {
-//       console.log('result.data', result.data);
-//       dispatch(update(result.data));
-//     })
-//     .catch(error => {
-//       console.error(error)
-//     })
-//   })
-
-
-
-//   return (
-//   <div className="inititateStore">
-//   </div>
-//   );
-// }
-
-
 
