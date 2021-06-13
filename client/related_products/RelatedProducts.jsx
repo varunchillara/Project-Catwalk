@@ -244,6 +244,7 @@ class CardTemplate extends React.Component {
       flexDirection: 'row',
       justifyContent: 'left',
     }
+
     let cardRowInlineStyle = {
       display: 'flex',
       flexDirection: 'row',
