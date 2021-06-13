@@ -8,7 +8,7 @@ import ProductInfo from './ProductInfo.jsx';
 const PhotoParent = () => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[productStyles, setProductStyles] = useState( [] );
-  const[style, setStyle] = useState({} );
+  const[style, setStyle] = useState( {} );
 
   useEffect(() => {
     axios.defaults.headers = {
@@ -23,7 +23,7 @@ const PhotoParent = () => {
       }
     })
     .then((result) => {
-      // console.log('results in parent', result.data.results)
+      console.log('results in parent', result.data.results)
       setProductStyles(result.data.results)
       setStyle(result.data.results[0])
     })
@@ -32,7 +32,7 @@ const PhotoParent = () => {
   return (
     <div className="overview-main">
       <CarouselMain style={style}/>
-      <ProductInfo  productStyles={productStyles} setStyle={setStyle}/>
+      <ProductInfo  productStyles={productStyles} style={style} setStyle={setStyle}/>
     </div>
   )
 };
