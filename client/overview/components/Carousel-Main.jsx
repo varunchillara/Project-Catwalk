@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
+import Image from 'react-image-enlarger';
 import CarouselExpanded from './Carousel-Expanded.jsx';
 
 const Carousel = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[photos, setPhotos] = useState( [] );
   const[imageUrl, setImageUrl] = useState("https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80");
+  const [zoomed, setZoomed] = useState(false);
 
   useEffect(() => {
     if (props.style.photos) {
@@ -21,6 +23,17 @@ const Carousel = (props) => {
     setImageUrl(url);
   }
 
+  // const enlargeImage = (image) => {
+  //   console.log('clicked main', enlargeImage)
+  //   img.style.transform = 'scale(1.5)';
+  //   img.style.transition = 'transform 0.25s ease';
+  // }
+
+  // const resetImg = () => {
+  //   img.style.transform = 'scale(1)';
+  //   img.style.transition = 'transform 0.25s ease';
+  // }
+
   return (
     <>
     <div className="imageThumb">
@@ -30,7 +43,15 @@ const Carousel = (props) => {
       )}
     </div>
     <div className="imageMain">
-      <img src={imageUrl} height="600px" width="450px"/>
+    {/* <img src={imageUrl} height="600px" width="450px" /> */}
+      <Image
+        style={{ width: "450px", height: "auto"}}
+        zoomed={zoomed}
+        src={imageUrl}
+        alt="main img"
+        onClick={() => setZoomed(true)}
+        onRequestClose={() => setZoomed(false)}
+      />
     </div>
     </>
   )
