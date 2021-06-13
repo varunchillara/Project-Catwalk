@@ -6,7 +6,7 @@ function Rating (props) {
   let currentRating = helperFunctions.getAverageRating(props.ratings);
   return (
     <div className="rating">
-      {console.log('****************!!!!', currentRating)}
+      {/* {console.log('****************!!!!', currentRating)} */}
       <div className="overallRating">{JSON.stringify(currentRating)}</div>
       <div className="starsContainer"><Stars rating={currentRating} /></div>
     </div>

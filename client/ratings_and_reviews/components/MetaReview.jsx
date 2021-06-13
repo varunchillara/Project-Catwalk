@@ -34,7 +34,7 @@ function MetaReview() {
         100% of reviews recommend this product
       </div>
       <StarsCount ratings={metaReview.ratings}/>
-      {console.log('****************metareview!!', metaReview)}
+      {/* {console.log('****************metareview!!', metaReview)} */}
       <SizeComfortLengthQuality characteristics={metaReview.characteristics}/>
     </div>
   )

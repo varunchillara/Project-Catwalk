@@ -13,7 +13,7 @@ function SizeComfortLengthQuality(props) {
 
   return (
     <div className="comfortFitLengthQuality">
-      {console.log('******** charactersitics!!', characteristics)}
+      {/* {console.log('******** charactersitics!!', characteristics)} */}
       <Size fit={fit} />
       <Comfort comfort={comfort} />
       <Length length={length} />
