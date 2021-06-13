@@ -5,11 +5,9 @@ import axios from 'axios';
 // import token from '../env/config.js';
 
 import Announcement from './Announcement.jsx';
-import Carousel from './Carousel-Main.jsx';
 import Description from './Description.jsx';
-// import Features from './Features.jsx';
 import LogoSearch from './Logo-Search.jsx';
-import ProductInfo from './ProductInfo.jsx';
+import PhotoParent from './Photo-Parent.jsx';
 
 	function Overview() {
 		const currentProduct = useSelector(state => state.currentProduct);
@@ -18,11 +16,8 @@ import ProductInfo from './ProductInfo.jsx';
     <div className="overview">
 			<LogoSearch />
 			<Announcement />
-			<div className="overview-main">
-				<Carousel />
-				<ProductInfo />
-			</div>
-			  <Description />
+			<PhotoParent />
+			<Description />
 		</div>
 	)
 };
