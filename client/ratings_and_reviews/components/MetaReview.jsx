@@ -4,8 +4,7 @@ import token from '../../env/config.js';
 import axios from 'axios';
 import Rating from './Rating.jsx';
 import StarsCount from './StarsCount.jsx';
-import Size from './Size.jsx';
-import Comfort from './Comfort.jsx';
+import SizeComfortLengthQuality from './SizeComfortLengthQuality.jsx';
 
 
 function MetaReview() {
@@ -30,15 +29,13 @@ function MetaReview() {
   return (
     <div className="metaReview">
       <h4 className="ratingsHeader">Ratings & Reviews</h4>
-      <Rating />
+      <Rating ratings={metaReview.ratings}/>
       <div className="recommendPrecentage">
         100% of reviews recommend this product
       </div>
-      <StarsCount />
-      <div className="sizeAndComfort">
-        <Size />
-        <Comfort />
-      </div>
+      <StarsCount ratings={metaReview.ratings}/>
+      {/* {console.log('****************metareview!!', metaReview)} */}
+      <SizeComfortLengthQuality characteristics={metaReview.characteristics}/>
     </div>
   )
 }

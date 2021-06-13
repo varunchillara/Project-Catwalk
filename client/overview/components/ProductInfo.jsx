@@ -5,19 +5,20 @@ import axios from 'axios';
 import Stars from '../../sharedComponents/Stars.jsx';
 import SelectStyle from './SelectStyle.jsx';
 
-const ProductInfo = () => {
+const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[productInfo, setProductInfo] = useState({ features: [] });
-  const[productStyle, setProductStyle] = useState( [] );
+  const[productStyle, setProductStyle] = useState( );
+  const[productPrice, setProductPrice] = useState( );
 
   useEffect(() => {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
       params: {
-        product_id: currentProduct.id,
+        product_id: currentProduct.id || 11004,
         category: currentProduct.category,
         name: currentProduct.name,
         default_price: currentProduct.default_price
@@ -30,51 +31,20 @@ const ProductInfo = () => {
   }, [currentProduct])
 
   useEffect(() => {
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization: token
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001/styles`, {
-      params: {
-        product_id: currentProduct.id,
-        results: currentProduct.results
-      }
-    })
-    .then((result) => {
-      setProductStyle(result.data.results)
-    })
-  }, [currentProduct])
+    if (props.style.name) {
+      setProductStyle(props.style.name);
+    }
+  }, [props.style.name])
 
-  // const stylePreview = (results) => {
-  //   var firstFour = [];
-  //   var rest = [];
-
-  //   for (let i = 0; i < 3; i++) {
-  //     firstFour.push(results.photos[0].thumbnail_url);
-  //   }
-
-  //   for (let j = 4; j < results.length; j++) {
-  //     rest.push(results.photos[0].thumbnail_url);
-  //   }
-
-  //   return (
-  //     <>
-  //     <div className="styleThumbTop">
-  //       {firstFour.map(topPhoto =>
-  //         <img src={topPhoto} height="100px" width="80px"/>
-  //       )}
-  //     </div>
-  //     <div className="styleThumbBottom">
-  //       {rest.map(bottomPhoto =>
-  //         <img src={bottomPhoto} height="100px" width="80px"/>
-  //       )}
-  //     </div>
-  //     </>
-  //   )
-  // }
+  useEffect(() => {
+    if (props.style.sale_price) {
+      setProductPrice(props.style.sale_price);
+    } else {
+      setProductPrice(0);
+    }
+  }, [props.style.sale_price])
 
   const selectSize = () => {
-
     const sizes = ['XS', 'S', 'M', 'L', 'XL'];
     const makeList = (size) => {
       return <option>{size}</option>;
@@ -90,6 +60,29 @@ const ProductInfo = () => {
     return <select>{qty.map(makeList)}</select>
   }
 
+  const clickImage = (photo) => {
+    // console.log('clicked photo: ', photo)
+    props.setStyle(photo);
+  }
+
+  const priceCheck = () => {
+    if (productPrice > 0) {
+      return (
+        <>
+        <span
+          style={{ 'textDecoration': 'line-through', 'textDecorationThickness': '2px', 'fontSize': '20px' }}>
+          ${props.style.original_price}
+        </span>
+        <span
+          style={{ 'color': 'red', 'paddingLeft': '10px', 'fontSize': '24px', 'fontStyle': 'italic' }}>
+          ${productPrice}
+        </span>
+        </>
+      )
+    }
+    return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
+  }
+
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -103,18 +96,18 @@ const ProductInfo = () => {
         <h3>{productInfo.name}</h3>
       </div>
       <div className="productPriceDefault">
-        <h3>{productInfo.default_price}</h3>
+        {priceCheck()}
       </div>
       <div className="productStyleHeader">
-        <h3>{"Selected Style: (Current Style Placeholder)"}</h3>
+        <span>Selected Style: </span>
+        <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
-        {/* {stylePreview(productStyle)} */}
-         {productStyle.map((style, i) =>
-          <div className="styleThumbs">
-            <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px"/>
-          </div>
-         )}
+        {props.productStyles.map((style, i) =>
+        <div className="styleThumbs">
+          <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+        </div>
+        )}
       </div>
       <div className="size-quantity">
         <div className="selectSize">
@@ -129,7 +122,9 @@ const ProductInfo = () => {
           <button className="button">Add To Bag</button>
         </div>
         <div className="addToOutfit">
-          <button className="button">+</button>
+          <button className="button">
+            <img src="./assets/relatedProductACTION.png" height="30px" width="30px"/>
+          </button>
         </div>
       </div>
       <div className="share">

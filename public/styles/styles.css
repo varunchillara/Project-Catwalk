@@ -1,3 +1,9 @@
+.label {
+  display: inline-block;
+  width: 140px;
+  text-align: left;
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -31,27 +37,36 @@
 .ratingsAndReviews .metaReview .starsCountContainer {
   margin-top: 15px;
 }
-.ratingsAndReviews .sizeAndComfort {
+.ratingsAndReviews .comfortFitLengthQuality {
   font-size: 17px;
   margin-top: 50px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating {
   display: flex;
   align-content: space-between;
   font-size: 13px;
   margin-top: 10px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating .perfect {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating .perfect {
   margin-left: 58px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating .tooLarge {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating .tooLarge {
   margin-left: 60px;
 }
-.ratingsAndReviews .sizeAndComfort .comfort {
-  margin-top: 15px;
+.ratingsAndReviews .comfortFitLengthQuality .comfort {
+  margin-top: 5px;
 }
-.ratingsAndReviews .sizeAndComfort .perfect1 {
+.ratingsAndReviews .comfortFitLengthQuality .length {
+  margin-top: 5px;
+}
+.ratingsAndReviews .comfortFitLengthQuality .quality {
+  margin-top: 5px;
+}
+.ratingsAndReviews .comfortFitLengthQuality .perfect1 {
   margin-left: 188px;
+}
+.ratingsAndReviews .buttons {
+  display: flex;
 }
 .ratingsAndReviews .arrowMakerBar {
   display: flex;
@@ -224,11 +239,24 @@
   align-self: flex-end;
 }
 .overview .announcements {
+  display: flex;
+  align-items: center;
   height: 50px;
   background-color: #ec7f7f;
   font-family: Cormorant;
-  text-align: center;
-  line-height: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.overview .announcements .firstA {
+  padding-left: 300px;
+  padding-right: 60px;
+}
+.overview .announcements .secondA {
+  padding-right: 10px;
+}
+.overview .announcements .thirdA:hover {
+  font-weight: bold;
+  color: #f3f3f3;
 }
 .overview .overview-main {
   display: flex;
@@ -241,6 +269,9 @@
   margin-bottom: 4px;
   align-self: flex-start;
 }
+.overview .overview-main .imageThumb:hover {
+  cursor: pointer;
+}
 .overview .overview-main .styleSide {
   display: flex;
   flex-direction: column;
@@ -249,15 +280,22 @@
 }
 .overview .overview-main .styleSide .ratings {
   display: flex;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+.overview .overview-main .styleSide .ratings:hover {
+  font-weight: bold;
+  color: #1a1a38;
+  cursor: pointer;
 }
 .overview .overview-main .styleSide .productCategory {
+  font-size: 20px;
   margin-bottom: -20px;
 }
-.overview .overview-main .styleSide .productName {
-  margin-bottom: -15px;
-}
-.overview .overview-main .styleSide .productPriceDefault {
-  margin-bottom: -15px;
+.overview .overview-main .styleSide .productStyleHeader {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 .overview .overview-main .styleSide .styleThumbsMain {
   display: flex;
@@ -268,6 +306,9 @@
   flex: 1 0 25%;
   margin: 5px;
   margin-bottom: 20px;
+}
+.overview .overview-main .styleSide .styleThumbsMain .styleThumbs:hover {
+  cursor: pointer;
 }
 .overview .overview-main .styleSide .size-quantity {
   display: flex;

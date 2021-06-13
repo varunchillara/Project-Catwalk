@@ -4,6 +4,7 @@ import token from '../../env/config.js';
 import axios from 'axios';
 import Review from './Review.jsx';
 import SortOptions from './SortOptions.jsx';
+import AddAReview from './AddAReview.jsx';
 
 function ListOfReviews() {
   const currentProduct = useSelector(state => state.currentProduct);
@@ -31,14 +32,14 @@ function ListOfReviews() {
   return (
     <div className="Reviews">
       <header className="reviewsHeader">
-        3 reviews, sorted by<SortOptions />
+        ___ reviews, sorted by<SortOptions />
       </header>
       {reviews.map((review, i) => {
         return <Review key={i} review={review} />
       })}
       <div className="buttons">
         <button className="button">MORE REVIEWS</button>
-        <button className="button">ADD A REVIEW +</button>
+        <AddAReview id={currentProduct.id}/>
       </div>
     </div>
   )
