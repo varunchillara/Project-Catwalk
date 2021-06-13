@@ -32,7 +32,7 @@
     }
   }
 
-  .sizeAndComfort {
+  .comfortFitLengthQuality {
     font-size: 17px;
     margin-top: 50px;
     .sizeRating {
@@ -49,8 +49,16 @@
         margin-left: 60px;
       }
     }
+    .fit {
+    }
     .comfort {
-      margin-top: 15px;
+      margin-top: 5px;
+    }
+    .length {
+      margin-top: 5px;
+    }
+    .quality {
+      margin-top: 5px;
     }
 
     .perfect1 {
