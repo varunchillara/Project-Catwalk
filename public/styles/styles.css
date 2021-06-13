@@ -1,3 +1,9 @@
+.label {
+  display: inline-block;
+  width: 140px;
+  text-align: left;
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -31,27 +37,36 @@
 .ratingsAndReviews .metaReview .starsCountContainer {
   margin-top: 15px;
 }
-.ratingsAndReviews .sizeAndComfort {
+.ratingsAndReviews .comfortFitLengthQuality {
   font-size: 17px;
   margin-top: 50px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating {
   display: flex;
   align-content: space-between;
   font-size: 13px;
   margin-top: 10px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating .perfect {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating .perfect {
   margin-left: 58px;
 }
-.ratingsAndReviews .sizeAndComfort .sizeRating .tooLarge {
+.ratingsAndReviews .comfortFitLengthQuality .sizeRating .tooLarge {
   margin-left: 60px;
 }
-.ratingsAndReviews .sizeAndComfort .comfort {
-  margin-top: 15px;
+.ratingsAndReviews .comfortFitLengthQuality .comfort {
+  margin-top: 5px;
 }
-.ratingsAndReviews .sizeAndComfort .perfect1 {
+.ratingsAndReviews .comfortFitLengthQuality .length {
+  margin-top: 5px;
+}
+.ratingsAndReviews .comfortFitLengthQuality .quality {
+  margin-top: 5px;
+}
+.ratingsAndReviews .comfortFitLengthQuality .perfect1 {
   margin-left: 188px;
+}
+.ratingsAndReviews .buttons {
+  display: flex;
 }
 .ratingsAndReviews .arrowMakerBar {
   display: flex;

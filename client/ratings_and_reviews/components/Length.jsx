@@ -1,11 +1,11 @@
 import React from 'react';
 import ArrowMarkerBar from './ArrowMarkerBar.jsx';
 
-function Size(props) {
+function Length(props) {
   return (
     <div>
-      <div className="fit">Fit</div>
-      <ArrowMarkerBar value={props.fit}/>
+      <div className="length">Length</div>
+      <ArrowMarkerBar value={props.length}/>
       <div className="sizeRating">
         <div className="tooSmall">Too small</div>
         <div className="perfect">Perfect</div>
@@ -15,4 +15,4 @@ function Size(props) {
   )
 }
 
-export default Size;
+export default Length;
