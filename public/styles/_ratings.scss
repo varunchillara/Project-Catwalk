@@ -1,3 +1,9 @@
+.label {
+  display: inline-block;
+  width: 140px;
+  text-align: left;
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -65,6 +71,10 @@
       margin-left: 188px;
     }
 
+  }
+
+  .buttons {
+    display: flex;
   }
 
 
