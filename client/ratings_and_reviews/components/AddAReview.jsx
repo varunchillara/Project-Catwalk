@@ -46,19 +46,37 @@ function AddAReview(props){
           style={customStyles}
           contentLabel="Example Modal"
         >
-
           <button onClick={closeModal}>close</button>
-
           <form className="modalForm" style={customStyles.modalForm}>
-            <label>rating:<input type="text" /></label>
-            <label>summary:<input type="text" /></label>
-            <label>body:<input type="text" /></label>
-            <label>recommend:<input type="text" /></label>
-            <label>name:<input type="text" /></label>
-            <label>email:<input type="text" /></label>
-            <label>photos:<input type="text" /></label>
-
-            <input type="submit" value="Submit" />
+            <div className="block">
+              <label className="label">rating:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">summary:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">body:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">recommend:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">name:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">email:</label>
+              <input type="text" />
+            </div>
+            <div className="block">
+              <label className="label">photos:</label>
+              <input type="text" />
+            </div>
+            <input className="button" type="submit" value="Submit" />
           </form>
         </Modal>
       </div>

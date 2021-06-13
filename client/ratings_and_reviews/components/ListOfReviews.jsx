@@ -32,7 +32,7 @@ function ListOfReviews() {
   return (
     <div className="Reviews">
       <header className="reviewsHeader">
-        3 reviews, sorted by<SortOptions />
+        ___ reviews, sorted by<SortOptions />
       </header>
       {reviews.map((review, i) => {
         return <Review key={i} review={review} />
