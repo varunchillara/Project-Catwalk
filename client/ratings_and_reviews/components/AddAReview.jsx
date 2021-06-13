@@ -1,18 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Modal from 'react-modal';
+import token from '../../env/config.js';
+import customStyles from '../customStyles/customStyles.jsx';
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
-function AddAReview(){
+function AddAReview(props){
   const [modalIsOpen,setIsOpen] = React.useState(false);
 
   useEffect(() => {
@@ -27,6 +18,25 @@ function AddAReview(){
     setIsOpen(false);
   }
 
+  function postReview(productId, rating, summary, body, recommend, name, email, photos, characteristics) {
+    axios.defaults.headers = {
+      'Content-Type': 'application/json',
+      Authorization: config.token
+    };
+
+    axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews', {
+      product_id: productId,
+      rating: rating,
+      summary: summary,
+      body: body,
+      recommend: recommend,
+      name: name,
+      email: email,
+      photos: photos,
+      characteristics: characteristics
+    });
+  }
+
     return (
       <div id="modal">
         <button className="button" onClick={openModal}>ADD A REVIEW</button>
@@ -38,13 +48,17 @@ function AddAReview(){
         >
 
           <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
+
+          <form className="modalForm" style={customStyles.modalForm}>
+            <label>rating:<input type="text" /></label>
+            <label>summary:<input type="text" /></label>
+            <label>body:<input type="text" /></label>
+            <label>recommend:<input type="text" /></label>
+            <label>name:<input type="text" /></label>
+            <label>email:<input type="text" /></label>
+            <label>photos:<input type="text" /></label>
+
+            <input type="submit" value="Submit" />
           </form>
         </Modal>
       </div>

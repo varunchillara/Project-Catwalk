@@ -39,7 +39,7 @@ function ListOfReviews() {
       })}
       <div className="buttons">
         <button className="button">MORE REVIEWS</button>
-        <AddAReview />
+        <AddAReview id={currentProduct.id}/>
       </div>
     </div>
   )
