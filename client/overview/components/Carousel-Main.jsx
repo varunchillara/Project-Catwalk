@@ -24,7 +24,6 @@ const Carousel = () => {
     .then((result) => {
       setPhotos(result.data.results[0].photos);
       setProductStyle(result.data.results);
-      console.log('result.data', result.data);
     })
   }, [currentProduct])
 

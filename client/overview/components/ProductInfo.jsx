@@ -42,7 +42,6 @@ const ProductInfo = () => {
     })
     .then((result) => {
       setProductStyle(result.data.results)
-      console.log('results', result.data.results)
     })
   }, [currentProduct])
 

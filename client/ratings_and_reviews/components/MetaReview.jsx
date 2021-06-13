@@ -35,7 +35,6 @@ function MetaReview() {
         100% of reviews recommend this product
       </div>
       <StarsCount />
-      {console.log('metareview!!', metaReview)}
       <div className="sizeAndComfort">
         <Size />
         <Comfort />
