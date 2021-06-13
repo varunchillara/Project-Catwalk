@@ -46,15 +46,15 @@ const Stars = (props) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
       if (rating <= 0) {
-        stars.push(<Star_EMPTY/>);
+        stars.push(<Star_EMPTY id={props.id}/>);
       } else if (rating === .25) {
-        stars.push(<Star_25/>);
+        stars.push(<Star_25 id={props.id}/>);
       } else if (rating === .5) {
-        stars.push(<Star_50/>);
+        stars.push(<Star_50 id={props.id}/>);
       } else if (rating === .75) {
-        stars.push(<Star_75/>);
+        stars.push(<Star_75 id={props.id}/>);
       } else {
-        stars.push(<Star_FULL/>)
+        stars.push(<Star_FULL id={props.id}/>)
       }
       rating -= 1;
     }
@@ -64,7 +64,7 @@ const Stars = (props) => {
       }
     return (
       <div style={starInlineStyles}>
-        {stars.map((star, i)=> <Star key={i} star={star}/>)}
+        {stars.map((star, i)=> <Star key={i} id={props.id} star={star}/>)}
       </div>
     )
 }

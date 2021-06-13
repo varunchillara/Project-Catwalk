@@ -4,7 +4,9 @@ import {update} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js'
-import Stars from '../Stars2.jsx';
+import Card from './components/Card.jsx'
+
+
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -28,47 +30,64 @@ class CardTemplate extends React.Component {
         comparableAspect4: 'Rather snazzy'
       },
       dummyRelatedProductsData : {},
-      myOutfit: {}
+      myOutfit: {},
+      modalId: null
     }
     this.formatData = this.formatData.bind(this);
     this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
     this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
-    this.modalCompareHandler = this.modalCompareHandler.bind(this);
-    this.removeOutfitHandler = this.removeOutfitHandler.bind(this);
-    this.addToOutfitHandler = this.addToOutfitHandler.bind(this);
-    this.thumbnailCarouselHandler = this.thumbnailCarouselHandler.bind(this);
-    this.onMouseEnterColorHandler = this.onMouseEnterColorHandler.bind(this);
-    this.onMouseLeaveColorHandler = this.onMouseLeaveColorHandler.bind(this);
+    this.launchCompareModal = this.launchCompareModal.bind(this);
+    this.closeCompareModal = this.closeCompareModal.bind(this);
+    this.removeOutfit = this.removeOutfit.bind(this);
+    this.addToOutfit = this.addToOutfit.bind(this);
+    this.onMouseEnterHandler = this.onMouseEnterHandler.bind(this);
+    this.onMouseLeaveHandler = this.onMouseLeaveHandler.bind(this);
+    this.cardClickHandler = this.cardClickHandler.bind(this);
+    this.determineAction = this.determineAction.bind(this);
+    this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
 
   formatData (results) {
-    let allRelatedProducts = {}
+    let formattedData = {}
+    let formattingCurrentProduct = results[0] === 'currentProduct' ? true : false;
+    results = formattingCurrentProduct ? results.slice(1) : results;
+
+
     for (let i = 0; i < results.length; i++) {
-      let data = results[i].data;
+      let data = results[i].data
       let id = data.product_id || data.id.toString();
-      if (allRelatedProducts[id] === undefined) {
-        allRelatedProducts[id] = {
-          id: id
+      if (formattingCurrentProduct) {
+        if (formattedData.id === undefined) {
+          formattedData.id = id
+        }
+      } else {
+        if (formattedData[id] === undefined) {
+          formattedData[id] = {id: id}
         }
       }
-      //DUMMY DATA!!!!!!
-      allRelatedProducts[id].comparableAspect1 = 'Edible';
-      allRelatedProducts[id].comparableAspect2 = 'Electrically conducive';
-      allRelatedProducts[id].comparableAspect3 = 'Rather unattractive';
-      //END OF DUMMY DATA
+      let currentlyFormatting = formattingCurrentProduct ? formattedData : formattedData[id]
+
+      //IF RATINGS API
       if (data.ratings) {
-        allRelatedProducts[id].rating = averageReviewsCalculator.getAverageRating(data.ratings)
+        currentlyFormatting.rating = averageReviewsCalculator.getAverageRating(data.ratings)
+        //OTHERWISE IF FROM STYLES CALL
       } else if (data.product_id) {
         let styleIndex = this.findDefaultStyleIndex(data)
-        allRelatedProducts[id].original_price = `$${Number(data.results[styleIndex].original_price)}`;
-        allRelatedProducts[id].sale_price = data.results[styleIndex].sale_price;
-        allRelatedProducts[id].photo = data.results[styleIndex].photos[0].url;
+        currentlyFormatting.original_price = `$${Number(data.results[styleIndex].original_price)}`;
+        currentlyFormatting.sale_price = data.results[styleIndex].sale_price;
+        currentlyFormatting.photo = data.results[styleIndex].photos[0].url;
+        currentlyFormatting.styles = data.results
+        //ALL OTHER DATA
       } else {
-        allRelatedProducts[id].category = data.category;
-        allRelatedProducts[id].nameWithText = data.name;
+        currentlyFormatting.category = data.category;
+        currentlyFormatting.nameWithText = data.name;
+        currentlyFormatting.features = {};
+        data.features.forEach(item => {
+          currentlyFormatting.features[item['feature']] = item.value
+        })
       }
     }
-    return allRelatedProducts;
+    return formattedData;
   }
 
   findDefaultStyleIndex (data) {
@@ -81,74 +100,129 @@ class CardTemplate extends React.Component {
     return defaultStyleIndex
   }
 
-  fetchRelatedProducts (results) {
-    let dummyRelatedProductIds = results.data
-        let relatedProductsData = dummyRelatedProductIds.map(relatedProduct =>
-          axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
-        let relatedProductsThumbnails = dummyRelatedProductIds.map(relatedProduct =>
-          axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
-        let relatedProductsReviews = dummyRelatedProductIds.map(relatedProduct =>
-          axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-            product_id: relatedProduct
-          }}))
-        return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
-  }
-
-  componentDidMount () {
-    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${this.state.dummyCurrentProductId}/related`)
-      .then(results => this.fetchRelatedProducts(results))
+  updateOverviewProduct (id) {
+    let dummyCurrentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}`)
+    let dummyCurrentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/styles`)
+    let dummyCurrentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+      product_id: id
+    }});
+    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/related`)
+    return Promise.all([dummyCurrentProductData, dummyCurrentProductStylesData, dummyCurrentProductRatingsData, relatedProducts])
+      .then(results => {
+        return Promise.all([['currentProduct', results[0], results[1], results[2]], this.fetchRelatedProducts(results[3])])
+      })
       .then(results => {
         this.setState ({
-          dummyRelatedProductsData: this.formatData(results)
+          dummyCurrentProductData: this.formatData(results[0]),
+          dummyRelatedProductsData: this.formatData(results[1])
         })
       })
       .catch(error => console.error(error))
+
   }
 
-  modalCompareHandler (e) {
-    let productId = e.target.id
-    console.log('LAUNCH COMPAIRSON MODAL')
+  fetchRelatedProducts (results) {
+    let dummyRelatedProductIds = results.data
+    let relatedProductsData = dummyRelatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
+    let relatedProductsThumbnails = dummyRelatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
+    let relatedProductsReviews = dummyRelatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+        product_id: relatedProduct
+      }}))
+    return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
   }
 
-  thumbnailCarouselHandler (e) {
-    console.log('LAUNCH THUMBNAIL CAROUSEL')
-  }
-
-  removeOutfitHandler (e) {
-    let productId = e.target.id
+  removeOutfit (productId) {
     let myOutfit_Copy = this.state.myOutfit;
     delete myOutfit_Copy[productId];
     this.setState({
       myOutfit: myOutfit_Copy
     });
-
   }
 
-  addToOutfitHandler (e) {
-    let id = this.state.dummyCurrentProductData.id
-    let chosenOutfitData_Copy = this.state.dummyCurrentProductData
-    let myOutfit_Copy = this.state.myOutfit;
+  launchCompareModal (currentProductData, relatedProductId) {
+    if (this.state.modalId !== null) {
+      return;
+    }
+    this.setState({
+      modalId: relatedProductId
+    })
+  }
+
+  closeCompareModal (e) {
+    let modals = document.getElementsByClassName('comparison-modal')
+    console.log(modals)
+    e.target.style.display = 'none';
+    this.setState({
+      modalId: null
+    })
+  }
+
+
+  addToOutfit (productData, myOutfit) {
+    let id = productData.id
+    let chosenOutfitData_Copy = productData
+    let myOutfit_Copy = myOutfit
     myOutfit_Copy[id] = chosenOutfitData_Copy;
     this.setState({
       myOutfit: myOutfit_Copy
     })
   }
 
-  onMouseEnterColorHandler (e) {
-    if (e.target.className === 'action') {
+  determineAction (className, productId) {
+    className === 'action-modal' ? this.launchCompareModal(this.state.dummyCurrentProductData, productId) : this.removeOutfit(productId)
+  }
+
+  thumbnailCarouselHandler (e) {
+    //THIS FUNCTION SHOULD DEAL WITH A LAUNCHED THUMBNAIL CAROUSEL
+    //PERHAPS A CLICK FUNCTION?  PERHAPS A HOVER FUNCTION?
+  }
+
+  onMouseEnterHandler (e) {
+    let id = this.state.dummyCurrentProductData.id
+    // if (this.state.myOutfit[id]) {
+    //   console.log('in here')
+    //   return;
+    // }
+    if (e.target.className.includes('overview-linked')) {
+      // console.log('OPEN THUMBNAIL CAROUSEL')
+    } else if (e.target.className.includes('action')) {
+      console.log('OVER ACTION')
       e.target.style.opacity='100%'
     } else {
       let card = document.getElementById('addOutfitCard')
       card.style.opacity='100%';
     }
   }
-  onMouseLeaveColorHandler (e) {
-    if (e.target.className === 'action') {
+
+  onMouseLeaveHandler (e) {
+    if (e.target.className.includes('overview-linked')) {
+      // console.log('CLOSE THUMBNAIL CAROUSEL')
+    } else if (e.target.className.includes('action')) {
+      console.log('EXIT ACTION')
       e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')
       card.style.opacity='50%';
     }
+  }
+
+  cardClickHandler (e) {
+    let className = e.target.className;
+    let productId = e.target.id;
+    if (e.target.className.includes('overview-linked')) {
+      this.updateOverviewProduct(e.target.id);
+    } else if (className.includes('action')) {
+      this.determineAction(className, productId)
+    } else {
+      this.addToOutfit(this.state.dummyCurrentProductData, this.state.myOutfit)
+    }
+  }
+
+  componentDidMount () {
+    this.updateOverviewProduct(11001)
   }
 
   render () {
@@ -166,11 +240,11 @@ class CardTemplate extends React.Component {
     let carouselInlineStyle = {
       marginTop: '30px',
       marginBottom: '50px',
-      // minHeight: '356.5px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'left',
     }
+
     let cardRowInlineStyle = {
       display: 'flex',
       flexDirection: 'row',
@@ -178,21 +252,27 @@ class CardTemplate extends React.Component {
       gap: '10%'
     }
 
+    let myOutfitContainer = {
+      display: "flex",
+      flexDirection: "row",
+      gap: "10%"
+    }
+
     let carouselLeftButton = {
       width: '70px',
       height: '70px',
       alignSelf: 'center',
-      zIndex: '1',
       position: 'absolute',
-      left: '10%'
+      left: '30px',
+      zIndex: 1
     }
     let carouselRightButton = {
       width: '70px',
       height: '70px',
       alignSelf: 'center',
-      zIndex: '1',
       position: 'absolute',
-      right: '10%'
+      right: '10%',
+      zIndex: 1,
 
     }
 
@@ -200,31 +280,41 @@ class CardTemplate extends React.Component {
     let removeOutfitButton = "./assets/myOutfitACTION.png"
     let relatedProducts = Object.values(this.state.dummyRelatedProductsData)
     let myOutfit = Object.values(this.state.myOutfit)
-
+    let currentProductData = (this.state.dummyCurrentProductData);
       if (relatedProducts.length) {
         relatedProducts = relatedProducts.map(product => <Card
           key={product.id}
-          data={product}
+          relatedProductData={product}
           actionButton={modalCompareButton}
-          thumbnailCarouselHandler={this.thumbnailCarouselHandler}
-          actionButtonHandler={this.modalCompareHandler}
-          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
-          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
+          closeCompareModal={this.closeCompareModal}
+          cardClickHandler={this.cardClickHandler}
+          onMouseEnterHandler={this.onMouseEnterHandler}
+          onMouseLeaveHandler={this.onMouseLeaveHandler}
           outfitAdder={false}
+          comparisonId={this.state.modalId}
+          currentProductData={currentProductData}
           />)
       }
       if (myOutfit.length) {
         myOutfit = myOutfit.map(product => <Card
           key={product.id}
-          data={product}
+          relatedProductData={product}
+          currentProductData={currentProductData}
           actionButton={removeOutfitButton}
-          actionButtonHandler={this.removeOutfitHandler}
-          onMouseEnterColorHandler={this.onMouseEnterColorHandler}
-          onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
+          cardClickHandler={this.cardClickHandler}
+          onMouseEnterHandler={this.onMouseEnterHandler}
+          onMouseLeaveHandler={this.onMouseLeaveHandler}
           outfitAdder={false}
           />)
       }
-
+      let addOutfitCard =  <Card
+        key={this.state.dummyCurrentProductData.product_id}
+        currentProductData={this.state.dummyCurrentProductData}
+        cardClickHandler={this.cardClickHandler}
+        onMouseEnterHandler={this.onMouseEnterHandler}
+        onMouseLeaveHandler={this.onMouseLeaveHandler}
+        outfitAdder={true}
+      />
     return (
 
     <div>
@@ -234,25 +324,25 @@ class CardTemplate extends React.Component {
         </div>
         <div className="related-products-carousel" style={carouselInlineStyle}>
           <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
-          <div className="card-row" style={cardRowInlineStyle}>{relatedProducts}</div>
+          <div className="card-row" style={cardRowInlineStyle}>
+            {relatedProducts}
+          </div>
           <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
         </div>
         <div className="my-outfit-title" style={cardTitleInlineStyle}>
           MY OUTFIT
         </div>
-        <div className="my-outfit" style={carouselInlineStyle}>
-          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
-          <Card
-            //subject to change
-            key={this.state.dummyCurrentProductData.product_id}
-            data={this.state.dummyCurrentProductData}
-            addToOutfitHandler={this.addToOutfitHandler}
-            onMouseEnterColorHandler={this.onMouseEnterColorHandler}
-            onMouseLeaveColorHandler={this.onMouseLeaveColorHandler}
-            outfitAdder={true}
-            />
-          {myOutfit}
-          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
+        <div className="my-outfit-container" style={myOutfitContainer}>
+          <div className="add-outfit-card" style={carouselInlineStyle}>
+            {addOutfitCard}
+          </div>
+          <div className="my-outfit-carousel" style={carouselInlineStyle}>
+            <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
+            <div className="card-row" style={cardRowInlineStyle}>
+              {myOutfit}
+            </div>
+            <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
+          </div>
         </div>
       </div>
     </div>
@@ -264,120 +354,8 @@ class CardTemplate extends React.Component {
 
 
 
-
-const Card = (props) => {
-  let wholeCardClick = null;
-  let wholeCardMouseEnter = null
-  let wholeCardMouseLeave = null
-  let actionButtonMouseEnter = props.onMouseEnterColorHandler
-  let actionButtonMouseLeave = props.onMouseLeaveColorHandler
-  let thumbnailCarouselHandler = props.thumbnailCarouselHandler || null;
-  let actionButtonHandler = props.actionButtonHandler
-  let overlayButton = props.actionButton
-  let id = props.data.id
-  let category = props.data.category
-  let name = props.data.nameWithText
-  let originalPrice = props.data.original_price
-  let salePrice = props.data.sale_price
-  let rating = props.data.rating
-
-  let cardInlineStyle = {
-    // flex: '1, '
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid grey',
-    justifyContent: 'space-between'
-  }
-  let imageContainerInlineStyle = {
-    flex:'1',
-    display:'flex',
-    // justifyContent:'center',
-    marginBottom: '10px',
-    position: 'relative',
-    // alignSelf: 'center',
-    backgroundColor: 'rgb(240, 237, 228)'
-  }
-  let actionButtonInlineStyle = {
-    position: 'absolute',
-    top:'5%',
-    left:'80%',
-    width: '23px',
-    opacity: '50%'
-  }
-  let imageInlineStyle = {
-    alignSelf: 'center',
-    width: '170px',
-  }
-  let productInfoInlineStyle = {
-    marginLeft : '8px',
-    marginRight : '8px',
-    marginBottom: '10px'
-  }
-  let nameInlineStyle = {
-    fontFamily : 'Cormorant',
-    justifyContent : 'center',
-    fontWeight : 900
-  }
-  let categoryInlineStyle = {
-    fontFamily : 'Cormorant',
-    justifyContent : 'center',
-    fontWeight : 'normal'
-  }
-  let priceInlineStyle = {
-    fontFamily : 'Cormorant',
-    justifyContent : 'center',
-    fontWeight : 'normal'
-  }
-  let ratingInlineStyle = {
-    color : 'white',
-  }
-
-  if (props.outfitAdder) {
-    id = "addOutfitCard"
-    wholeCardClick = props.addToOutfitHandler;
-    wholeCardMouseEnter = props.onMouseEnterColorHandler;
-    wholeCardMouseLeave = props.onMouseLeaveColorHandler;
-    actionButtonMouseEnter = null
-    actionButtonMouseLeave = null
-    cardInlineStyle.opacity = '50%'
-    categoryInlineStyle.textAlign = 'center'
-    nameInlineStyle.textAlign = 'center'
-    priceInlineStyle.textAlign = 'center'
-    category = 'ADD'
-    originalPrice = 'TO OUTFIT'
-    salePrice = null
-    rating = null
-
-
-
-  }
-  return (
-    <div id={id} className="card" style={cardInlineStyle} onClick={wholeCardClick} onMouseEnter={wholeCardMouseEnter} onMouseLeave={wholeCardMouseLeave} >
-      <div className="image-container" style={imageContainerInlineStyle}>
-        <img className="image" src={props.data.photo || "./images/logo.jpg"} alt="NO THUMBNAIL" style={imageInlineStyle} onClick={thumbnailCarouselHandler}></img>
-        <img id={id} className="action" src={overlayButton} style={actionButtonInlineStyle} onClick={actionButtonHandler} onMouseEnter={actionButtonMouseEnter} onMouseLeave={actionButtonMouseLeave}></img>
-      </div>
-      <div className="product-info" style={productInfoInlineStyle}>
-        <div className="category" style={categoryInlineStyle}>
-          {category}
-        </div>
-        <div className="name" style={nameInlineStyle}>
-          {name}
-        </div>
-        <div className="price" style={priceInlineStyle}>
-          {originalPrice}
-          {salePrice}
-        </div>
-        <div className="rating" style={ratingInlineStyle}>
-          <Stars rating={rating}/>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-
 export default CardTemplate;
+
 
 
 
@@ -388,9 +366,9 @@ export default CardTemplate;
 //   useEffect(() => {
 //     axios.defaults.headers = {
 //       'Content-Type': 'application/json',
+//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
 //       Authorization : token
 //     };
-//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
 //     .then((result) => {
 //       console.log('result.data', result.data);
 //       dispatch(update(result.data));
@@ -400,8 +378,13 @@ export default CardTemplate;
 //     })
 //   })
 
+
+
 //   return (
 //   <div className="inititateStore">
 //   </div>
 //   );
 // }
+
+
+

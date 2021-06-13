@@ -7,7 +7,6 @@ import Features from './Features.jsx';
 const Description = () => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[productDescription, setProductDescription] = useState({ features: [] });
-
   useEffect(() => {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
