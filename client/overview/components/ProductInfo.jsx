@@ -16,9 +16,9 @@ const ProductInfo = (props) => {
       'Content-Type': 'application/json',
       Authorization: token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
       params: {
-        product_id: currentProduct.id,
+        product_id: currentProduct.id || 11004,
         category: currentProduct.category,
         name: currentProduct.name,
         default_price: currentProduct.default_price

@@ -10,15 +10,17 @@ const PhotoParent = () => {
   const[productStyles, setProductStyles] = useState( [] );
   const[style, setStyle] = useState( {} );
 
+  let currentProd = currentProduct.id || 11004;
   useEffect(() => {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
     };
 
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001/styles`, {
+
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentProd}/styles`, {
       params: {
-        product_id: currentProduct.id,
+        product_id: currentProduct.id || 11004,
         results: currentProduct.results
       }
     })
