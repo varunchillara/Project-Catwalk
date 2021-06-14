@@ -7,6 +7,7 @@ import SelectStyle from './SelectStyle.jsx';
 
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
+  const currentRating = useSelector(state => state.currentRating);
   const[productInfo, setProductInfo] = useState({ features: [] });
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
@@ -93,10 +94,12 @@ const ProductInfo = (props) => {
     return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
 
+
+
   return (
     <div className="styleSide">
       <div className="ratings">
-        <Stars rating={1}/>
+        <Stars rating={currentRating}/>
         Read all reviews
       </div>
       <div className="productCategory">
