@@ -17,7 +17,7 @@ const Description = () => {
         product_id: currentProduct.id,
         slogan: currentProduct.category,
         description: currentProduct.name,
-        features: currentProduct.features
+        features: currentProduct.feature5s
       }
     })
     .then((result) => {

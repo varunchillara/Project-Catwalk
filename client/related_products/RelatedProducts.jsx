@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {update} from '../../store/actions/product.js';
+import {useUpdate} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js'
@@ -11,6 +11,10 @@ axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
 };
+
+
+
+
 
 class CardTemplate extends React.Component {
   constructor (props) {
@@ -53,9 +57,10 @@ class CardTemplate extends React.Component {
     results = formattingCurrentProduct ? results.slice(1) : results;
 
 
+    console.log('in formatted Data', results)
     for (let i = 0; i < results.length; i++) {
       let data = results[i].data
-      let id = data.product_id || data.id.toString();
+      let id = data.id.toString();
       if (formattingCurrentProduct) {
         if (formattedData.id === undefined) {
           formattedData.id = id
@@ -100,16 +105,15 @@ class CardTemplate extends React.Component {
     return defaultStyleIndex
   }
 
-  updateOverviewProduct (id) {
-    let dummyCurrentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}`)
-    let dummyCurrentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/styles`)
-    let dummyCurrentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-      product_id: id
+  updateOverviewProduct (currentProductData, currentProductStylesData) {
+    let productId = currentProductData.id || 11004
+    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
+    let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+      product_id: productId
     }});
-    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${id}/related`)
-    return Promise.all([dummyCurrentProductData, dummyCurrentProductStylesData, dummyCurrentProductRatingsData, relatedProducts])
-      .then(results => {
-        return Promise.all([['currentProduct', results[0], results[1], results[2]], this.fetchRelatedProducts(results[3])])
+    return Promise.all([currentProductData, currentProductStylesData, currentProductRatingsData, relatedProducts])
+    .then(results => {
+      return Promise.all([['currentProduct', results[0], results[1], results[2]], this.fetchRelatedProducts(results[3])])
       })
       .then(results => {
         this.setState ({
@@ -118,7 +122,6 @@ class CardTemplate extends React.Component {
         })
       })
       .catch(error => console.error(error))
-
   }
 
   fetchRelatedProducts (results) {
@@ -153,7 +156,6 @@ class CardTemplate extends React.Component {
 
   closeCompareModal (e) {
     let modals = document.getElementsByClassName('comparison-modal')
-    console.log(modals)
     e.target.style.display = 'none';
     this.setState({
       modalId: null
@@ -182,14 +184,10 @@ class CardTemplate extends React.Component {
 
   onMouseEnterHandler (e) {
     let id = this.state.dummyCurrentProductData.id
-    // if (this.state.myOutfit[id]) {
-    //   console.log('in here')
-    //   return;
-    // }
     if (e.target.className.includes('overview-linked')) {
       // console.log('OPEN THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      console.log('OVER ACTION')
+      // console.log('OVER ACTION')
       e.target.style.opacity='100%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -201,7 +199,7 @@ class CardTemplate extends React.Component {
     if (e.target.className.includes('overview-linked')) {
       // console.log('CLOSE THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      console.log('EXIT ACTION')
+      // console.log('EXIT ACTION')
       e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -213,7 +211,9 @@ class CardTemplate extends React.Component {
     let className = e.target.className;
     let productId = e.target.id;
     if (e.target.className.includes('overview-linked')) {
-      this.updateOverviewProduct(e.target.id);
+      ///THIS FUNCTION IS PASSED DOWN FROM APP.
+      // this.updateOverviewProduct(e.target.id);
+      this.props.setCurrentAppId(e.target.id);
     } else if (className.includes('action')) {
       this.determineAction(className, productId)
     } else {
@@ -221,11 +221,17 @@ class CardTemplate extends React.Component {
     }
   }
 
+  // componentDidUpdate () {
+  //   this.updateOverviewProduct(this.props.currentProduct.id)
+  // }
+
   componentDidMount () {
-    this.updateOverviewProduct(11001)
+    // console.log(this.props.currentProduct);
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
   }
 
   render () {
+  console.log('PROPS IN RENDER', this.props)
     let relatedProductsContainerInlineStyle = {
       margin: 'auto',
       width : '920px',
@@ -350,41 +356,5 @@ class CardTemplate extends React.Component {
   }
 }
 
-
-
-
-
 export default CardTemplate;
-
-
-
-
-
-// function initiateStore() {
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     axios.defaults.headers = {
-//       'Content-Type': 'application/json',
-//     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`)
-//       Authorization : token
-//     };
-//     .then((result) => {
-//       console.log('result.data', result.data);
-//       dispatch(update(result.data));
-//     })
-//     .catch(error => {
-//       console.error(error)
-//     })
-//   })
-
-
-
-//   return (
-//   <div className="inititateStore">
-//   </div>
-//   );
-// }
-
-
 
