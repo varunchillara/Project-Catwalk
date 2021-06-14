@@ -60,6 +60,16 @@ const ProductInfo = (props) => {
     return <select>{qty.map(makeList)}</select>
   }
 
+  // const Option = (props) => {
+  //   return (
+  //     <option>
+  //       {props.option}
+
+  //     </option>
+
+  //   )
+  // }
+
   const clickImage = (photo) => {
     // console.log('clicked photo: ', photo)
     props.setStyle(photo);

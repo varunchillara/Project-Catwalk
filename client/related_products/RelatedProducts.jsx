@@ -20,8 +20,8 @@ class CardTemplate extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      dummyCurrentProductId : 11001,
-      dummyCurrentProductData: {
+      currentProductId : 11001,
+      currentProductData: {
         id: '11001',
         category: "Jackets",
         nameWithText: "Camo Onesie",
@@ -33,7 +33,8 @@ class CardTemplate extends React.Component {
         comparableAspect3: 'Electrically conducive',
         comparableAspect4: 'Rather snazzy'
       },
-      dummyRelatedProductsData : {},
+      currentProductStyle: null,
+      relatedProductsData: {},
       myOutfit: {},
       modalId: null
     }
@@ -50,17 +51,44 @@ class CardTemplate extends React.Component {
     this.determineAction = this.determineAction.bind(this);
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
+  updateOverviewProduct (currentProductData, currentProductStyleData) {
+    if (currentProductData === '') {
+      return;
+    }
+    if (currentProductStyleData === undefined) {
+      return;
+    }
+
+    let productId = currentProductData.id
+    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
+    let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+      product_id: productId
+    }});
+    return Promise.all([currentProductData, currentProductRatingsData,relatedProducts, currentProductStyleData])
+    .then(results => {
+      results[1] = results[1].data;
+      return Promise.all([['currentProduct', results[0], results[1]], this.fetchRelatedProducts(results[2]), results[3]])
+    })
+    .then(results => {
+      results[1] = results[1].map(result => result.data)
+      this.setState ({
+          currentProductData: this.formatData(results[0]),
+          relatedProductsData: this.formatData(results[1]),
+          currentProductStyle: results[2]
+        })
+      })
+      .catch(error => console.error(error))
+  }
 
   formatData (results) {
     let formattedData = {}
     let formattingCurrentProduct = results[0] === 'currentProduct' ? true : false;
     results = formattingCurrentProduct ? results.slice(1) : results;
 
-
-    console.log('in formatted Data', results)
     for (let i = 0; i < results.length; i++) {
-      let data = results[i].data
-      let id = data.id.toString();
+      // console.log('in formatted Data', results[i])
+      let data = results[i];
+      let id = data.product_id || data.id.toString();
       if (formattingCurrentProduct) {
         if (formattedData.id === undefined) {
           formattedData.id = id
@@ -105,32 +133,13 @@ class CardTemplate extends React.Component {
     return defaultStyleIndex
   }
 
-  updateOverviewProduct (currentProductData, currentProductStylesData) {
-    let productId = currentProductData.id || 11004
-    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
-    let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-      product_id: productId
-    }});
-    return Promise.all([currentProductData, currentProductStylesData, currentProductRatingsData, relatedProducts])
-    .then(results => {
-      return Promise.all([['currentProduct', results[0], results[1], results[2]], this.fetchRelatedProducts(results[3])])
-      })
-      .then(results => {
-        this.setState ({
-          dummyCurrentProductData: this.formatData(results[0]),
-          dummyRelatedProductsData: this.formatData(results[1])
-        })
-      })
-      .catch(error => console.error(error))
-  }
-
   fetchRelatedProducts (results) {
-    let dummyRelatedProductIds = results.data
-    let relatedProductsData = dummyRelatedProductIds.map(relatedProduct =>
+    let relatedProductIds = results.data
+    let relatedProductsData = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
-    let relatedProductsThumbnails = dummyRelatedProductIds.map(relatedProduct =>
+    let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
-    let relatedProductsReviews = dummyRelatedProductIds.map(relatedProduct =>
+    let relatedProductsReviews = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
         product_id: relatedProduct
       }}))
@@ -162,7 +171,6 @@ class CardTemplate extends React.Component {
     })
   }
 
-
   addToOutfit (productData, myOutfit) {
     let id = productData.id
     let chosenOutfitData_Copy = productData
@@ -174,7 +182,7 @@ class CardTemplate extends React.Component {
   }
 
   determineAction (className, productId) {
-    className === 'action-modal' ? this.launchCompareModal(this.state.dummyCurrentProductData, productId) : this.removeOutfit(productId)
+    className === 'action-modal' ? this.launchCompareModal(this.state.currentProductData, productId) : this.removeOutfit(productId)
   }
 
   thumbnailCarouselHandler (e) {
@@ -183,7 +191,7 @@ class CardTemplate extends React.Component {
   }
 
   onMouseEnterHandler (e) {
-    let id = this.state.dummyCurrentProductData.id
+    let id = this.state.currentProductData.id
     if (e.target.className.includes('overview-linked')) {
       // console.log('OPEN THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
@@ -217,21 +225,20 @@ class CardTemplate extends React.Component {
     } else if (className.includes('action')) {
       this.determineAction(className, productId)
     } else {
-      this.addToOutfit(this.state.dummyCurrentProductData, this.state.myOutfit)
+      this.addToOutfit(this.state.currentProductData, this.state.myOutfit)
     }
   }
 
-  // componentDidUpdate () {
-  //   this.updateOverviewProduct(this.props.currentProduct.id)
-  // }
-
+  componentDidUpdate () {
+    // console.log('in componentDidUpdate', this.props.currentProduct, this.props);
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
+  }
   componentDidMount () {
-    // console.log(this.props.currentProduct);
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
+    // console.log('in componentDidMount', this.props.currentProduct);
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
   }
 
   render () {
-  console.log('PROPS IN RENDER', this.props)
     let relatedProductsContainerInlineStyle = {
       margin: 'auto',
       width : '920px',
@@ -282,12 +289,22 @@ class CardTemplate extends React.Component {
 
     }
 
-    let modalCompareButton = "./assets/relatedProductACTION.png"
-    let removeOutfitButton = "./assets/myOutfitACTION.png"
-    let relatedProducts = Object.values(this.state.dummyRelatedProductsData)
-    let myOutfit = Object.values(this.state.myOutfit)
-    let currentProductData = (this.state.dummyCurrentProductData);
-      if (relatedProducts.length) {
+    // console.log('relatedProducts', this.state.relatedProductsData)
+    // console.log('currentProducts', this.state.currentProductsData)
+
+    if (this.state.currentProducts === undefined || Object.keys(this.state.currentProductsData).length === 0) {
+      return (
+        <div></div>
+      )
+    }
+
+    let modalCompareButton = "./assets/relatedProductACTION.png";
+    let removeOutfitButton = "./assets/myOutfitACTION.png";
+    let addOutfitCard;
+    let relatedProducts = Object.values(this.state.relatedProductsData).length ? Object.values(this.state.relatedProductsData) : null;
+    let myOutfit = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : null
+    let currentProductData = (this.state.currentProductData);
+      if (relatedProducts !== null) {
         relatedProducts = relatedProducts.map(product => <Card
           key={product.id}
           relatedProductData={product}
@@ -301,7 +318,7 @@ class CardTemplate extends React.Component {
           currentProductData={currentProductData}
           />)
       }
-      if (myOutfit.length) {
+      if (myOutfit !== null) {
         myOutfit = myOutfit.map(product => <Card
           key={product.id}
           relatedProductData={product}
@@ -313,16 +330,17 @@ class CardTemplate extends React.Component {
           outfitAdder={false}
           />)
       }
-      let addOutfitCard =  <Card
-        key={this.state.dummyCurrentProductData.product_id}
-        currentProductData={this.state.dummyCurrentProductData}
-        cardClickHandler={this.cardClickHandler}
-        onMouseEnterHandler={this.onMouseEnterHandler}
-        onMouseLeaveHandler={this.onMouseLeaveHandler}
-        outfitAdder={true}
-      />
+      if (this.state.currentProductData.id) {
+        addOutfitCard =  <Card
+          key={this.state.currentProductData.product_id}
+          currentProductData={this.state.currentProductData}
+          cardClickHandler={this.cardClickHandler}
+          onMouseEnterHandler={this.onMouseEnterHandler}
+          onMouseLeaveHandler={this.onMouseLeaveHandler}
+          outfitAdder={true}
+        />
+      }
     return (
-
     <div>
       <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
         <div className="related-products-title" style={cardTitleInlineStyle}>

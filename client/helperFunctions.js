@@ -1,4 +1,15 @@
+
+
 const averageReviewsCalculator = {
+  findDefaultStyleIndex: (data) => {
+      let defaultStyleIndex = 0;
+      let defaultFound = false
+      data.results.some((style, index)=> {
+        style['default?'] ? (defaultStyleIndex = index, defaultFound = true) : defaultFound;
+        return defaultFound;
+      })
+      return defaultStyleIndex
+  },
 
   getTotalReviews: (reviews) => {
     let total = 0;

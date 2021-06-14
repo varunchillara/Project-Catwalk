@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const SelectStyle = ({ style }) => {
@@ -17,14 +18,15 @@ const SelectStyle = ({ style }) => {
 
   return (
     <div className="styleThumb">
-    {firstFour.map(topPhoto =>
+    {firstFour.map((topPhoto, i) =>
       <img src={topPhoto} height="100px" width="80px"/>
     )}
-    {rest.map(bottomPhoto =>
+    {rest.map((bottomPhoto, i) =>
       <img src={bottomPhoto} height="100px" width="80px"/>
     )}
     </div>
   )
 };
+
 
 export default SelectStyle;

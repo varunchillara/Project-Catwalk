@@ -7,20 +7,23 @@ import Features from './Features.jsx';
 const Description = () => {
   const currentProduct = useSelector(state => state.currentProduct);
   const[productDescription, setProductDescription] = useState({ features: [] });
+
+  let currentProd = currentProduct.id || 11004;
   useEffect(() => {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/11001`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentProd}`, {
       params: {
         product_id: currentProduct.id,
         slogan: currentProduct.category,
         description: currentProduct.name,
-        features: currentProduct.feature5s
+        features: currentProduct.features
       }
     })
     .then((result) => {
+      console.log('DOES SET PRODUCT DESCRIPTION GET FIRED?????')
       setProductDescription(result.data);
     })
   }, [currentProduct])
