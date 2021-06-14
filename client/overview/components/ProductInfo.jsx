@@ -120,11 +120,11 @@ const ProductInfo = (props) => {
         <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
-        {props.productStyles.map((style, i) =>
+        {/* {props.productStyles.map((style, i) =>
         <div className="styleThumbs">
           <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
         </div>
-        )}
+        )} */}
       </div>
       <div className="size-quantity">
         <div className="selectSize">

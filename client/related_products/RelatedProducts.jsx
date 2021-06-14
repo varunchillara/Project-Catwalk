@@ -61,9 +61,9 @@ class CardTemplate extends React.Component {
     console.log('how many times does this run?')
     let productId = currentProductData.id
     let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
-    let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-      product_id: productId
-    }});
+    // let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+    //   product_id: productId
+    // }});
     return Promise.all([currentProductData, currentProductRatingsData,relatedProducts, currentProductStyleData])
     .then(results => {
       results[1] = results[1].data;
