@@ -16,7 +16,6 @@ function StarsCount (props) {
 
   return (
   <div className="starsCountContainer">
-    {console.log('toal ratings!!!!', totalRatingsAdded)}
     <div className="starsCount">
       <div className="stars1">5 stars</div>
       <Bar precent={((Number(fiveStar)) / totalRatingsAdded) * 100} />

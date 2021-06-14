@@ -28,7 +28,6 @@ function App () {
 
   return(
     <div className="App">
-      {console.log('***********is it changing??', currentAppId)}
       <Overview />
       <RelatedProducts setCurrentAppId={setCurrentAppId}/>
       <RatingsAndReviews />
