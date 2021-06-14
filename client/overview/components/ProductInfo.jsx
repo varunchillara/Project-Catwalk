@@ -6,30 +6,32 @@ import Stars from '../../sharedComponents/Stars.jsx';
 import SelectStyle from './SelectStyle.jsx';
 
 const ProductInfo = (props) => {
-  const currentProduct = useSelector(state => state.currentProduct);
+  const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
-  const[productInfo, setProductInfo] = useState({ features: [] });
+  // const[productInfo, setProductInfo] = useState({ features: [] });
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
+  // console.log('currentProduct************', currentProduct);
 
-  useEffect(() => {
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization: token
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
-      params: {
-        product_id: currentProduct.id || 11004,
-        category: currentProduct.category,
-        name: currentProduct.name,
-        default_price: currentProduct.default_price
-      }
-    })
-    .then((result) => {
-      setProductInfo(result.data);
-      // console.log('productList: ', result.data)
-    })
-  }, [currentProduct])
+
+  // useEffect(() => {
+  //   axios.defaults.headers = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: token
+  //   };
+  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
+  //     params: {
+  //       product_id: currentProduct.id || 11004,
+  //       category: currentProduct.category,
+  //       name: currentProduct.name,
+  //       default_price: currentProduct.default_price
+  //     }
+  //   })
+  //   .then((result) => {
+      // setProductInfo(result.data);
+  //     console.log('********************productList: ', result.data);
+  //   })
+  // }, [currentProduct])
 
   useEffect(() => {
     if (props.style.name) {
@@ -45,21 +47,22 @@ const ProductInfo = (props) => {
     }
   }, [props.style.sale_price])
 
-  const selectSize = () => {
-    const sizes = ['XS', 'S', 'M', 'L', 'XL'];
-    const makeList = (size) => {
-      return <option>{size}</option>;
-    };
-    return <select>{sizes.map(makeList)}</select>;
-  }
+  // const selectSize = () => {
+  //   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+  //   const makeList = (size) => {
+  //     return <option>{size}</option>;
+  //   };
+  //   return <select>{sizes.map(makeList)}</select>;
+  // }
 
-  const selectQty = () => {
-    const qty = ['1','2','3','4','5','6','7','8','9','10','10+'];
-    const makeList = (qty) => {
-      return <option>{qty}</option>;
-    };
-    return <select>{qty.map(makeList)}</select>
-  }
+  // const selectQty = () => {
+  //   const qty = ['1','2','3','4','5','6','7','8','9','10','10+'];
+  //   const makeList = (qty) => {
+  //     return <option>{qty}</option>;
+  //   };
+  //   return <select>{qty.map(makeList)}</select>
+  // }
+
 
   // const Option = (props) => {
   //   return (
@@ -70,6 +73,7 @@ const ProductInfo = (props) => {
 
   //   )
   // }
+
 
   const clickImage = (photo) => {
     // console.log('clicked photo: ', photo)
@@ -103,10 +107,10 @@ const ProductInfo = (props) => {
         Read all reviews
       </div>
       <div className="productCategory">
-        <h3>{productInfo.category}</h3>
+        <h3>{currentProduct.data.category}</h3>
       </div>
       <div className="productName">
-        <h3>{productInfo.name}</h3>
+        <h3>{currentProduct.data.name}</h3>
       </div>
       <div className="productPriceDefault">
         {priceCheck()}
@@ -124,10 +128,10 @@ const ProductInfo = (props) => {
       </div>
       <div className="size-quantity">
         <div className="selectSize">
-          Select Size{selectSize()}
+          {/* Select Size{selectSize()} */}
         </div>
         <div className="selectQty">
-          {selectQty()}
+          {/* {selectQty()} */}
         </div>
       </div>
       <div className="bag-outfit">
