@@ -13,11 +13,13 @@ import PhotoParent from './Photo-Parent.jsx';
 		const currentProduct = useSelector(state => state.currentProduct);
 
 	return (
+		<div className="overviewContainer">
     <div className="overview">
 			<LogoSearch />
 			<Announcement />
 			<PhotoParent />
 			<Description />
+		</div>
 		</div>
 	)
 };

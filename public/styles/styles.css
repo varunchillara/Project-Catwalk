@@ -196,13 +196,16 @@
   background-color: #f3f3f3;
 }
 
-.overview {
+.overviewContainer {
   display: flex;
   justify-content: center;
+}
+
+.overview {
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-left: 150px;
-  margin-right: 150px;
+  width: 80vw;
 }
 .overview .topOfPage {
   display: flex;
@@ -213,7 +216,6 @@
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  margin-left: 25px;
   overflow: hidden;
   align-self: center;
 }
@@ -223,12 +225,10 @@
   text-align: center;
   font-size: 30px;
   line-height: 50px;
-  margin-left: 75px;
 }
 .overview .topOfPage .searchBar {
   width: 300px;
   height: 38px;
-  margin-left: 360px;
   margin-bottom: 4px;
   align-self: flex-end;
 }
@@ -272,11 +272,14 @@
 .overview .overview-main .imageThumb:hover {
   cursor: pointer;
 }
+.overview .overview-main .imageMain {
+  display: flex;
+  flex-direction: column;
+}
 .overview .overview-main .styleSide {
   display: flex;
   flex-direction: column;
   font-family: Cormorant;
-  margin-left: 100px;
 }
 .overview .overview-main .styleSide .ratings {
   display: flex;
@@ -323,7 +326,6 @@
   display: flex;
   flex-direction: column;
   font-family: Cormorant;
-  margin-left: 80px;
 }
 .overview .description-features .slogan-features {
   display: flex;
