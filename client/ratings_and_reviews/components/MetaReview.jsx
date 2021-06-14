@@ -31,7 +31,7 @@ function MetaReview() {
       <h4 className="ratingsHeader">Ratings & Reviews</h4>
       <Rating ratings={metaReview.ratings}/>
       <div className="recommendPrecentage">
-        100% of reviews recommend this product
+        % of reviews recommend this product
       </div>
       <StarsCount ratings={metaReview.ratings}/>
       {/* {console.log('****************metareview!!', metaReview)} */}
