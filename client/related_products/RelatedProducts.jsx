@@ -235,14 +235,16 @@ class CardTemplate extends React.Component {
 
   render () {
     let relatedProductsContainerInlineStyle = {
+      marginTop: '30px',
+    }
+    let relatedProductsContainerInlineStyle2 = {
       margin: 'auto',
       width : '920px',
-
     }
     let cardTitleInlineStyle = {
       fontFamily : 'Cormorant',
       fontWeight : 'bolder',
-      fontSize : '16px'
+      fontSize : '20px'
     }
 
     let carouselInlineStyle = {
@@ -325,8 +327,8 @@ class CardTemplate extends React.Component {
       />
     return (
 
-    <div>
-      <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
+    <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
+      <div className="related-products-container2" style={relatedProductsContainerInlineStyle2}>
         <div className="related-products-title" style={cardTitleInlineStyle}>
           RELATED PRODUCTS
         </div>

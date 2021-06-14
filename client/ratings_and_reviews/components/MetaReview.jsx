@@ -28,7 +28,7 @@ function MetaReview() {
 
   return (
     <div className="metaReview">
-      <h4 className="ratingsHeader">Ratings & Reviews</h4>
+      <h4 className="ratingsHeader">RATINGS & REVIEWS</h4>
       <Rating ratings={metaReview.ratings}/>
       <div className="recommendPrecentage">
         % of reviews recommend this product
