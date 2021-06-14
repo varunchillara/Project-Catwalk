@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import Overview from './overview/components/Overview.jsx';
@@ -6,6 +7,9 @@ import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
 import {update} from '../store/actions/product.js';
+import {updateStyle} from '../store/actions/updateStyle.js';
+import {updateMetaReviews} from '../store/actions/updateMetaReviews.js';
+import RelatedProductsContainer from './related_products/RelatedProductsContainer.jsx'
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
@@ -17,9 +21,20 @@ function App () {
       'Content-Type': 'application/json',
       Authorization : token
     };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`)
+    let currentMetaReviews = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
+      params: {
+        product_id: currentAppId || 11004
+      }});
+    let currentProductInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
+    let currentProductStylesInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
+    Promise.all([currentProductInfo, currentProductStylesInfo, currentMetaReviews])
     .then((result) => {
-      dispatch(update(result.data));
+      currentProductInfo = result[0]
+      currentProductStylesInfo = result[1]
+      currentMetaReviews = result[2]
+      dispatch(update(currentProductInfo));
+      dispatch(updateStyle(currentProductStylesInfo));
+      dispatch(updateMetaReviews(currentMetaReviews));
     })
     .catch(error => {
       console.error(error)
@@ -29,7 +44,7 @@ function App () {
   return(
     <div className="App">
       <Overview />
-      <RelatedProducts setCurrentAppId={setCurrentAppId}/>
+      {/* <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/> */}
       <RatingsAndReviews />
     </div>
   );

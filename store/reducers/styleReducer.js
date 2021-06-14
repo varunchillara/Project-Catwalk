@@ -1,4 +1,4 @@
-const styleReducer = (state = {}, action) => {
+const styleReducer = (state = '', action) => {
   switch(action.type) {
     case 'STYLE' :
       return action.payload;
