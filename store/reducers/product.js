@@ -1,6 +1,9 @@
 
 const productReducer = (state = '', action) => {
+
   switch(action.type) {
+    case 'UPDATE_ALL':
+      return action.payload.currentProduct;
     case 'UPDATE' :
       return action.payload;
     default:

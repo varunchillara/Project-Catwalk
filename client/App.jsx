@@ -6,9 +6,7 @@ import RelatedProducts from './related_products/RelatedProducts.jsx';
 import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
-import {update} from '../store/actions/product.js';
-import {updateStyle} from '../store/actions/updateStyle.js';
-import {updateMetaReviews} from '../store/actions/updateMetaReviews.js';
+import {updateAll} from '../store/actions/updateAll.js';
 import RelatedProductsContainer from './related_products/RelatedProductsContainer.jsx'
 
 function App () {
@@ -17,24 +15,40 @@ function App () {
   const dispatch = useDispatch();
 
     useEffect(() => {
+    //attempt to pull down from cache at key currentAppId.
+    //let cachedData = useSelector(state => state.cachedData);
+    //if it comes back with the data (SHOULD BE STORED AS JSON)
+
+    //if (cachedData[currentAppId]) {
+      //FIRE UPDATE_ALL with the data
+      // dispatch(updateAll(JSON.parse(cachedData[currentAppId])))
+    // }
+
+    //otherwise
+
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization : token
     };
-    let currentMetaReviews = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
+    let currentMetaReviewsData = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
       params: {
         product_id: currentAppId || 11004
       }});
-    let currentProductInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
-    let currentProductStylesInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
-    Promise.all([currentProductInfo, currentProductStylesInfo, currentMetaReviews])
+    let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
+    let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
+    Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
     .then((result) => {
-      currentProductInfo = result[0]
-      currentProductStylesInfo = result[1]
-      currentMetaReviews = result[2]
-      dispatch(update(currentProductInfo));
-      dispatch(updateStyle(currentProductStylesInfo));
-      dispatch(updateMetaReviews(currentMetaReviews));
+      let updateAllPayload = {
+        currentProduct: result[0],
+        currentProductStyles: result[1],
+        currentMetaReviews: result[2]
+      }
+      //prepare cached data
+
+      // cachedData[`${currentAppId}`] = JSON.stringify(updateAllPayload);
+
+      dispatch(updateAll(updateAllPayload));
+      //dispatch(updateCache(cachedData))
     })
     .catch(error => {
       console.error(error)
@@ -44,7 +58,7 @@ function App () {
   return(
     <div className="App">
       <Overview />
-      {/* <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/> */}
+      <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/>
       <RatingsAndReviews />
     </div>
   );
