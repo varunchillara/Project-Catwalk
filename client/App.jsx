@@ -7,52 +7,62 @@ import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
 import {updateAll} from '../store/actions/updateAll.js';
+import {updateCache} from '../store/actions/updateCache.js';
 import RelatedProductsContainer from './related_products/RelatedProductsContainer.jsx'
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
-
   const dispatch = useDispatch();
 
-    useEffect(() => {
-    //attempt to pull down from cache at key currentAppId.
-    //let cachedData = useSelector(state => state.cachedData);
-    //if it comes back with the data (SHOULD BE STORED AS JSON)
 
-    //if (cachedData[currentAppId]) {
-      //FIRE UPDATE_ALL with the data
-      // dispatch(updateAll(JSON.parse(cachedData[currentAppId])))
-    // }
+  let cachedData = useSelector(state => state.cache) || null;
+  let cachedKeys = Object.keys(cachedData)
+  let dataToBeCached = {
+    currentProduct: useSelector(state => state.currentProduct),
+    currentStyle: useSelector(state => state.currentStyle),
+    currentMetaReviews: useSelector(state => state.currentMetaReviews)
+  }
 
-    //otherwise
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization : token
-    };
-    let currentMetaReviewsData = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
-      params: {
-        product_id: currentAppId || 11004
-      }});
-    let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
-    let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
-    Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
-    .then((result) => {
-
-      let updateAllPayload = {
-        currentProduct: result[0],
-        currentStyle: result[1],
-        currentMetaReviews: result[2]
+  useEffect(() => {
+    console.log(cachedData)
+    if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
+      if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentStyle !== '' || dataToBeCached.currentMetaReviews !== '') {
+        cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
+        dispatch(updateCache(cachedData))
       }
-      //prepare cached data
-
-      // cachedData[`${currentAppId}`] = JSON.stringify(updateAllPayload);
-
-      dispatch(updateAll(updateAllPayload));
-      //dispatch(updateCache(cachedData))
-    })
-    .catch(error => {
-      console.error(error)
-    })
+    }
+    if (cachedData[`${currentAppId}`]) {
+      if (cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
+        cachedData[dataToBeCached.currentProduct.data.id] = dataToBeCached;
+        dispatch(updateCache(cachedData));
+      }
+      console.log('updating from cached')
+      dispatch(updateAll(cachedData[currentAppId]));
+    } else {
+      axios.defaults.headers = {
+        'Content-Type': 'application/json',
+        Authorization : token
+      };
+      let currentMetaReviewsData = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
+        params: {
+          product_id: currentAppId || 11004
+        }
+      });
+      let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
+      let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
+      return Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
+        .then((result) => {
+        let updateAllPayload = {
+          currentProduct: result[0],
+          currentStyle: result[1],
+          currentMetaReviews: result[2]
+        }
+        dispatch(updateAll(updateAllPayload))
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
   }, [currentAppId])
 
   return(

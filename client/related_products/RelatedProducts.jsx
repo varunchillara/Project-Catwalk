@@ -44,7 +44,6 @@ class CardTemplate extends React.Component {
     if (currentProductStylesData === '' || currentProductStylesData.data.product_id === this.state.currentProductData.id ) {
       return;
     }
-    console.log('here')
     let productId = currentProductData.data.id
     let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
     return Promise.all([currentProductData, relatedProducts, currentProductStylesData])
@@ -216,7 +215,6 @@ class CardTemplate extends React.Component {
   }
 
   render () {
-    console.log(this.state)
     let relatedProductsContainerInlineStyle = {
       margin: 'auto',
       width : '920px',

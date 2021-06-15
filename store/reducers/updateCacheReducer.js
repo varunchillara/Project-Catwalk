@@ -1,7 +1,10 @@
-const updateCacheReducer = (state = '', action) => {
+const updateCacheReducer = (state = {}, action) => {
   switch(action.type) {
-    case 'UPDATE_CACHE'
-      return
-      
+    case 'UPDATE_CACHE':
+      return action.payload;
+    default:
+      return state;
   }
 }
+
+export default updateCacheReducer;
