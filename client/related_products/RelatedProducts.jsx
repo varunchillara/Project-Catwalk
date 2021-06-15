@@ -20,20 +20,8 @@ class CardTemplate extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentProductId : 11001,
-      currentProductData: {
-        id: '11001',
-        category: "Jackets",
-        nameWithText: "Camo Onesie",
-        photo: "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-        original_price: '$140',
-        sale_price: null,
-        comparableAspect1: 'Made from Animals',
-        comparableAspect2: 'Edible',
-        comparableAspect3: 'Electrically conducive',
-        comparableAspect4: 'Rather snazzy'
-      },
-      currentProductStyle: null,
+      currentProductData: {},
+      currentProductStyle: {},
       relatedProductsData: {},
       myOutfit: {},
       modalId: null
@@ -51,30 +39,25 @@ class CardTemplate extends React.Component {
     this.determineAction = this.determineAction.bind(this);
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
-  updateOverviewProduct (currentProductData, currentProductStyleData) {
-    if (currentProductData === '') {
+  updateOverviewProduct (currentProductData, currentProductStylesData) {
+
+    if (currentProductStylesData === '' || currentProductStylesData.data.product_id === this.state.currentProductData.id ) {
       return;
     }
-    if (currentProductStyleData === undefined) {
-      return;
-    }
-    console.log('how many times does this run?')
-    let productId = currentProductData.id
+    console.log('here')
+    let productId = currentProductData.data.id
     let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
-    // let currentProductRatingsData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-    //   product_id: productId
-    // }});
-    return Promise.all([currentProductData, currentProductRatingsData,relatedProducts, currentProductStyleData])
+    return Promise.all([currentProductData, relatedProducts, currentProductStylesData])
     .then(results => {
-      results[1] = results[1].data;
-      return Promise.all([['currentProduct', results[0], results[1]], this.fetchRelatedProducts(results[2]), results[3]])
+      return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
     })
     .then(results => {
+      results[0][1] = results[0][1].data
       results[1] = results[1].map(result => result.data)
       this.setState ({
           currentProductData: this.formatData(results[0]),
           relatedProductsData: this.formatData(results[1]),
-          currentProductStyle: results[2]
+          currentProductStyle: results[2].data
         })
       })
       .catch(error => console.error(error))
@@ -86,7 +69,6 @@ class CardTemplate extends React.Component {
     results = formattingCurrentProduct ? results.slice(1) : results;
 
     for (let i = 0; i < results.length; i++) {
-      // console.log('in formatted Data', results[i])
       let data = results[i];
       let id = data.product_id || data.id.toString();
       if (formattingCurrentProduct) {
@@ -99,11 +81,8 @@ class CardTemplate extends React.Component {
         }
       }
       let currentlyFormatting = formattingCurrentProduct ? formattedData : formattedData[id]
-
-      //IF RATINGS API
       if (data.ratings) {
         currentlyFormatting.rating = averageReviewsCalculator.getAverageRating(data.ratings)
-        //OTHERWISE IF FROM STYLES CALL
       } else if (data.product_id) {
         let styleIndex = this.findDefaultStyleIndex(data)
         currentlyFormatting.original_price = `$${Number(data.results[styleIndex].original_price)}`;
@@ -230,15 +209,14 @@ class CardTemplate extends React.Component {
   }
 
   componentDidUpdate () {
-    // console.log('in componentDidUpdate', this.props.currentProduct, this.props);
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
   }
   componentDidMount () {
-    // console.log('in componentDidMount', this.props.currentProduct);
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
   }
 
   render () {
+    console.log(this.state)
     let relatedProductsContainerInlineStyle = {
       margin: 'auto',
       width : '920px',
@@ -289,14 +267,13 @@ class CardTemplate extends React.Component {
 
     }
 
-    // console.log('relatedProducts', this.state.relatedProductsData)
-    // console.log('currentProducts', this.state.currentProductsData)
 
-    if (this.state.currentProducts === undefined || Object.keys(this.state.currentProductsData).length === 0) {
-      return (
-        <div></div>
-      )
-    }
+    // if (this.state.currentProductData === undefined) {
+    //   console.log('in here')
+    //   return (
+    //     <div></div>
+    //   )
+    // }
 
     let modalCompareButton = "./assets/relatedProductACTION.png";
     let removeOutfitButton = "./assets/myOutfitACTION.png";

@@ -11,7 +11,7 @@ const Description = () => {
       description: null
     }
   };
-  // const[productDescription, setProductDescription] = useState({ features: [] });
+    // const[productDescription, setProductDescription] = useState({ features: [] });
 
   // let currentProd = currentProduct.id || 11004;
   // console.log('currentProduct', currentProduct)
