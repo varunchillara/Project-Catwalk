@@ -8,9 +8,11 @@ import SelectStyle from './SelectStyle.jsx';
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
-  // const[productInfo, setProductInfo] = useState({ features: [] });
+    // const[productInfo, setProductInfo] = useState({ features: [] });
+
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
+
   // console.log('currentProduct************', currentProduct);
 
 

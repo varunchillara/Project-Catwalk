@@ -36,7 +36,7 @@ const PhotoParent = () => {
 
   // let currentProd = currentProduct.id || 11004;
 
-  // useEffect(() => {
+    // useEffect(() => {
   //   axios.defaults.headers = {
   //     'Content-Type': 'application/json',
   //     Authorization: token
