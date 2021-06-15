@@ -7,39 +7,54 @@ import SortOptions from './SortOptions.jsx';
 import AddAReview from './AddAReview.jsx';
 
 function ListOfReviews() {
-  const currentProduct = useSelector(state => state.currentProduct);
+  const currentProduct = useSelector(state => state.currentProduct) || { data: { id: 11004 } };
   const[reviews, setReviews] = useState([]);
+  const[currentCount, setCurentCount] = useState(4);
+  const[currentSort, setCurrentSort] = useState('newest');
 
-  useEffect(() => {
+  function getReviews() {
+    console.log()
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
     };
-
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews', {
     params: {
       page: 1,
-      count: 4,
-      sort: 'newest',
-      product_id: currentProduct.id || 11004
+      count: currentCount,
+      sort: currentSort,
+      product_id: currentProduct.data.id || 11004
     }
   })
   .then((result) => {
     setReviews(result.data.results);
   })
-  }, [currentProduct])
+  }
+
+  function handleChange(e) {
+    setCurrentSort(e.target.value);
+ };
+
+  useEffect(() => {
+    getReviews();
+    console.log('does this get run again?????');
+  }, [currentProduct, currentCount, currentSort])
 
   return (
     <div className="Reviews">
       <header className="reviewsHeader">
-        {reviews.length} reviews, sorted by<SortOptions />
+        {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
       {reviews.map((review, i) => {
         return <Review key={i} review={review} />
       })}
       <div className="buttons">
-        <button className="button">MORE REVIEWS</button>
-        <AddAReview id={currentProduct.id}/>
+        <button className="button"
+        onClick={() => {
+          const newCount = currentCount + 4;
+          setCurentCount(newCount);
+        }}>MORE REVIEWS</button>
+        <AddAReview id={currentProduct.id} />
       </div>
     </div>
   )
