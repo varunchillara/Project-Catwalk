@@ -12,29 +12,30 @@
   .topOfPage {
     display: flex;
     height: 120px;
-    background-color: rgb(202, 202, 202);
+    background-color: rgb(59, 158, 189);
 
     .logo {
       border-radius: 50%;
       width: 100px;
       height: 100px;
-      // margin-left: 25px;
+      margin-left: 25px;
       overflow: hidden;
       align-self: center;
     }
     .companyName{
       height: 50px;
       font-family: Cormorant;
+      color: rgb(51, 51, 51);
       text-align: center;
       font-size: 30px;
       line-height: 50px;
-      // margin-left: 75px;
+      margin-left: 75px;
       // align-self: center;
     }
     .searchBar {
       width: 300px;
       height: 38px;
-      // margin-left: 360px;
+      margin-left: 360px;
       margin-bottom: 4px;
       align-self: flex-end;
     }
@@ -51,57 +52,77 @@
     display: flex;
     align-items: center;
     height: 50px;
-    background-color: rgb(236, 127, 127);
+    // background-color: rgb(236, 127, 127);
     font-family: Cormorant;
-    font-size: 20px;
+    font-size: 22px;
     // text-align: center;
     cursor: pointer;
 
     .firstA {
       padding-left: 300px;
-      padding-right: 60px;
+      padding-right: 220px;
     }
 
     .secondA {
-      padding-right: 10px;
+      text-decoration: underline;
     }
 
-    .thirdA {
-      // padding-right: 40px;
-    }
-    .thirdA:hover {
+    .secondA:hover {
       font-weight: bold;
       color: rgb(243, 243, 243);
     }
+
+    // .thirdA {
+    //   // padding-right: 40px;
+    // }
+    // .thirdA:hover {
+    //   font-weight: bold;
+    //   color: rgb(243, 243, 243);
+    // }
   }
 
   //Image Carousel and Product Overview//
   .overview-main {
     display: flex;
+    position: relative;
     // background-color: rgb(150, 218, 230);
 
-    .imageThumb {
+    .imageThumbs {
       display: flex;
       flex-direction: column;
-      margin: 5px;
+      // margin: 5px;
       margin-top: 4x;
       margin-bottom: 4px;
       align-self: flex-start;
+      position: absolute;
+      left: 15px;
+      top: 20px;
+      bottom: 20px;
+      z-index: 150;
+      width: 100px;
+      height: 100px;
     }
-    .imageThumb:hover {
+    .imageThumbs img {
+      margin-top: 30x;
+      margin-bottom: 30px;
+      border: 1px solid #555;
+    }
+    .imageThumbs:hover {
       cursor: pointer;
     }
 
     .imageMain {
-      // border: 5px solid #555;
-      display: flex;
-      flex-direction: column;
+      border: 2px solid #555;
+      // display: flex;
+      // flex-direction: column;
+      // position: relative;
     }
 
     .styleSide {
       display: flex;
       flex-direction: column;
       font-family: Cormorant;
+      margin-left: 50px;
       // border: 5px solid #555;
 
       .ratings {
@@ -115,11 +136,12 @@
         cursor: pointer;
       }
       .productCategory {
-        font-size: 20px;
-        margin-bottom: -20px;
+        font-size: 18px;
+        margin-bottom: -40px;
       }
       .productName {
-
+        font-size: 24px;
+        margin-bottom: 10px;
       }
       .productPriceDefault {
 
@@ -127,7 +149,7 @@
       .productStyleHeader {
         margin-top: 15px;
         margin-bottom: 15px;
-        font-size: 18px;
+        font-size: 22px;
       }
 
       .styleThumbsMain {
@@ -151,10 +173,11 @@
         display: flex;
 
         .selectSize {
-
+          text-align-last: center;
         }
         .selectQty {
           margin-left: 30px;
+          text-align-last: center;
         }
       }
       .bag-outfit {
@@ -182,8 +205,15 @@
 
     .slogan-features {
       display: flex;
+
+      ul {
+        list-style: none;
+      }
+      ul li:before {
+        content: '✓ ';
+      }
       // justify-content: center;
-      align-items: baseline;
+      // align-items: baseline;
 
       .productSlogan {
         align-self: flex-end;
@@ -191,7 +221,7 @@
         font-weight: bold;
       }
       .productFeatures{
-        margin-left: 400px;
+        margin-left: 440px;
         font-size: 20px;
       }
     }
@@ -201,7 +231,6 @@
       align-self: flex-start;
       justify-content: center;
       font-size: 20px;
-      width: 450px;
     }
   }
 };

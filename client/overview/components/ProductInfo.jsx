@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-scroll';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
@@ -8,30 +9,15 @@ import SelectStyle from './SelectStyle.jsx';
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
-  // const[productInfo, setProductInfo] = useState({ features: [] });
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
-  // console.log('currentProduct************', currentProduct);
+  const[productSkus, setProductSkus] = useState( {} );
+  // const[currentSku, setCurrentSku] = useState( '' )
+  const[quantity, setQuantity] = useState( [] )
+  // console.log('productSkus', productSkus)
 
-
-  // useEffect(() => {
-  //   axios.defaults.headers = {
-  //     'Content-Type': 'application/json',
-  //     Authorization: token
-  //   };
-  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
-  //     params: {
-  //       product_id: currentProduct.id || 11004,
-  //       category: currentProduct.category,
-  //       name: currentProduct.name,
-  //       default_price: currentProduct.default_price
-  //     }
-  //   })
-  //   .then((result) => {
-      // setProductInfo(result.data);
-  //     console.log('********************productList: ', result.data);
-  //   })
-  // }, [currentProduct])
+  // let vals = Object.values(props.style.skus)
+  // console.log('vals', vals)
 
   useEffect(() => {
     if (props.style.name) {
@@ -47,37 +33,38 @@ const ProductInfo = (props) => {
     }
   }, [props.style.sale_price])
 
-  // const selectSize = () => {
-  //   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
-  //   const makeList = (size) => {
-  //     return <option>{size}</option>;
-  //   };
-  //   return <select>{sizes.map(makeList)}</select>;
-  // }
+  useEffect(() => {
+    if (props.style.skus) {
+      setProductSkus(props.style.skus);
+      // setCurrentSku('')
+      let defaultQty = new Array(15).fill(true).map((num, i) => i + 1)
+      setQuantity(defaultQty)
+      // setQuantity(new Array(Object.values(props.style.skus)[0].quantity.fill(true).map((num, i) => i + 1)))
+    }
+  }, [props.style.skus])
 
-  // const selectQty = () => {
-  //   const qty = ['1','2','3','4','5','6','7','8','9','10','10+'];
-  //   const makeList = (qty) => {
-  //     return <option>{qty}</option>;
-  //   };
-  //   return <select>{qty.map(makeList)}</select>
-  // }
+  const selectSize = () => {
+    console.log('selected')
+    // setCurrentSku(sku)
+  }
 
-
-  // const Option = (props) => {
-  //   return (
-  //     <option>
-  //       {props.option}
-
-  //     </option>
-
-  //   )
-  // }
-
+  const selectQuantity = () => {
+    let skus = Object.values(productSkus);
+    for (let i = 0; i < skus.length; i++) {
+      var qty;
+      if (skus[i].quantity < 15) {
+        qty = new Array(skus[i].quantity).fill(true).map((num, i) => i + 1);
+      } else {
+        qty = new Array(15).fill(true).map((num, i) => i + 1);
+      }
+    }
+    // console.log('selected', qty);
+    setQuantity(qty);
+  }
 
   const clickImage = (photo) => {
-    // console.log('clicked photo: ', photo)
     props.setStyle(photo);
+    console.log('style', props.style)
   }
 
   const priceCheck = () => {
@@ -85,7 +72,7 @@ const ProductInfo = (props) => {
       return (
         <>
         <span
-          style={{ 'textDecoration': 'line-through', 'textDecorationThickness': '2px', 'fontSize': '20px' }}>
+          style={{ 'color': 'grey', 'textDecoration': 'line-through', 'textDecorationThickness': '2px', 'fontSize': '20px' }}>
           ${props.style.original_price}
         </span>
         <span
@@ -98,13 +85,11 @@ const ProductInfo = (props) => {
     return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
 
-
-
   return (
     <div className="styleSide">
       <div className="ratings">
-        <Stars rating={currentRating}/>
-        Read all reviews
+        <Stars rating={currentRating} />
+        <Link to="modal" spy={true} smooth={true}>Read all reviews</Link>
       </div>
       <div className="productCategory">
         <h3>{currentProduct.data.category}</h3>
@@ -120,19 +105,25 @@ const ProductInfo = (props) => {
         <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
-        {/* {props.productStyles.map((style, i) =>
-        <div className="styleThumbs">
-          <img key={i} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+        {props.productStyles.map((style, i) =>
+        <div className="styleThumbs" key={i}>
+          <img style={{"border" : "2px solid #555"}} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
         </div>
-        )} */}
+        )}
       </div>
       <div className="size-quantity">
-        <div className="selectSize">
-          {/* Select Size{selectSize()} */}
-        </div>
-        <div className="selectQty">
-          {/* {selectQty()} */}
-        </div>
+        <select
+          className="selectSize" onChange={() => selectQuantity()}>
+            <option key={0}>-</option>
+          {Object.values(productSkus).map((sku, i) =>
+            <option key={i}>{sku.size}</option>
+          )}
+        </select>
+        <select className="selectQty">
+          {quantity.map((qty, i) =>
+            <option key={i}>{qty}</option>
+          )}
+        </select>
       </div>
       <div className="bag-outfit">
         <div className="addToBag">
@@ -145,6 +136,7 @@ const ProductInfo = (props) => {
         </div>
       </div>
       <div className="share">
+        {/* <img src="../../../public/images/instagram.jpg" height="40px" width="40px" /> */}
         <button className="button">Instagram</button>
         <button className="button">Pinterest</button>
         <button className="button">Facebook</button>
