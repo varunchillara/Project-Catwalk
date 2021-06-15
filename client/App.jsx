@@ -25,7 +25,6 @@ function App () {
     // }
 
     //otherwise
-
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization : token
@@ -38,6 +37,7 @@ function App () {
     let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
     Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
     .then((result) => {
+
       let updateAllPayload = {
         currentProduct: result[0],
         currentStyle: result[1],
