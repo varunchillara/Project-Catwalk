@@ -64,7 +64,7 @@ const ProductInfo = (props) => {
 
   const clickImage = (photo) => {
     props.setStyle(photo);
-    // console.log('style', props.style)
+    console.log('style', props.style)
   }
 
   const priceCheck = () => {
@@ -115,12 +115,12 @@ const ProductInfo = (props) => {
         <select
           className="selectSize" onChange={() => selectQuantity()}>
           {Object.values(productSkus).map((sku, i) =>
-            <option key={i}> {sku.size} </option>
+            <option key={i}>{sku.size}</option>
           )}
         </select>
         <select className="selectQty">
           {quantity.map((qty, i) =>
-            <option key={i}> {qty}</option>
+            <option key={i}>{qty}</option>
           )}
         </select>
       </div>

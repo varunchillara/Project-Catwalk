@@ -21,8 +21,6 @@ const PhotoParent = () => {
     }
   }, [currentStyle])
 
-  console.log('currentStyle', currentStyle.data.results)
-
   return (
     <div className="overview-main">
       <CarouselMain style={style}/>
