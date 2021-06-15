@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .label {
   display: inline-block;
   width: 140px;
@@ -210,25 +211,29 @@
 .overview .topOfPage {
   display: flex;
   height: 120px;
-  background-color: #cacaca;
+  background-color: #3b9ebd;
 }
 .overview .topOfPage .logo {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+  margin-left: 25px;
   overflow: hidden;
   align-self: center;
 }
 .overview .topOfPage .companyName {
   height: 50px;
   font-family: Cormorant;
+  color: #333333;
   text-align: center;
   font-size: 30px;
   line-height: 50px;
+  margin-left: 75px;
 }
 .overview .topOfPage .searchBar {
   width: 300px;
   height: 38px;
+  margin-left: 360px;
   margin-bottom: 4px;
   align-self: flex-end;
 }
@@ -242,44 +247,55 @@
   display: flex;
   align-items: center;
   height: 50px;
-  background-color: #ec7f7f;
   font-family: Cormorant;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
 }
 .overview .announcements .firstA {
   padding-left: 300px;
-  padding-right: 60px;
+  padding-right: 220px;
 }
 .overview .announcements .secondA {
-  padding-right: 10px;
+  text-decoration: underline;
 }
-.overview .announcements .thirdA:hover {
+.overview .announcements .secondA:hover {
   font-weight: bold;
   color: #f3f3f3;
 }
 .overview .overview-main {
   display: flex;
+  position: relative;
 }
-.overview .overview-main .imageThumb {
+.overview .overview-main .imageThumbs {
   display: flex;
   flex-direction: column;
-  margin: 5px;
   margin-top: 4x;
   margin-bottom: 4px;
   align-self: flex-start;
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  bottom: 20px;
+  z-index: 150;
+  width: 100px;
+  height: 100px;
 }
-.overview .overview-main .imageThumb:hover {
+.overview .overview-main .imageThumbs img {
+  margin-top: 30x;
+  margin-bottom: 30px;
+  border: 1px solid #555;
+}
+.overview .overview-main .imageThumbs:hover {
   cursor: pointer;
 }
 .overview .overview-main .imageMain {
-  display: flex;
-  flex-direction: column;
+  border: 2px solid #555;
 }
 .overview .overview-main .styleSide {
   display: flex;
   flex-direction: column;
   font-family: Cormorant;
+  margin-left: 50px;
 }
 .overview .overview-main .styleSide .ratings {
   display: flex;
@@ -292,13 +308,17 @@
   cursor: pointer;
 }
 .overview .overview-main .styleSide .productCategory {
-  font-size: 20px;
-  margin-bottom: -20px;
+  font-size: 18px;
+  margin-bottom: -40px;
+}
+.overview .overview-main .styleSide .productName {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 .overview .overview-main .styleSide .productStyleHeader {
   margin-top: 15px;
   margin-bottom: 15px;
-  font-size: 18px;
+  font-size: 22px;
 }
 .overview .overview-main .styleSide .styleThumbsMain {
   display: flex;
@@ -316,8 +336,12 @@
 .overview .overview-main .styleSide .size-quantity {
   display: flex;
 }
+.overview .overview-main .styleSide .size-quantity .selectSize {
+  text-align-last: center;
+}
 .overview .overview-main .styleSide .size-quantity .selectQty {
   margin-left: 30px;
+  text-align-last: center;
 }
 .overview .overview-main .styleSide .bag-outfit {
   display: flex;
@@ -329,7 +353,12 @@
 }
 .overview .description-features .slogan-features {
   display: flex;
-  align-items: baseline;
+}
+.overview .description-features .slogan-features ul {
+  list-style: none;
+}
+.overview .description-features .slogan-features ul li:before {
+  content: "✓ ";
 }
 .overview .description-features .slogan-features .productSlogan {
   align-self: flex-end;
@@ -337,7 +366,7 @@
   font-weight: bold;
 }
 .overview .description-features .slogan-features .productFeatures {
-  margin-left: 400px;
+  margin-left: 440px;
   font-size: 20px;
 }
 .overview .description-features .productDescription {
@@ -345,7 +374,6 @@
   align-self: flex-start;
   justify-content: center;
   font-size: 20px;
-  width: 450px;
 }
 
 /*# sourceMappingURL=styles.css.map */
