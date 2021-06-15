@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-scroll';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
@@ -11,9 +12,12 @@ const ProductInfo = (props) => {
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
   const[productSkus, setProductSkus] = useState( {} );
-  const[styleSku, setStyleSku] = useState()
-  const[quantity, setQuantity] = useState([])
-  console.log('props', props)
+  // const[currentSku, setCurrentSku] = useState( '' )
+  const[quantity, setQuantity] = useState( [] )
+  // console.log('productSkus', productSkus)
+
+  // let vals = Object.values(props.style.skus)
+  // console.log('vals', vals)
 
   useEffect(() => {
     if (props.style.name) {
@@ -32,13 +36,17 @@ const ProductInfo = (props) => {
   useEffect(() => {
     if (props.style.skus) {
       setProductSkus(props.style.skus);
-      setQuantity(['0','1','2'])
+      // setCurrentSku('')
+      let defaultQty = new Array(10).fill(true).map((num, i) => i + 1)
+      setQuantity(defaultQty)
+      // setQuantity(new Array(Object.values(props.style.skus)[0].quantity.fill(true).map((num, i) => i + 1)))
     }
   }, [props.style.skus])
 
-  // const selectSize = (size) => {
-  //   setStyleSku(size)
-  // }
+  const selectSize = () => {
+    console.log('selected')
+    // setCurrentSku(sku)
+  }
 
   const selectQuantity = () => {
     let skus = Object.values(productSkus);
@@ -50,13 +58,13 @@ const ProductInfo = (props) => {
         qty = new Array(10).fill(true).map((num, i) => i + 1);
       }
     }
-    console.log('selected', qty);
+    // console.log('selected', qty);
     setQuantity(qty);
   }
 
   const clickImage = (photo) => {
-    // console.log('clicked photo: ', photo)
     props.setStyle(photo);
+    // console.log('style', props.style)
   }
 
   const priceCheck = () => {
@@ -80,8 +88,8 @@ const ProductInfo = (props) => {
   return (
     <div className="styleSide">
       <div className="ratings">
-        <Stars rating={currentRating}/>
-        Read all reviews
+        <Stars rating={currentRating} />
+        <Link to="modal" spy={true} smooth={true}>Read all reviews</Link>
       </div>
       <div className="productCategory">
         <h3>{currentProduct.data.category}</h3>
@@ -127,7 +135,7 @@ const ProductInfo = (props) => {
         </div>
       </div>
       <div className="share">
-        <img src="../../../public/images/instagram.jpg" height="40px" width="40px" />
+        {/* <img src="../../../public/images/instagram.jpg" height="40px" width="40px" /> */}
         <button className="button">Instagram</button>
         <button className="button">Pinterest</button>
         <button className="button">Facebook</button>

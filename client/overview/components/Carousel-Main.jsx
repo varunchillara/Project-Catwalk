@@ -14,31 +14,29 @@ const Carousel = (props) => {
   useEffect(() => {
     if (props.style.photos) {
       setPhotos(props.style.photos)
-      setImageUrl(props.style.photos[0].thumbnail_url)
+      setImageUrl(props.style.photos[0].url)
     }
   }, [props.style.photos])
 
   const clickImage = (url) => {
-    // console.log("Selected Image: ", url)
     setImageUrl(url);
   }
 
   return (
     <>
-    <div className="imageMain">
+    <div className="imageThumbs">
       {photos.map((photo, i) =>
-        // console.log('photo:', photo.thumbnail_url)
-       <img key={i} src={photo.thumbnail_url} height="100px" width="80px" onClick={() => clickImage(photo.url)}/>
+       <img key={i} src={photo.thumbnail_url} height="100px" width="100px" onClick={() => clickImage(photo.url)}/>
       )}
-      <Image
-        style={{ width: "450px", height: "auto"}}
+      </div>
+      <Image className="imageMain"
+        style={{ width: "auto", minWidth: "750px", height: "830px", maxHeight: "830px"}}
         zoomed={zoomed}
         src={imageUrl}
         alt="main img"
         onClick={() => setZoomed(true)}
         onRequestClose={() => setZoomed(false)}
       />
-    </div>
     </>
   )
 };
