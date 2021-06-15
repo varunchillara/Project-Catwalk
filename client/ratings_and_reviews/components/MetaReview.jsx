@@ -8,8 +8,12 @@ import SizeComfortLengthQuality from './SizeComfortLengthQuality.jsx';
 
 
 function MetaReview() {
-  const currentProduct = useSelector(state => state.currentProduct);
+  const currentProduct = useSelector(state => state.currentProduct) || { data: { id: 11004 } };
+  // const currentProduct = useSelector(state => state.currentProduct);
+  const currentMetaReview = useSelector(state => state.currentMetaReviews);
   const[metaReview, setMetaReview] = useState({});
+
+  console.log('************** currentPRODUCTTTTT', currentProduct);
 
   useEffect(() => {
     axios.defaults.headers = {
@@ -18,7 +22,7 @@ function MetaReview() {
     };
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
       params: {
-        product_id: currentProduct.id || 11004
+        product_id: currentProduct.data.id
       }
     })
     .then((result) => {
