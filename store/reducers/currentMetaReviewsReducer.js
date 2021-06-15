@@ -1,6 +1,8 @@
 
-const metaReviewReducer = (state = '', action) => {
+const currentMetaReviewsReducer = (state = '', action) => {
   switch(action.type) {
+    case 'UPDATE_ALL' :
+      return action.payload.currentMetaReviews;
     case 'METAREVIEW' :
       return action.payload;
     default:
@@ -8,4 +10,4 @@ const metaReviewReducer = (state = '', action) => {
   }
 }
 
-export default metaReviewReducer;
+export default currentMetaReviewsReducer;

@@ -6,45 +6,69 @@ import RelatedProducts from './related_products/RelatedProducts.jsx';
 import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
-import {update} from '../store/actions/product.js';
-import {updateStyle} from '../store/actions/updateStyle.js';
-import {updateMetaReviews} from '../store/actions/updateMetaReviews.js';
+import {updateAll} from '../store/actions/updateAll.js';
+import {updateCache} from '../store/actions/updateCache.js';
 import RelatedProductsContainer from './related_products/RelatedProductsContainer.jsx'
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
-
   const dispatch = useDispatch();
 
-    useEffect(() => {
-    axios.defaults.headers = {
-      'Content-Type': 'application/json',
-      Authorization : token
-    };
-    let currentMetaReviews = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
-      params: {
-        product_id: currentAppId || 11004
-      }});
-    let currentProductInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
-    let currentProductStylesInfo = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
-    Promise.all([currentProductInfo, currentProductStylesInfo, currentMetaReviews])
-    .then((result) => {
-      currentProductInfo = result[0]
-      currentProductStylesInfo = result[1]
-      currentMetaReviews = result[2]
-      dispatch(update(currentProductInfo));
-      dispatch(updateStyle(currentProductStylesInfo));
-      dispatch(updateMetaReviews(currentMetaReviews));
-    })
-    .catch(error => {
-      console.error(error)
-    })
+
+  let cachedData = useSelector(state => state.cache) || null;
+  let cachedKeys = Object.keys(cachedData)
+  let dataToBeCached = {
+    currentProduct: useSelector(state => state.currentProduct),
+    currentStyle: useSelector(state => state.currentStyle),
+    currentMetaReviews: useSelector(state => state.currentMetaReviews)
+  }
+
+  useEffect(() => {
+    console.log(cachedData)
+    if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
+      if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentStyle !== '' || dataToBeCached.currentMetaReviews !== '') {
+        cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
+        dispatch(updateCache(cachedData))
+      }
+    }
+    if (cachedData[`${currentAppId}`]) {
+      if (cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
+        cachedData[dataToBeCached.currentProduct.data.id] = dataToBeCached;
+        dispatch(updateCache(cachedData));
+      }
+      console.log('updating from cached')
+      dispatch(updateAll(cachedData[currentAppId]));
+    } else {
+      axios.defaults.headers = {
+        'Content-Type': 'application/json',
+        Authorization : token
+      };
+      let currentMetaReviewsData = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
+        params: {
+          product_id: currentAppId || 11004
+        }
+      });
+      let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
+      let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
+      return Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
+        .then((result) => {
+        let updateAllPayload = {
+          currentProduct: result[0],
+          currentStyle: result[1],
+          currentMetaReviews: result[2]
+        }
+        dispatch(updateAll(updateAllPayload))
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
   }, [currentAppId])
 
   return(
     <div className="App">
       <Overview />
-      {/* <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/> */}
+      <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/>
       <RatingsAndReviews />
     </div>
   );
