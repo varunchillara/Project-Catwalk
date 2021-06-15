@@ -19,6 +19,7 @@ const Carousel = (props) => {
   }, [props.style.photos])
 
   const clickImage = (url) => {
+        // console.log("Selected Image: ", url)
     setImageUrl(url);
   }
 
@@ -27,7 +28,9 @@ const Carousel = (props) => {
     <div className="imageMain">
       {photos.map((photo, i) =>
        <img key={i} src={photo.thumbnail_url} height="100px" width="80px" onClick={() => clickImage(photo.url)}/>
-      )}
+             // console.log('photo:', photo.thumbnail_url)
+
+     )}
       <Image
         style={{ width: "450px", height: "auto"}}
         zoomed={zoomed}

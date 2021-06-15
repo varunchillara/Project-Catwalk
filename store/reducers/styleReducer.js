@@ -3,7 +3,7 @@ const styleReducer = (state = '', action) => {
     case 'STYLE' :
       return action.payload;
     case 'UPDATE_ALL':
-      return action.payload.currentProductStyles;
+      return action.payload.currentStyle;
     default:
       return state;
   }

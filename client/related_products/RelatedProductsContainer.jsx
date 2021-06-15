@@ -4,14 +4,13 @@ import {useSelector, useDispatch} from 'react-redux';
 
 
 const RelatedProductsContainer = (props) => {
-  // const [communalState, setCommunalState] = useState()
   const currentProduct = useSelector(state => state.currentProduct);
-  const currentProductStyles = useSelector(state => state.currentProductStyles);
+  const currentStyle = useSelector(state => state.currentStyle);
   return (
     <>
       <RelatedProducts
       currentProduct={currentProduct}
-      currentProductStyle={currentProductStyles}
+      currentProductStyles={currentStyle}
       setCurrentAppId={props.setCurrentAppId}/>
     </>
   )

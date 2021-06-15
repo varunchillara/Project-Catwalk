@@ -209,10 +209,10 @@ class CardTemplate extends React.Component {
   }
 
   componentDidUpdate () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
   }
   componentDidMount () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyle)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
   }
 
   render () {

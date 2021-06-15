@@ -40,7 +40,7 @@ function App () {
     .then((result) => {
       let updateAllPayload = {
         currentProduct: result[0],
-        currentProductStyles: result[1],
+        currentStyle: result[1],
         currentMetaReviews: result[2]
       }
       //prepare cached data

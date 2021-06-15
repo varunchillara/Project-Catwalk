@@ -8,9 +8,32 @@ import SelectStyle from './SelectStyle.jsx';
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
+    // const[productInfo, setProductInfo] = useState({ features: [] });
+
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
 
+  // console.log('currentProduct************', currentProduct);
+
+
+  // useEffect(() => {
+  //   axios.defaults.headers = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: token
+  //   };
+  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products`, {
+  //     params: {
+  //       product_id: currentProduct.id || 11004,
+  //       category: currentProduct.category,
+  //       name: currentProduct.name,
+  //       default_price: currentProduct.default_price
+  //     }
+  //   })
+  //   .then((result) => {
+      // setProductInfo(result.data);
+  //     console.log('********************productList: ', result.data);
+  //   })
+  // }, [currentProduct])
 
   useEffect(() => {
     if (props.style.name) {

@@ -7,7 +7,7 @@ import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
   currentProduct: productReducer,
-  currentProductStyles: styleReducer,
+  currentStyle: styleReducer,
   currentRating: ratingReducer,
   currentMetaReviews: metaReviewsReducer,
   updateAll: updateAllReducer

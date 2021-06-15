@@ -1,7 +1,9 @@
 import React from 'react';
 
 const SelectStyle = ({ style }) => {
+  // console.log('style', style)
 
+  console.log('style', style)
   var firstFour = [];
   var rest = [];
 
