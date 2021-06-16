@@ -1,5 +1,5 @@
 import React from 'react';
-import RelatedProducts from './RelatedProducts.jsx';
+import RelatedProductsMain from './RelatedProductsMain.jsx';
 import {useSelector, useDispatch} from 'react-redux';
 
 
@@ -8,7 +8,7 @@ const RelatedProductsContainer = (props) => {
   const currentStyle = useSelector(state => state.currentStyle);
   return (
     <>
-      <RelatedProducts
+      <RelatedProductsMain
       currentChosenStyleId={props.currentChosenStyleId}
       currentProduct={currentProduct}
       currentProductStyles={currentStyle}

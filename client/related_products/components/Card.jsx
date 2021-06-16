@@ -6,6 +6,11 @@ const Card = (props) => {
 
   let cardInlineStyle = {
     border: '1px solid grey',
+    top: 0,
+    width: '100%',
+    margin: 'auto',
+    zIndex: 100,
+    transition: 'transform .5s, opacity.5s, z-index .5s'
   }
   let imageContainerInlineStyle = {
     flex: 1,
@@ -94,7 +99,7 @@ const Card = (props) => {
 
 
   return (
-    <div>
+    <div className="card">
       {modal}
       <div id={id} className={cls.cardClass} style={cardInlineStyle} onClick={cardClickHandler} onMouseEnter={props.onMouseEnterHandler} onMouseLeave={props.onMouseLeaveHandler} >
         <div id={id} className={cls.imageContainerClass} style={imageContainerInlineStyle}>
