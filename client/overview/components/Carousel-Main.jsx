@@ -32,7 +32,7 @@ const Carousel = (props) => {
       )} */}
       </div>
       <Image className="imageMain"
-        style={{ width: "auto", minWidth: "750px", height: "830px", maxHeight: "830px"}}
+        style={{ width: "auto", minWidth: "950px", height: "830px", "borderRadius": "6px" }}
         zoomed={zoomed}
         src={imageUrl}
         alt="main img"
