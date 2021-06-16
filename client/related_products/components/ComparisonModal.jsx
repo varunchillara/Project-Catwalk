@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+
+
+
+
 const ComparisonModal = (props) => {
+
   let modalOverlayInlineStyle = {
     position: 'fixed',
     top: 0,
@@ -12,6 +17,7 @@ const ComparisonModal = (props) => {
   }
   let modalInlineStyle = {
     position: 'fixed',
+    borderRadius: '10%',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -19,7 +25,10 @@ const ComparisonModal = (props) => {
     padding: '20px',
     zIndex: 1000
   };
-  let modalSpanInlineStyle = {visibility: 'visible'};
+  let modalSpanInlineStyle = {
+    visibility: 'visible',
+    textAlign: 'right'
+  };
   let modalSpecsInlineStyle = {visibility: 'visible'};
 
   if (props.comparisonId !== props.relatedProductData.id) {
@@ -37,7 +46,8 @@ const ComparisonModal = (props) => {
       modalData[item] ? modalData[item].relatedProduct = relProdFeatures[item]
         : modalData[item] = {currentProduct: null, relatedProduct: relProdFeatures[item]}
     }
-      return modalData;
+
+    return modalData;
   }
 
   return ReactDOM.createPortal(
@@ -45,84 +55,94 @@ const ComparisonModal = (props) => {
       <div className="modal-overlay" style={modalOverlayInlineStyle}>
         <div className="comparison-modal" style={modalInlineStyle}>
           <span className="close" style={modalSpanInlineStyle} onClick={props.closeCompareModal}>X</span>
-          <p className="specs" style={modalSpecsInlineStyle}>
+          <div className="specs" style={modalSpecsInlineStyle}>
             <ComparisonTable currentProductName={props.currentProductData.nameWithText} relatedProductName={props.relatedProductData.nameWithText} comparisonData={generateCompareModalData(props.currentProductData.features, props.relatedProductData.features)}/>
-          </p>
+          </div>
         </div>
       </div>
     </>, document.getElementById('portal')
   )
 }
 
+
 const ComparisonTable = (props) => {
   let currentProductHeaderInlineStyle = {
-    background: 'gray',
+    background: '#e6e6e6',
     fontFamily: 'Cormorant',
     fontWeight: 'bolder',
     textAlign: 'left'
   }
   let relatedProductHeaderInlineStyle = {
-    background: 'gray',
+    background: '#e6e6e6',
     fontFamily: 'Cormorant',
     fontWeight: 'bolder',
     textAlign: 'right'
   }
-  let featureInlineStyle = {
 
-  }
-  let currentProductValueInlineStyle = {
-    fontFamily: 'Cormorant'
-  }
-  let relatedProductValueInlineStyle = {
-    fontFamily: 'Cormorant'
-  }
-  let featureTextInlineStyle = {
-    fontFamily: 'Cormorant'
-  }
+
+  let comparisonData = props.comparisonData
+  let comparisonKeys = Object.keys(comparisonData);
+  console.log(props)
+  console.log(comparisonData)
+  console.log(comparisonKeys)
   return (
-    <table>
-      <th className="current-product-header" style={currentProductHeaderInlineStyle} colspan="3">
-        Current Product
-      </th>
-      <th className="related-product-header" style={relatedProductHeaderInlineStyle} colspan="3">
-        Related Product
-      </th>
-      <hr></hr>
-      <tr className="feature" style={featureInlineStyle}>
-        <td className="current-product-value" colspan="2" style={currentProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-        <td className="feature-text" colspan="2">
-          Feature 1
-        </td>
-        <td className="related-product-value" colspan="2" style={relatedProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-      </tr>
-      <tr className="feature" colspan="2">
-      <td className="current-product-value" colspan="2" style={currentProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-        <td className="feature-text" colspan="2">
-          Feature 2
-        </td>
-        <td className="related-product-value" colspan="2" style={relatedProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-      </tr>
-      <tr className="feature" colspan="2">
-      <td className="current-product-value" colspan="2" style={currentProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-        <td className="feature-text" colspan="2">
-          Feature 3
-        </td>
-        <td className="related-product-value" colspan="2" style={relatedProductValueInlineStyle}>
-          Has or Doesn't Have
-        </td>
-      </tr>
+    <table width="500px">
+      <thead>
+        <tr>
+          <td className="current-product-header" style={currentProductHeaderInlineStyle}>
+            {props.currentProductName}
+          </td>
+          <td></td>
+          <td className="related-product-header" style={relatedProductHeaderInlineStyle}>
+            {props.relatedProductName}
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        {comparisonKeys.map(feature =>
+          <FeatureRow key={feature}
+          feature={feature}
+          currentProductValue={comparisonData[feature].currentProduct}
+          relatedProductValue={comparisonData[feature].relatedProduct}
+          />
+        )}
+      </tbody>
     </table>
   )
 }
 
+const FeatureRow = (props) => {
+  let featureInlineStyle = {
+    width: '500px'
+
+  }
+  let currentProductValueInlineStyle = {
+    fontFamily: 'Cormorant',
+    textAlign: 'left'
+  }
+  let relatedProductValueInlineStyle = {
+    fontFamily: 'Cormorant',
+    textAlign: 'right'
+  }
+  let featureTextInlineStyle = {
+    fontFamily: 'Cormorant',
+    textAlign: 'center',
+    fontWeight: 'bolder'
+  }
+
+
+  return (
+    <tr className="feature" style={featureInlineStyle}>
+      <td className="current-product-value" style={currentProductValueInlineStyle}>
+        {props.currentProductValue}
+      </td>
+      <td className="feature-text" style={featureTextInlineStyle}>
+        {props.feature}
+      </td>
+      <td className="related-product-value" style={relatedProductValueInlineStyle}>
+        {props.relatedProductValue}
+      </td>
+    </tr>
+  )
+}
 export default ComparisonModal;

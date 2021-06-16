@@ -1,35 +1,47 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
+var begin = 0;
+var end = 4;
 const CarouselThumbs = ({ photos, clickImage }) => {
+  const[urls, setUrls] = useState( [] );
 
-  let start = 0;
-  let end = 4;
+  let showFour = urls.map(url => url);
 
-  let images = photos.map((photo, i) => photo.url)
-  let showFour = images.slice(start, end);
-  // let secondFour = images.slice(4, 8);
-  // let rest = images.slice(8, 12);
+  useEffect(() => {
+    if (photos) {
+      setUrls(photos.slice(begin, end));
+    }
+  }, [photos])
 
   const arrowDown = () => {
-    start++;
-    end++;
-    console.log('down clicked')
+    if (begin === photos.length - 4) {
+      begin = photos.length - 4;
+      end = photos.length;
+    } else {
+      begin++;
+      end++;
+    }
+    setUrls(photos.slice(begin, end));
+  }
+
+  const arrowUp = () => {
+    if (begin === 0) {
+      begin = 0
+      end = 4;
+    } else {
+      begin--;
+      end--;
+    }
+    setUrls(photos.slice(begin, end));
   }
 
   return (
     <div className="imageThumbs">
-      <button onClick={() => {arrowUp()}}>/\</button>
+      <button style={{ "marginBottom": "20px" }} onClick={arrowUp}>/\</button>
       {showFour.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
+        <img key={i} style={{ "borderRadius": "10px", "height": "100px", "minWidth": "100px" }} src={image.thumbnail_url}  onClick={() => {clickImage(image.url)}}/>
       )}
-
-      {/* {secondFour.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
-      )}
-      {rest.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
-      )} */}
-      <button onClick={() => {arrowDown()}}>\/</button>
+      <button style={{ "marginTop": "-10px" }} onClick={arrowDown}>\/</button>
     </div>
   )
 };

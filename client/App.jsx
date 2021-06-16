@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import Overview from './overview/components/Overview.jsx';
-import RelatedProducts from './related_products/RelatedProducts.jsx';
 import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
@@ -12,8 +11,9 @@ import RelatedProductsContainer from './related_products/RelatedProductsContaine
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
+  const [currentChosenStyle, setCurrentChosenStyle] = useState(51174);
+  const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const dispatch = useDispatch();
-
 
   let cachedData = useSelector(state => state.cache) || null;
   let cachedKeys = Object.keys(cachedData)
@@ -22,9 +22,8 @@ function App () {
     currentStyle: useSelector(state => state.currentStyle),
     currentMetaReviews: useSelector(state => state.currentMetaReviews)
   }
-
   useEffect(() => {
-    console.log(cachedData)
+    // console.log(cachedData)
     if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
       if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentStyle !== '' || dataToBeCached.currentMetaReviews !== '') {
         cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
@@ -36,7 +35,6 @@ function App () {
         cachedData[dataToBeCached.currentProduct.data.id] = dataToBeCached;
         dispatch(updateCache(cachedData));
       }
-      console.log('updating from cached')
       dispatch(updateAll(cachedData[currentAppId]));
     } else {
       axios.defaults.headers = {
@@ -65,10 +63,14 @@ function App () {
     }
   }, [currentAppId])
 
+  const togglePopupOutfit = () => {
+    setIsOpenOutfit(!isOpenOutfit);
+  }
+
   return(
     <div className="App">
-      <Overview />
-      <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/>
+      <Overview setCurrentChosenStyle={setCurrentChosenStyle} togglePopupOutfit={togglePopupOutfit} isOpenOutfit={isOpenOutfit}/>
+      <RelatedProductsContainer setCurrentAppId={setCurrentAppId} currentChosenStyleId={currentChosenStyle} isOpenOutfit={isOpenOutfit}/>
       <RatingsAndReviews />
     </div>
   );

@@ -6,6 +6,11 @@ const Card = (props) => {
 
   let cardInlineStyle = {
     border: '1px solid grey',
+    top: 0,
+    width: '100%',
+    margin: 'auto',
+    zIndex: 100,
+    transition: 'transform .5s, opacity.5s, z-index .5s'
   }
   let imageContainerInlineStyle = {
     flex: 1,
@@ -61,7 +66,6 @@ const Card = (props) => {
     ratingClass: 'rating',
     actionClass: null
   }
-
   let cardClickHandler = props.cardClickHandler
   let overlayButton = props.outfitAdder ? null : props.actionButton
   let actionButtonMouseEnter = props.outfitAdder ? null : props.onMouseEnterHandler;
@@ -75,6 +79,7 @@ const Card = (props) => {
   let name = props.outfitAdder ? props.currentProductData.nameWithText : props.relatedProductData.nameWithText
   let modal = props.outfitAdder ? null : <ComparisonModal
     id={id}
+    currentChosenStyleId={props.currentChosenStyleId}
     comparisonId={props.comparisonId}
     relatedProductData={props.relatedProductData}
     currentProductData={props.currentProductData}
@@ -94,7 +99,7 @@ const Card = (props) => {
 
 
   return (
-    <div>
+    <div className="card">
       {modal}
       <div id={id} className={cls.cardClass} style={cardInlineStyle} onClick={cardClickHandler} onMouseEnter={props.onMouseEnterHandler} onMouseLeave={props.onMouseLeaveHandler} >
         <div id={id} className={cls.imageContainerClass} style={imageContainerInlineStyle}>
