@@ -11,9 +11,21 @@ function ListOfReviews() {
   const[reviews, setReviews] = useState([]);
   const[currentCount, setCurentCount] = useState(4);
   const[currentSort, setCurrentSort] = useState('newest');
+  const[toggleReport, setToggleReport] = useState(0);
+  const[helpfulToggle, setHelpfulToggle] = useState(false);
+
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  // const reviewValues = Object.values(reviews)
+  // let recs = 0;
+  // reviewValues.forEach((item) => {
+  //   if (item.recommend === true) {
+  //     recs ++;
+  //   }
+  // })
+  // console.log('**************', recs);
 
   function getReviews() {
-    console.log()
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
@@ -31,14 +43,17 @@ function ListOfReviews() {
   })
   }
 
+  function handleToggle() {
+    setToggleReport(0);
+  }
+
   function handleChange(e) {
     setCurrentSort(e.target.value);
  };
 
   useEffect(() => {
     getReviews();
-    console.log('does this get run again?????');
-  }, [currentProduct, currentCount, currentSort])
+  }, [currentProduct, currentCount, currentSort, toggleReport])
 
   return (
     <div className="Reviews">
@@ -46,12 +61,12 @@ function ListOfReviews() {
         {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
       {reviews.map((review, i) => {
-        return <Review key={i} review={review} />
+        return <Review key={i} review={review} getReviews={getReviews}/>
       })}
       <div className="buttons">
         <button className="button"
         onClick={() => {
-          const newCount = currentCount + 4;
+          const newCount = currentCount + 2;
           setCurentCount(newCount);
         }}>MORE REVIEWS</button>
         <AddAReview id={currentProduct.id} />

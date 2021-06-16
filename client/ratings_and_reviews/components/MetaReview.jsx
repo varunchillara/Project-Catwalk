@@ -9,11 +9,11 @@ import SizeComfortLengthQuality from './SizeComfortLengthQuality.jsx';
 
 function MetaReview() {
   const currentProduct = useSelector(state => state.currentProduct) || { data: { id: 11004 } };
-  // const currentProduct = useSelector(state => state.currentProduct);
   const currentMetaReview = useSelector(state => state.currentMetaReviews);
   const[metaReview, setMetaReview] = useState({});
 
-  console.log('************** currentPRODUCTTTTT', currentProduct);
+  const recCount = metaReview.recommended || {};
+  const recPrecentage = Math.trunc((Number(recCount.true) / (Number(recCount.true) + Number(recCount.false))) * 100)
 
   useEffect(() => {
     axios.defaults.headers = {
@@ -35,10 +35,9 @@ function MetaReview() {
       <h4 className="ratingsHeader">RATINGS & REVIEWS</h4>
       <Rating ratings={metaReview.ratings}/>
       <div className="recommendPrecentage">
-        % of reviews recommend this product
+      {recPrecentage} % of reviews recommend this product
       </div>
       <StarsCount ratings={metaReview.ratings}/>
-      {/* {console.log('****************metareview!!', metaReview)} */}
       <SizeComfortLengthQuality characteristics={metaReview.characteristics}/>
     </div>
   )

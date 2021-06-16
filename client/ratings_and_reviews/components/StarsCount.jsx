@@ -18,23 +18,23 @@ function StarsCount (props) {
   <div className="starsCountContainer">
     <div className="starsCount">
       <div className="stars1">5 stars</div>
-      <Bar precent={((Number(fiveStar)) / totalRatingsAdded) * 100} />
+      <Bar precent={((Number(fiveStar)) / totalRatingsAdded) * 100} count={fiveStar}/>
     </div>
     <div className="starsCount">
       <div className="stars1">4 stars</div>
-      <Bar precent={((Number(fourStar)) / totalRatingsAdded) * 100} />
+      <Bar precent={((Number(fourStar)) / totalRatingsAdded) * 100} count={fourStar}/>
     </div>
     <div className="starsCount">
       <div className="stars1">3 stars</div>
-      <Bar precent={((Number(threeStar)) / totalRatingsAdded) * 100} />
+      <Bar precent={((Number(threeStar)) / totalRatingsAdded) * 100} count={threeStar}/>
     </div>
     <div className="starsCount">
       <div className="stars1">2 stars</div>
-      <Bar precent={((Number(twoStar)) / totalRatingsAdded) * 100} />
+      <Bar precent={((Number(twoStar)) / totalRatingsAdded) * 100} count={twoStar}/>
     </div>
     <div className="starsCount">
       <div className="stars1">1 stars</div>
-      <Bar precent={((Number(oneStar)) / totalRatingsAdded) * 100} />
+      <Bar precent={((Number(oneStar)) / totalRatingsAdded) * 100} count={oneStar}/>
     </div>
   </div>
   );

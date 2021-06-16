@@ -5,6 +5,12 @@
   text-align: left;
 }
 
+.barContainer {
+  display: flex;
+  font-family: Cormorant;
+  color: #494949;
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -100,13 +106,17 @@
   margin-right: 10px;
   font-weight: normal;
 }
+.ratingsAndReviews .starsCount .numOfReviews {
+  color: lightgray;
+}
 .ratingsAndReviews .starsCount .bar {
   background-color: #e9e9e9;
-  width: 200px;
+  width: 184px;
   height: 7px;
   position: relative;
   transition: width 0.5s linear;
   margin-top: 8px;
+  margin-right: 2px;
 }
 .ratingsAndReviews .starsCount .bar .status {
   background: #494949;
@@ -164,8 +174,18 @@
   font-size: small;
   margin-bottom: 15px;
 }
-.ratingsAndReviews .actions .helpful {
-  margin-right: 10px;
+.report {
+  margin-left: 3px;
+}
+
+.yes:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.report:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .stars {
