@@ -48,19 +48,10 @@ const ProductInfo = (props) => {
     Modal.setAppElement('#modal');
   }, [])
 
-  const selectSize = (e) => {
-    setCurrentSize(e.target.value);
-    console.log(e.target.value)
-    // selectQuantity();
-  }
-
   const selectQuantity = () => {
-    if (currentSize === 'L') {
-      console.log('This is the currentSize', currentSize)
-    }
     let skus = Object.values(productSkus);
     for (let i = 0; i < skus.length; i++) {
-      if (skus[i].size === currentSize) {
+      if (skus[i].size === 'XS') {
         var qty;
         if (skus[i].quantity === 0) {
           qty = ['Out of Stock'];
@@ -73,6 +64,11 @@ const ProductInfo = (props) => {
       }
     }
     setQuantity(qty);
+  }
+
+  const selectSize = (e) => {
+    setCurrentSize(e.target.value);
+    selectQuantity();
   }
 
   const clickImage = (photo) => {
@@ -142,7 +138,7 @@ const ProductInfo = (props) => {
       <div className="size-quantity">
         <select
           className="selectSize" onChange={selectSize}>
-            <option key={0}>-</option>
+            <option key={0}>Select Size</option>
           {Object.values(productSkus).map((sku, i) =>
             <option key={i}>{sku.size}</option>
           )}
