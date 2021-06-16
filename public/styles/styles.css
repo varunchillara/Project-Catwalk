@@ -212,6 +212,8 @@
   display: flex;
   height: 120px;
   background-color: #3b9ebd;
+  border: 1px solid #555;
+  border-radius: 6px;
 }
 .overview .topOfPage .logo {
   border-radius: 50%;
@@ -236,12 +238,14 @@
   margin-left: 360px;
   margin-bottom: 4px;
   align-self: flex-end;
+  border-radius: 4px;
 }
 .overview .topOfPage .search-button {
   width: 60px;
   margin-right: 30px;
   margin-bottom: 4px;
   align-self: flex-end;
+  border-radius: 4px;
 }
 .overview .announcements {
   display: flex;
@@ -260,7 +264,7 @@
 }
 .overview .announcements .secondA:hover {
   font-weight: bold;
-  color: #f3f3f3;
+  color: #3b9ebd;
 }
 .overview .overview-main {
   display: flex;
@@ -285,8 +289,9 @@
   margin-bottom: 30px;
   border: 1px solid #555;
 }
-.overview .overview-main .imageThumbs:hover {
+.overview .overview-main .imageThumbs img:hover {
   cursor: pointer;
+  transform: scale(1.4);
 }
 .overview .overview-main .imageMain {
   border: 2px solid #555;
@@ -330,8 +335,9 @@
   margin: 5px;
   margin-bottom: 20px;
 }
-.overview .overview-main .styleSide .styleThumbsMain .styleThumbs:hover {
+.overview .overview-main .styleSide .styleThumbsMain .styleThumbs img:hover {
   cursor: pointer;
+  transform: scale(1.4);
 }
 .overview .overview-main .styleSide .size-quantity {
   display: flex;
@@ -345,6 +351,50 @@
 }
 .overview .overview-main .styleSide .bag-outfit {
   display: flex;
+}
+.overview .overview-main .styleSide .bag-outfit .popup-box {
+  position: fixed;
+  background: #74747450;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+.overview .overview-main .styleSide .bag-outfit .box {
+  position: relative;
+  width: 30%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+}
+.overview .overview-main .styleSide .bag-outfit .close-icon {
+  content: "X";
+  cursor: pointer;
+  position: fixed;
+  right: calc(15% + 330px);
+  top: calc(100vh - 85vh - 25px);
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+}
+.overview .overview-main .styleSide .bag-outfit .addToOutfit img:hover {
+  cursor: pointer;
+  transform: scale(1.5);
+}
+.overview .overview-main .styleSide .share img:hover {
+  cursor: pointer;
+  transform: scale(1.3);
 }
 .overview .description-features {
   display: flex;
@@ -361,12 +411,12 @@
   content: "✓ ";
 }
 .overview .description-features .slogan-features .productSlogan {
-  align-self: flex-end;
+  margin-left: 30px;
   font-size: 24px;
   font-weight: bold;
 }
 .overview .description-features .slogan-features .productFeatures {
-  margin-left: 440px;
+  margin-left: 570px;
   font-size: 20px;
 }
 .overview .description-features .productDescription {
@@ -374,6 +424,9 @@
   align-self: flex-start;
   justify-content: center;
   font-size: 20px;
+  margin-left: 30px;
+  margin-top: -50px;
+  margin-bottom: 50px;
 }
 
 /*# sourceMappingURL=styles.css.map */

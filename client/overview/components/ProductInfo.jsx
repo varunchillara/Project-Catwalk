@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
 import Stars from '../../sharedComponents/Stars.jsx';
-import SelectStyle from './SelectStyle.jsx';
+import Popup from './Popup.jsx';
 
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
@@ -14,7 +14,7 @@ const ProductInfo = (props) => {
   const[productSkus, setProductSkus] = useState( {} );
   // const[currentSku, setCurrentSku] = useState( '' )
   const[quantity, setQuantity] = useState( [] )
-  // console.log('productSkus', productSkus)
+  const[isOpen, setIsOpen] = useState(false);
 
   // let vals = Object.values(props.style.skus)
   // console.log('vals', vals)
@@ -22,7 +22,6 @@ const ProductInfo = (props) => {
   useEffect(() => {
     if (props.style.name) {
       setProductStyle(props.style.name);
-      props.setCurrentChosenStyle(props.style.style_id)
     }
   }, [props.style.name])
 
@@ -86,6 +85,10 @@ const ProductInfo = (props) => {
     return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
 
+  const togglePopup = (content) => {
+    setIsOpen(!isOpen);
+  }
+
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -103,12 +106,12 @@ const ProductInfo = (props) => {
       </div>
       <div className="productStyleHeader">
         <span>Selected Style: </span>
-        <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
+        <span style={{ 'color': 'rgb(59, 158, 189)', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
         {props.productStyles.map((style, i) =>
         <div className="styleThumbs" key={i}>
-          <img style={{"border" : "2px solid #555"}} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+          <img style={{"border" : "2px solid #555", "borderRadius": "50%" }} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
         </div>
         )}
       </div>
@@ -128,19 +131,28 @@ const ProductInfo = (props) => {
       </div>
       <div className="bag-outfit">
         <div className="addToBag">
-          <button className="button">Add To Bag</button>
+          <input
+            type="button"
+            className="button"
+            value="Add to Bag"
+            onClick={togglePopup}
+          />
+          {isOpen && <Popup
+            content={<>
+              <span style={{ "fontWeight": "bold"}}>Added to Bag!</span>
+              <span style={{ "marginLeft": "8px", "fontWeight": "bold"}}>You're this much closer to happiness!</span>
+            </>}
+            handleClose={togglePopup}
+          />}
         </div>
         <div className="addToOutfit">
-          <button className="button">
-            <img src="./assets/relatedProductACTION.png" height="30px" width="30px"/>
-          </button>
+          <img style={{ "marginTop": "16px" }} src="./assets/relatedProductACTION.png" height="40px" width="40px"/>
         </div>
       </div>
       <div className="share">
-        {/* <img src="../../../public/images/instagram.jpg" height="40px" width="40px" /> */}
-        <button className="button">Instagram</button>
-        <button className="button">Pinterest</button>
-        <button className="button">Facebook</button>
+        <img style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
+        <img style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
+        <img src="./assets/facebook.png" height="50px" width="50px"/>
       </div>
     </div>
   )

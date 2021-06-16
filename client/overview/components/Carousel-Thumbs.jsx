@@ -1,35 +1,54 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 const CarouselThumbs = ({ photos, clickImage }) => {
+  const[urls, setUrls] = useState( [] );
 
-  let start = 0;
-  let end = 4;
+  var start = 0;
+  var end = 4;
+  let showFour = urls.map(url => url.thumbnail_url);
 
-  let images = photos.map((photo, i) => photo.url)
-  let showFour = images.slice(start, end);
-  // let secondFour = images.slice(4, 8);
-  // let rest = images.slice(8, 12);
+  useEffect(() => {
+    if (photos) {
+      setUrls(photos.slice(start, end));
+    }
+  }, [photos])
 
   const arrowDown = () => {
-    start++;
-    end++;
-    console.log('down clicked')
+    if (start === urls.length - 4) {
+      start = urls.length - 4;
+      end = urls.length;
+    } else {
+      start++;
+      end++;
+    }
+
+    setUrls(photos.slice(start + 1, end + 1));
+    console.log('start click', start)
   }
+
+  console.log('start', start);
+  console.log('end', end);
+
+  const arrowUp = () => {
+    if (start === 0) {
+      start = 0
+      end = 4;
+    } else {
+      start--;
+      end--;
+    }
+    setUrls(photos.slice(start, end));
+  }
+
+  console.log('urls', urls)
 
   return (
     <div className="imageThumbs">
-      <button onClick={() => {arrowUp()}}>/\</button>
+      <button style={{ 'marginBottom': '20px' }} onClick={() => {arrowUp()}}>/\</button>
       {showFour.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
+        <img key={i} style={{ "borderRadius": "10px" }} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
       )}
-
-      {/* {secondFour.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
-      )}
-      {rest.map((image, i) =>
-        <img key={i} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
-      )} */}
-      <button onClick={() => {arrowDown()}}>\/</button>
+      <button style={{ "marginTop": "-10px" }} onClick={() => {arrowDown()}}>\/</button>
     </div>
   )
 };
