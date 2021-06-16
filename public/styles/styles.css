@@ -292,6 +292,7 @@
 .overview .overview-main .imageThumbs img:hover {
   cursor: pointer;
   transform: scale(1.4);
+  border: 2px solid #3b9ebd;
 }
 .overview .overview-main .imageMain {
   border: 2px solid #555;
@@ -404,6 +405,12 @@
 .overview .description-features .slogan-features {
   display: flex;
 }
+.overview .description-features .slogan-features .vertical {
+  border-left: 2px solid #555;
+  height: 70px;
+  position: absolute;
+  margin-top: 16px;
+}
 .overview .description-features .slogan-features ul {
   list-style: none;
 }
@@ -426,7 +433,7 @@
   font-size: 20px;
   margin-left: 30px;
   margin-top: -50px;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 /*# sourceMappingURL=styles.css.map */

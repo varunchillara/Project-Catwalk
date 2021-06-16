@@ -4,7 +4,9 @@ import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
 import Stars from '../../sharedComponents/Stars.jsx';
-import Popup from './Popup.jsx';
+import PopupBag from './PopupBag.jsx';
+import PopupOutfit from './PopupOutfit.jsx';
+import PopupShare from './PopupShare.jsx';
 
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
@@ -14,7 +16,9 @@ const ProductInfo = (props) => {
   const[productSkus, setProductSkus] = useState( {} );
   // const[currentSku, setCurrentSku] = useState( '' )
   const[quantity, setQuantity] = useState( [] )
-  const[isOpen, setIsOpen] = useState(false);
+  const[isOpenBag, setIsOpenBag] = useState(false);
+  const[isOpenOutfit, setIsOpenOutfit] = useState(false);
+  const[isOpenShare, setIsOpenShare] = useState(false);
 
   // let vals = Object.values(props.style.skus)
   // console.log('vals', vals)
@@ -85,9 +89,17 @@ const ProductInfo = (props) => {
     return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
 
-  const togglePopup = (content) => {
-    setIsOpen(!isOpen);
+  const togglePopupBag = () => {
+    setIsOpenBag(!isOpenBag);
   }
+  const togglePopupOutfit = () => {
+    setIsOpenOutfit(!isOpenOutfit);
+  }
+
+  const togglePopupShare = () => {
+    setIsOpenShare(!isOpenShare);
+  }
+
 
   return (
     <div className="styleSide">
@@ -124,6 +136,7 @@ const ProductInfo = (props) => {
           )}
         </select>
         <select className="selectQty">
+          <option key={0}>-</option>
           {quantity.map((qty, i) =>
             <option key={i}>{qty}</option>
           )}
@@ -135,18 +148,28 @@ const ProductInfo = (props) => {
             type="button"
             className="button"
             value="Add to Bag"
-            onClick={togglePopup}
+            onClick={togglePopupBag}
           />
-          {isOpen && <Popup
-            content={<>
-              <span style={{ "fontWeight": "bold"}}>Added to Bag!</span>
-              <span style={{ "marginLeft": "8px", "fontWeight": "bold"}}>You're this much closer to happiness!</span>
+          {isOpenBag && <PopupBag
+            bagContent={<>
+              <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Bag!</span>
+              <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're one step closer to happiness!</span>
             </>}
-            handleClose={togglePopup}
+            handleCloseBag={togglePopupBag}
           />}
         </div>
         <div className="addToOutfit">
-          <img style={{ "marginTop": "16px" }} src="./assets/relatedProductACTION.png" height="40px" width="40px"/>
+          <img
+            style={{ "border": "1px solid #555", "marginTop": "14px" }} src="./assets/relatedProductACTION.png" height="46px" width="46px"
+            onClick={togglePopupOutfit}
+          />
+          {isOpenOutfit && <PopupOutfit
+            outfitContent={<>
+              <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
+              <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
+            </>}
+            handleCloseOutfit={togglePopupOutfit}
+          />}
         </div>
       </div>
       <div className="share">

@@ -103,6 +103,7 @@
     .imageThumbs img:hover {
       cursor: pointer;
       transform: scale(1.4);
+      border: 2px solid rgb(59, 158, 189);
     }
 
     .imageMain {
@@ -238,6 +239,13 @@
     .slogan-features {
       display: flex;
 
+      .vertical {
+        border-left: 2px solid #555;
+        height: 70px;
+        position: absolute;
+        margin-top: 16px;
+      }
+
       ul {
         list-style: none;
       }
@@ -264,7 +272,7 @@
       font-size: 20px;
       margin-left: 30px;
       margin-top: -50px;
-      margin-bottom: 50px;
+      margin-bottom: 60px;
     }
   }
 };
