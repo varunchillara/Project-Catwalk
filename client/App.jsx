@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import Overview from './overview/components/Overview.jsx';
-import RelatedProducts from './related_products/RelatedProducts.jsx';
 import RatingsAndReviews from './ratings_and_reviews/RatingsAndReviews.jsx';
 import axios from 'axios';
 import token from './env/config.js';
@@ -15,7 +14,6 @@ function App () {
   const [currentChosenStyle, setCurrentChosenStyle] = useState(51174);
   const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const dispatch = useDispatch();
-  // console.log({isOpenOutfit})
 
   let cachedData = useSelector(state => state.cache) || null;
   let cachedKeys = Object.keys(cachedData)

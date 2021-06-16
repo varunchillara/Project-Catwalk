@@ -3,9 +3,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useUpdate} from '../../store/actions/product.js';
 import axios from 'axios';
 import token from '../env/config.js';
-import averageReviewsCalculator from '../helperFunctions.js'
-import Card from './components/Card.jsx'
-
+import averageReviewsCalculator from '../helperFunctions.js';
+import Card from './components/Card.jsx';
+import Carousel from './components/Carousel.jsx';
+import MyOutfitCarousel from './components/MyOutfitCarousel.jsx';
+import RelatedProductsCarousel from './components/RelatedProductsCarousel.jsx';
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -16,10 +18,11 @@ axios.defaults.headers = {
 
 
 
-class CardTemplate extends React.Component {
+class RelatedProductsMain extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      cache: {},
       currentProductData: {},
       currentProductStyles: {},
       relatedProductsData: {},
@@ -41,6 +44,7 @@ class CardTemplate extends React.Component {
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
   updateOverviewProduct (currentProductData, currentProductStylesData, currentChosenStyleId) {
+
     if (Object.keys(this.state.currentProductStyles).length) {
       if (currentChosenStyleId !== this.state.currentChosenStyleId) {
         this.setState({
@@ -63,6 +67,11 @@ class CardTemplate extends React.Component {
       results[0][1] = results[0][1].data
       results[1] = results[1].map(result => result.data)
       results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
+
+
+      //store the above results in cache
+
+
       this.setState ({
           currentProductData: this.formatData(results[0]),
           relatedProductsData: this.formatData(results[1]),
@@ -123,6 +132,7 @@ class CardTemplate extends React.Component {
 
   fetchRelatedProducts (results) {
     let relatedProductIds = results.data
+    //check if each id for each of these pieces of data exist in cache.  if they do, pull from cache.  if not make an api call
     let relatedProductsData = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
     let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
@@ -225,67 +235,17 @@ class CardTemplate extends React.Component {
   }
 
   render () {
-    let relatedProductsContainerInlineStyle = {
-      margin: 'auto',
-      width : '920px',
-
-    }
-    let cardTitleInlineStyle = {
-      fontFamily : 'Cormorant',
-      fontWeight : 'bolder',
-      fontSize : '16px'
-    }
-
-    let carouselInlineStyle = {
-      marginTop: '30px',
-      marginBottom: '50px',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'left',
-    }
-
-    let cardRowInlineStyle = {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'left',
-      gap: '10%'
-    }
-
-    let myOutfitContainer = {
-      display: "flex",
-      flexDirection: "row",
-      gap: "10%"
-    }
-
-    let carouselLeftButton = {
-      width: '70px',
-      height: '70px',
-      alignSelf: 'center',
-      position: 'absolute',
-      left: '30px',
-      zIndex: 1
-    }
-    let carouselRightButton = {
-      width: '70px',
-      height: '70px',
-      alignSelf: 'center',
-      position: 'absolute',
-      right: '10%',
-      zIndex: 1,
-
-    }
 
     let modalCompareButton = "./assets/relatedProductACTION.png";
     let removeOutfitButton = "./assets/myOutfitACTION.png";
-    let addOutfitCard;
-    let relatedProducts = Object.values(this.state.relatedProductsData).length ? Object.values(this.state.relatedProductsData) : null;
-    let myOutfit = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : null
+    let addOutfitCard = null;
+    let relatedProductsCards = Object.values(this.state.relatedProductsData).length ? Object.values(this.state.relatedProductsData) : [];
+    let myOutfitCards = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : []
     let currentProductData = (this.state.currentProductData);
 
 
-    if (relatedProducts !== null) {
-
-        relatedProducts = relatedProducts.map(product => <Card
+    if (relatedProductsCards !== null) {
+        relatedProductsCards = relatedProductsCards.map(product => <Card
           key={product.id}
           currentChosenStyleId={this.props.currentChosenStyleId}
           relatedProductData={product}
@@ -299,8 +259,8 @@ class CardTemplate extends React.Component {
           currentProductData={currentProductData}
           />)
       }
-      if (myOutfit !== null) {
-        myOutfit = myOutfit.map(product => <Card
+      if (myOutfitCards !== null) {
+        myOutfitCards = myOutfitCards.map(product => <Card
           key={product.id}
           relatedProductData={product}
           currentProductData={currentProductData}
@@ -321,39 +281,28 @@ class CardTemplate extends React.Component {
           outfitAdder={true}
         />
       }
+
+    let relatedProductsWrapperInlineStyle = {
+      margin: 'auto',
+      width : '920px',
+    }
     return (
-    <div>
-      <div className="related-products-container" style={relatedProductsContainerInlineStyle}>
-        <div className="related-products-title" style={cardTitleInlineStyle}>
-          RELATED PRODUCTS
-        </div>
-        <div className="related-products-carousel" style={carouselInlineStyle}>
-          <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
-          <div className="card-row" style={cardRowInlineStyle}>
-            {relatedProducts}
-          </div>
-          <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
-        </div>
-        <div className="my-outfit-title" style={cardTitleInlineStyle}>
-          MY OUTFIT
-        </div>
-        <div className="my-outfit-container" style={myOutfitContainer}>
-          <div className="add-outfit-card" style={carouselInlineStyle}>
-            {addOutfitCard}
-          </div>
-          <div className="my-outfit-carousel" style={carouselInlineStyle}>
-            <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
-            <div className="card-row" style={cardRowInlineStyle}>
-              {myOutfit}
-            </div>
-            <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
-          </div>
-        </div>
+      <div className="related-products-wrapper" style={relatedProductsWrapperInlineStyle}>
+        <RelatedProductsCarousel
+          relatedProductsCards={relatedProductsCards}
+          modalCompareButton={modalCompareButton}
+          currentProductData={currentProductData}
+          />
+        <MyOutfitCarousel
+          myOutfitCards={myOutfitCards}
+          addOutfitCard={addOutfitCard}
+          removeOutfitButton={removeOutfitButton}
+          currentProductData={currentProductData}
+          />
       </div>
-    </div>
     )
   }
 }
 
-export default CardTemplate;
+export default RelatedProductsMain;
 
