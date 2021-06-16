@@ -12,6 +12,7 @@ import RelatedProductsContainer from './related_products/RelatedProductsContaine
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
   const [currentChosenStyle, setCurrentChosenStyle] = useState(51174);
+  const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const dispatch = useDispatch();
 
   let cachedData = useSelector(state => state.cache) || null;
@@ -62,10 +63,14 @@ function App () {
     }
   }, [currentAppId])
 
+  const togglePopupOutfit = () => {
+    setIsOpenOutfit(!isOpenOutfit);
+  }
+
   return(
     <div className="App">
-      <Overview setCurrentChosenStyle={setCurrentChosenStyle}/>
-      <RelatedProductsContainer setCurrentAppId={setCurrentAppId} currentChosenStyleId={currentChosenStyle}/>
+      <Overview setCurrentChosenStyle={setCurrentChosenStyle} togglePopupOutfit={togglePopupOutfit} isOpenOutfit={isOpenOutfit}/>
+      <RelatedProductsContainer setCurrentAppId={setCurrentAppId} currentChosenStyleId={currentChosenStyle} isOpenOutfit={isOpenOutfit}/>
       <RatingsAndReviews />
     </div>
   );
