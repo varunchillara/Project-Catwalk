@@ -1,54 +1,47 @@
 import React, {useState, useEffect} from 'react';
 
+var begin = 0;
+var end = 4;
 const CarouselThumbs = ({ photos, clickImage }) => {
   const[urls, setUrls] = useState( [] );
 
-  var start = 0;
-  var end = 4;
-  let showFour = urls.map(url => url.thumbnail_url);
+  let showFour = urls.map(url => url);
 
   useEffect(() => {
     if (photos) {
-      setUrls(photos.slice(start, end));
+      setUrls(photos.slice(begin, end));
     }
   }, [photos])
 
   const arrowDown = () => {
-    if (start === urls.length - 4) {
-      start = urls.length - 4;
-      end = urls.length;
+    if (begin === photos.length - 4) {
+      begin = photos.length - 4;
+      end = photos.length;
     } else {
-      start++;
+      begin++;
       end++;
     }
-
-    setUrls(photos.slice(start + 1, end + 1));
-    console.log('start click', start)
+    setUrls(photos.slice(begin, end));
   }
-
-  console.log('start', start);
-  console.log('end', end);
 
   const arrowUp = () => {
-    if (start === 0) {
-      start = 0
+    if (begin === 0) {
+      begin = 0
       end = 4;
     } else {
-      start--;
+      begin--;
       end--;
     }
-    setUrls(photos.slice(start, end));
+    setUrls(photos.slice(begin, end));
   }
-
-  console.log('urls', urls)
 
   return (
     <div className="imageThumbs">
-      <button style={{ 'marginBottom': '20px' }} onClick={() => {arrowUp()}}>/\</button>
+      <button style={{ "marginBottom": "20px" }} onClick={arrowUp}>/\</button>
       {showFour.map((image, i) =>
-        <img key={i} style={{ "borderRadius": "10px" }} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
+        <img key={i} style={{ "borderRadius": "10px", "height": "100px", "minWidth": "100px" }} src={image.thumbnail_url}  onClick={() => {clickImage(image.url)}}/>
       )}
-      <button style={{ "marginTop": "-10px" }} onClick={() => {arrowDown()}}>\/</button>
+      <button style={{ "marginTop": "-10px" }} onClick={arrowDown}>\/</button>
     </div>
   )
 };

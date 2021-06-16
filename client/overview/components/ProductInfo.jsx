@@ -16,17 +16,11 @@ const ProductInfo = (props) => {
   const[productStyle, setProductStyle] = useState( );
   const[productPrice, setProductPrice] = useState( );
   const[productSkus, setProductSkus] = useState( {} );
-  // const[currentSku, setCurrentSku] = useState( '' )
-  const[quantity, setQuantity] = useState( [] )
+  const[currentSize, setCurrentSize] = useState( '' );
+  const[quantity, setQuantity] = useState( [] );
   const[isOpenBag, setIsOpenBag] = useState(false);
-  // const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const[isOpenShare, setIsOpenShare] = useState(false);
-  const [modalIsOpen,setIsOpen] = React.useState(false);
-
-  console.log({productSkus})
-
-  // let vals = Object.values(props.style.skus)
-  // console.log('vals', vals)
+  const [modalIsOpen,setIsOpen] = useState(false);
 
   useEffect(() => {
     if (props.style.name) {
@@ -45,10 +39,8 @@ const ProductInfo = (props) => {
   useEffect(() => {
     if (props.style.skus) {
       setProductSkus(props.style.skus);
-      // setCurrentSku('')
       let defaultQty = new Array(15).fill(true).map((num, i) => i + 1)
       setQuantity(defaultQty)
-      // setQuantity(new Array(Object.values(props.style.skus)[0].quantity.fill(true).map((num, i) => i + 1)))
     }
   }, [props.style.skus])
 
@@ -56,28 +48,35 @@ const ProductInfo = (props) => {
     Modal.setAppElement('#modal');
   }, [])
 
-  const selectSize = () => {
-    console.log('selected')
-    // setCurrentSku(sku)
+  const selectSize = (e) => {
+    setCurrentSize(e.target.value);
+    console.log(e.target.value)
+    // selectQuantity();
   }
 
   const selectQuantity = () => {
+    if (currentSize === 'L') {
+      console.log('This is the currentSize', currentSize)
+    }
     let skus = Object.values(productSkus);
     for (let i = 0; i < skus.length; i++) {
-      var qty;
-      if (skus[i].quantity < 15) {
-        qty = new Array(skus[i].quantity).fill(true).map((num, i) => i + 1);
-      } else {
-        qty = new Array(15).fill(true).map((num, i) => i + 1);
+      if (skus[i].size === currentSize) {
+        var qty;
+        if (skus[i].quantity === 0) {
+          qty = ['Out of Stock'];
+        }
+        if (skus[i].quantity < 15) {
+          qty = new Array(skus[i].quantity).fill(true).map((num, i) => i + 1);
+        } else {
+          qty = new Array(15).fill(true).map((num, i) => i + 1);
+        }
       }
     }
-    // console.log('selected', qty);
     setQuantity(qty);
   }
 
   const clickImage = (photo) => {
     props.setStyle(photo);
-    console.log('style', props.style)
   }
 
   const priceCheck = () => {
@@ -106,15 +105,14 @@ const ProductInfo = (props) => {
     setIsOpenShare(!isOpenShare);
   }
 
-  function openModal() {
+  const openModal = () => {
     setIsOpen(true);
   }
 
-  function closeModal(){
+  const closeModal = () => {
     setIsOpen(false);
   }
 
-console.log('isopenOutfit***', props.isOpenOutfit)
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -137,13 +135,13 @@ console.log('isopenOutfit***', props.isOpenOutfit)
       <div className="styleThumbsMain">
         {props.productStyles.map((style, i) =>
         <div className="styleThumbs" key={i}>
-          <img style={{"border" : "2px solid #555", "borderRadius": "50%" }} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+          <img alt="styleThumb" style={{"border" : "2px solid #555", "borderRadius": "50%" }} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
         </div>
         )}
       </div>
       <div className="size-quantity">
         <select
-          className="selectSize" onChange={() => selectQuantity()}>
+          className="selectSize" onChange={selectSize}>
             <option key={0}>-</option>
           {Object.values(productSkus).map((sku, i) =>
             <option key={i}>{sku.size}</option>
@@ -177,22 +175,17 @@ console.log('isopenOutfit***', props.isOpenOutfit)
             style={{ "border": "1px solid #555", "marginTop": "14px" }} src="./assets/relatedProductACTION.png" height="46px" width="46px"
             onClick={props.togglePopupOutfit}
           />
-          {props.isOpenOutfit && <PopupOutfit
-            // outfitContent={<>
-            //   <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
-            //   <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
-            // </>}
-            handleCloseOutfit={props.togglePopupOutfit}
-          >
+          {props.isOpenOutfit &&
+          <PopupOutfit handleCloseOutfit={props.togglePopupOutfit}>
             <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
             <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
-            </PopupOutfit>}
+          </PopupOutfit>}
         </div>
       </div>
       <div className="share">
-        <img onClick={openModal} style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
-        <img onClick={openModal} style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
-        <img onClick={openModal} src="./assets/facebook.png" height="50px" width="50px"/>
+        <img alt="twitter" onClick={openModal} style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
+        <img alt="pinterest" onClick={openModal} style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
+        <img alt="facebook" onClick={openModal} src="./assets/facebook.png" height="50px" width="50px"/>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
