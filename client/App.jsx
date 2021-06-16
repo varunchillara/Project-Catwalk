@@ -21,7 +21,6 @@ function App () {
     currentStyle: useSelector(state => state.currentStyle),
     currentMetaReviews: useSelector(state => state.currentMetaReviews)
   }
-
   useEffect(() => {
     // console.log(cachedData)
     if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
@@ -35,7 +34,6 @@ function App () {
         cachedData[dataToBeCached.currentProduct.data.id] = dataToBeCached;
         dispatch(updateCache(cachedData));
       }
-      console.log('updating from cached')
       dispatch(updateAll(cachedData[currentAppId]));
     } else {
       axios.defaults.headers = {

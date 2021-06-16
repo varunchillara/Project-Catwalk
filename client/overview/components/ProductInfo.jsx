@@ -4,7 +4,9 @@ import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
 import Stars from '../../sharedComponents/Stars.jsx';
-import SelectStyle from './SelectStyle.jsx';
+import PopupBag from './PopupBag.jsx';
+import PopupOutfit from './PopupOutfit.jsx';
+import PopupShare from './PopupShare.jsx';
 
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
@@ -14,7 +16,9 @@ const ProductInfo = (props) => {
   const[productSkus, setProductSkus] = useState( {} );
   // const[currentSku, setCurrentSku] = useState( '' )
   const[quantity, setQuantity] = useState( [] )
-  // console.log('productSkus', productSkus)
+  const[isOpenBag, setIsOpenBag] = useState(false);
+  const[isOpenOutfit, setIsOpenOutfit] = useState(false);
+  const[isOpenShare, setIsOpenShare] = useState(false);
 
   // let vals = Object.values(props.style.skus)
   // console.log('vals', vals)
@@ -22,7 +26,6 @@ const ProductInfo = (props) => {
   useEffect(() => {
     if (props.style.name) {
       setProductStyle(props.style.name);
-      props.setCurrentChosenStyle(props.style.style_id)
     }
   }, [props.style.name])
 
@@ -86,6 +89,18 @@ const ProductInfo = (props) => {
     return <span style={{ 'fontSize': '20px' }}>${props.style.original_price}</span>;
   }
 
+  const togglePopupBag = () => {
+    setIsOpenBag(!isOpenBag);
+  }
+  const togglePopupOutfit = () => {
+    setIsOpenOutfit(!isOpenOutfit);
+  }
+
+  const togglePopupShare = () => {
+    setIsOpenShare(!isOpenShare);
+  }
+
+
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -103,12 +118,12 @@ const ProductInfo = (props) => {
       </div>
       <div className="productStyleHeader">
         <span>Selected Style: </span>
-        <span style={{ 'color': 'rgb(81, 126, 221', 'fontWeight': 'bold' }}> {productStyle}</span>
+        <span style={{ 'color': 'rgb(59, 158, 189)', 'fontWeight': 'bold' }}> {productStyle}</span>
       </div>
       <div className="styleThumbsMain">
         {props.productStyles.map((style, i) =>
         <div className="styleThumbs" key={i}>
-          <img style={{"border" : "2px solid #555"}} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
+          <img style={{"border" : "2px solid #555", "borderRadius": "50%" }} src={style.photos[0].thumbnail_url} height="100px" width="100px" onClick={() => clickImage(style)}/>
         </div>
         )}
       </div>
@@ -121,6 +136,7 @@ const ProductInfo = (props) => {
           )}
         </select>
         <select className="selectQty">
+          <option key={0}>-</option>
           {quantity.map((qty, i) =>
             <option key={i}>{qty}</option>
           )}
@@ -128,19 +144,38 @@ const ProductInfo = (props) => {
       </div>
       <div className="bag-outfit">
         <div className="addToBag">
-          <button className="button">Add To Bag</button>
+          <input
+            type="button"
+            className="button"
+            value="Add to Bag"
+            onClick={togglePopupBag}
+          />
+          {isOpenBag && <PopupBag
+            bagContent={<>
+              <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Bag!</span>
+              <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're one step closer to happiness!</span>
+            </>}
+            handleCloseBag={togglePopupBag}
+          />}
         </div>
         <div className="addToOutfit">
-          <button className="button">
-            <img src="./assets/relatedProductACTION.png" height="30px" width="30px"/>
-          </button>
+          <img
+            style={{ "border": "1px solid #555", "marginTop": "14px" }} src="./assets/relatedProductACTION.png" height="46px" width="46px"
+            onClick={togglePopupOutfit}
+          />
+          {isOpenOutfit && <PopupOutfit
+            outfitContent={<>
+              <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
+              <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
+            </>}
+            handleCloseOutfit={togglePopupOutfit}
+          />}
         </div>
       </div>
       <div className="share">
-        {/* <img src="../../../public/images/instagram.jpg" height="40px" width="40px" /> */}
-        <button className="button">Instagram</button>
-        <button className="button">Pinterest</button>
-        <button className="button">Facebook</button>
+        <img style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
+        <img style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
+        <img src="./assets/facebook.png" height="50px" width="50px"/>
       </div>
     </div>
   )
