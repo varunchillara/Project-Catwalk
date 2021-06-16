@@ -236,6 +236,10 @@ class RelatedProductsMain extends React.Component {
 
   render () {
 
+    if (this.props.isOpenOutfit) {
+      console.log('YAAAAY')
+    }
+
     let modalCompareButton = "./assets/relatedProductACTION.png";
     let removeOutfitButton = "./assets/myOutfitACTION.png";
     let addOutfitCard = null;
