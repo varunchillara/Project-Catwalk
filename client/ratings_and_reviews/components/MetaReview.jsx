@@ -13,7 +13,7 @@ function MetaReview() {
   const currentMetaReview = useSelector(state => state.currentMetaReviews);
   const[metaReview, setMetaReview] = useState({});
 
-  console.log('************** currentPRODUCTTTTT', currentProduct);
+  // console.log('************** currentPRODUCTTTTT', currentProduct);
 
   useEffect(() => {
     axios.defaults.headers = {

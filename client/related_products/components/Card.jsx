@@ -61,7 +61,6 @@ const Card = (props) => {
     ratingClass: 'rating',
     actionClass: null
   }
-
   let cardClickHandler = props.cardClickHandler
   let overlayButton = props.outfitAdder ? null : props.actionButton
   let actionButtonMouseEnter = props.outfitAdder ? null : props.onMouseEnterHandler;
@@ -75,6 +74,7 @@ const Card = (props) => {
   let name = props.outfitAdder ? props.currentProductData.nameWithText : props.relatedProductData.nameWithText
   let modal = props.outfitAdder ? null : <ComparisonModal
     id={id}
+    currentChosenStyleId={props.currentChosenStyleId}
     comparisonId={props.comparisonId}
     relatedProductData={props.relatedProductData}
     currentProductData={props.currentProductData}

@@ -22,6 +22,7 @@ const ProductInfo = (props) => {
   useEffect(() => {
     if (props.style.name) {
       setProductStyle(props.style.name);
+      props.setCurrentChosenStyle(props.style.style_id)
     }
   }, [props.style.name])
 

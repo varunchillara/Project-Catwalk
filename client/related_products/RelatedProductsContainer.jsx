@@ -9,6 +9,7 @@ const RelatedProductsContainer = (props) => {
   return (
     <>
       <RelatedProducts
+      currentChosenStyleId={props.currentChosenStyleId}
       currentProduct={currentProduct}
       currentProductStyles={currentStyle}
       setCurrentAppId={props.setCurrentAppId}/>
