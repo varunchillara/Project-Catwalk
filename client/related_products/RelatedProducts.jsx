@@ -21,9 +21,10 @@ class CardTemplate extends React.Component {
     super(props)
     this.state = {
       currentProductData: {},
-      currentProductStyle: {},
+      currentProductStyles: {},
       relatedProductsData: {},
       myOutfit: {},
+      currentChosenStyleId: null,
       modalId: null
     }
     this.formatData = this.formatData.bind(this);
@@ -39,8 +40,15 @@ class CardTemplate extends React.Component {
     this.determineAction = this.determineAction.bind(this);
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
-  updateOverviewProduct (currentProductData, currentProductStylesData) {
-
+  updateOverviewProduct (currentProductData, currentProductStylesData, currentChosenStyleId) {
+    if (Object.keys(this.state.currentProductStyles).length) {
+      if (currentChosenStyleId !== this.state.currentChosenStyleId) {
+        this.setState({
+          currentChosenStyleId: currentChosenStyleId,
+          currentChosenStyle: this.state.currentProductStyles[`${currentChosenStyleId}`]
+        })
+      }
+    }
     if (currentProductStylesData === '' || currentProductStylesData.data.product_id === this.state.currentProductData.id ) {
       return;
     }
@@ -51,12 +59,14 @@ class CardTemplate extends React.Component {
       return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
     })
     .then(results => {
+      let currentProductStyles = {}
       results[0][1] = results[0][1].data
       results[1] = results[1].map(result => result.data)
+      results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
       this.setState ({
           currentProductData: this.formatData(results[0]),
           relatedProductsData: this.formatData(results[1]),
-          currentProductStyle: results[2].data
+          currentProductStyles: currentProductStyles
         })
       })
       .catch(error => console.error(error))
@@ -208,10 +218,10 @@ class CardTemplate extends React.Component {
   }
 
   componentDidUpdate () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentChosenStyleId)
   }
   componentDidMount () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentChosenStyleId)
   }
 
   render () {
@@ -265,23 +275,19 @@ class CardTemplate extends React.Component {
 
     }
 
-
-    // if (this.state.currentProductData === undefined) {
-    //   console.log('in here')
-    //   return (
-    //     <div></div>
-    //   )
-    // }
-
     let modalCompareButton = "./assets/relatedProductACTION.png";
     let removeOutfitButton = "./assets/myOutfitACTION.png";
     let addOutfitCard;
     let relatedProducts = Object.values(this.state.relatedProductsData).length ? Object.values(this.state.relatedProductsData) : null;
     let myOutfit = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : null
     let currentProductData = (this.state.currentProductData);
-      if (relatedProducts !== null) {
+
+
+    if (relatedProducts !== null) {
+
         relatedProducts = relatedProducts.map(product => <Card
           key={product.id}
+          currentChosenStyleId={this.props.currentChosenStyleId}
           relatedProductData={product}
           actionButton={modalCompareButton}
           closeCompareModal={this.closeCompareModal}

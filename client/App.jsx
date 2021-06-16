@@ -12,8 +12,9 @@ import RelatedProductsContainer from './related_products/RelatedProductsContaine
 
 function App () {
   const [currentAppId, setCurrentAppId] = useState(11004);
+  const [currentChosenStyle, setCurrentChosenStyle] = useState(51174);
   const dispatch = useDispatch();
-
+  console.log('state', currentChosenStyle)
 
   let cachedData = useSelector(state => state.cache) || null;
   let cachedKeys = Object.keys(cachedData)
@@ -23,7 +24,7 @@ function App () {
     currentMetaReviews: useSelector(state => state.currentMetaReviews)
   }
   useEffect(() => {
-    console.log(cachedData)
+    // console.log(cachedData)
     if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
       if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentStyle !== '' || dataToBeCached.currentMetaReviews !== '') {
         cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
@@ -65,8 +66,8 @@ function App () {
 
   return(
     <div className="App">
-      <Overview />
-      <RelatedProductsContainer setCurrentAppId={setCurrentAppId}/>
+      <Overview setCurrentChosenStyle={setCurrentChosenStyle}/>
+      <RelatedProductsContainer setCurrentAppId={setCurrentAppId} currentChosenStyleId={currentChosenStyle}/>
       <RatingsAndReviews />
     </div>
   );

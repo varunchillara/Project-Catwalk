@@ -13,7 +13,6 @@ function ListOfReviews() {
   const[currentSort, setCurrentSort] = useState('newest');
 
   function getReviews() {
-    console.log()
     axios.defaults.headers = {
       'Content-Type': 'application/json',
       Authorization: token
@@ -37,7 +36,7 @@ function ListOfReviews() {
 
   useEffect(() => {
     getReviews();
-    console.log('does this get run again?????');
+    // console.log('does this get run again?????');
   }, [currentProduct, currentCount, currentSort])
 
   return (
