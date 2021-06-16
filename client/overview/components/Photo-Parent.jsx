@@ -9,7 +9,6 @@ import { updateStyle } from '../../../store/actions/updateStyle.js';
 const PhotoParent = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const currentStyle = useSelector(state => state.currentStyle) || {data: {results: []}};
-  // const currentStyle = useSelector(state => state.currentProductStyles) || {data: {results: []}};
 
   const [style, setStyle] = useState( currentStyle.data );
   const [productStyles, setProductStyles] = useState( currentStyle.data.results );

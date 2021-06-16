@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {update} from '../../../store/actions/product.js';
 import axios from 'axios';
-// import token from '../env/config.js';
-
 import Announcement from './Announcement.jsx';
 import Description from './Description.jsx';
 import LogoSearch from './Logo-Search.jsx';
