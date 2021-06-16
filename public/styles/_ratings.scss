@@ -4,6 +4,12 @@
   text-align: left;
 }
 
+.barContainer {
+  display: flex;
+  font-family: Cormorant;
+  color: rgb(73, 73, 73);
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -110,13 +116,19 @@
       margin-right: 10px;
       font-weight: normal;
     }
+
+    .numOfReviews {
+      color: lightgray;
+    }
+
     .bar {
       background-color: rgb(233, 233, 233);
-      width: 200px;
+      width: 184px;
       height: 7px;
       position: relative;
       transition: width .5s linear;
       margin-top: 8px;
+      margin-right: 2px;
       .status {
         background: rgb(73, 73, 73);
         width: 50%;
@@ -178,8 +190,21 @@
     font-size: small;
     margin-bottom: 15px;
     .helpful {
-      margin-right: 10px;
     }
   }
+}
+
+.report {
+  margin-left: 3px;
+}
+
+.yes:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.report:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
