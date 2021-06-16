@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-scroll';
+import Modal from 'react-modal';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
@@ -7,6 +8,7 @@ import Stars from '../../sharedComponents/Stars.jsx';
 import PopupBag from './PopupBag.jsx';
 import PopupOutfit from './PopupOutfit.jsx';
 import PopupShare from './PopupShare.jsx';
+import customStyles from '../../ratings_and_reviews/customStyles/customStyles.jsx';
 
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
@@ -19,6 +21,9 @@ const ProductInfo = (props) => {
   const[isOpenBag, setIsOpenBag] = useState(false);
   // const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const[isOpenShare, setIsOpenShare] = useState(false);
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+
+  console.log({productSkus})
 
   // let vals = Object.values(props.style.skus)
   // console.log('vals', vals)
@@ -46,6 +51,10 @@ const ProductInfo = (props) => {
       // setQuantity(new Array(Object.values(props.style.skus)[0].quantity.fill(true).map((num, i) => i + 1)))
     }
   }, [props.style.skus])
+
+  useEffect(() => {
+    Modal.setAppElement('#modal');
+  }, [])
 
   const selectSize = () => {
     console.log('selected')
@@ -92,12 +101,17 @@ const ProductInfo = (props) => {
   const togglePopupBag = () => {
     setIsOpenBag(!isOpenBag);
   }
-  // const togglePopupOutfit = () => {
-  //   setIsOpenOutfit(!isOpenOutfit);
-  // }
 
   const togglePopupShare = () => {
     setIsOpenShare(!isOpenShare);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
   }
 
 console.log('isopenOutfit***', props.isOpenOutfit)
@@ -176,9 +190,24 @@ console.log('isopenOutfit***', props.isOpenOutfit)
         </div>
       </div>
       <div className="share">
-        <img style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
-        <img style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
-        <img src="./assets/facebook.png" height="50px" width="50px"/>
+        <img onClick={openModal} style={{"marginTop": "20px", "marginRight": "10px"}} src="./assets/twitter.png" height="50px" width="50px"/>
+        <img onClick={openModal} style={{"marginRight": "10px"}} src="./assets/pinterest.png" height="50px" width="50px"/>
+        <img onClick={openModal} src="./assets/facebook.png" height="50px" width="50px"/>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <button onClick={closeModal}>close</button>
+          <form className="modalForm" style={customStyles.modalForm}>
+            <div className="block">
+              <label className="label">message:</label>
+              <input type="text" required value="http://www.garganelliclothing.com/products"/>
+            </div>
+            <input className="button" type="submit" value="Submit" />
+          </form>
+        </Modal>
       </div>
     </div>
   )
