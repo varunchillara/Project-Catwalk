@@ -22,6 +22,7 @@ class RelatedProductsMain extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      cache: {},
       currentProductData: {},
       currentProductStyles: {},
       relatedProductsData: {},
@@ -43,6 +44,7 @@ class RelatedProductsMain extends React.Component {
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
   updateOverviewProduct (currentProductData, currentProductStylesData, currentChosenStyleId) {
+
     if (Object.keys(this.state.currentProductStyles).length) {
       if (currentChosenStyleId !== this.state.currentChosenStyleId) {
         this.setState({
@@ -65,6 +67,11 @@ class RelatedProductsMain extends React.Component {
       results[0][1] = results[0][1].data
       results[1] = results[1].map(result => result.data)
       results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
+
+
+      //store the above results in cache
+
+
       this.setState ({
           currentProductData: this.formatData(results[0]),
           relatedProductsData: this.formatData(results[1]),
@@ -125,6 +132,7 @@ class RelatedProductsMain extends React.Component {
 
   fetchRelatedProducts (results) {
     let relatedProductIds = results.data
+    //check if each id for each of these pieces of data exist in cache.  if they do, pull from cache.  if not make an api call
     let relatedProductsData = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
     let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
@@ -279,7 +287,6 @@ class RelatedProductsMain extends React.Component {
       width : '920px',
     }
     return (
-    <div>
       <div className="related-products-wrapper" style={relatedProductsWrapperInlineStyle}>
         <RelatedProductsCarousel
           relatedProductsCards={relatedProductsCards}
@@ -293,7 +300,6 @@ class RelatedProductsMain extends React.Component {
           currentProductData={currentProductData}
           />
       </div>
-    </div>
     )
   }
 }

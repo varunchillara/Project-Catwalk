@@ -7,13 +7,13 @@ const RelatedProductsContainer = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const currentStyle = useSelector(state => state.currentStyle);
   return (
-    <>
+    <div className="relatedProductsContainer">
       <RelatedProductsMain
       currentChosenStyleId={props.currentChosenStyleId}
       currentProduct={currentProduct}
       currentProductStyles={currentStyle}
       setCurrentAppId={props.setCurrentAppId}/>
-    </>
+    </div>
   )
 }
 

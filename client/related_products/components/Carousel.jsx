@@ -33,10 +33,28 @@ const CarouselContainer = (props) => {
 }
 
 const CarouselContainerInner = (props) => {
-  const [visibleCards, setVisibleCards] = useState()
+
+  let carouselLeftButton = {
+    width: '70px',
+    height: '70px',
+    alignSelf: 'center',
+    position: 'relative',
+    left: '30px',
+    zIndex: 1001
+  }
+  let carouselRightButton = {
+    width: '70px',
+    height: '70px',
+    alignSelf: 'center',
+    position: 'relative',
+    right: '30px',
+    zIndex: 1001,
+  }
   return (
     <>
+      <img src="./assets/carouselLeft.png" style={carouselLeftButton}></img>
       {props.cards}
+      <img src="./assets/carouselRight.png" style={carouselRightButton}></img>
     </>
   )
 }
