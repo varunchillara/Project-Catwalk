@@ -17,7 +17,7 @@ const ProductInfo = (props) => {
   // const[currentSku, setCurrentSku] = useState( '' )
   const[quantity, setQuantity] = useState( [] )
   const[isOpenBag, setIsOpenBag] = useState(false);
-  const[isOpenOutfit, setIsOpenOutfit] = useState(false);
+  // const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const[isOpenShare, setIsOpenShare] = useState(false);
 
   // let vals = Object.values(props.style.skus)
@@ -92,15 +92,15 @@ const ProductInfo = (props) => {
   const togglePopupBag = () => {
     setIsOpenBag(!isOpenBag);
   }
-  const togglePopupOutfit = () => {
-    setIsOpenOutfit(!isOpenOutfit);
-  }
+  // const togglePopupOutfit = () => {
+  //   setIsOpenOutfit(!isOpenOutfit);
+  // }
 
   const togglePopupShare = () => {
     setIsOpenShare(!isOpenShare);
   }
 
-
+console.log('isopenOutfit***', props.isOpenOutfit)
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -161,15 +161,18 @@ const ProductInfo = (props) => {
         <div className="addToOutfit">
           <img
             style={{ "border": "1px solid #555", "marginTop": "14px" }} src="./assets/relatedProductACTION.png" height="46px" width="46px"
-            onClick={togglePopupOutfit}
+            onClick={props.togglePopupOutfit}
           />
-          {isOpenOutfit && <PopupOutfit
-            outfitContent={<>
-              <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
-              <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
-            </>}
-            handleCloseOutfit={togglePopupOutfit}
-          />}
+          {props.isOpenOutfit && <PopupOutfit
+            // outfitContent={<>
+            //   <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
+            //   <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
+            // </>}
+            handleCloseOutfit={props.togglePopupOutfit}
+          >
+            <span style={{ "fontSize": "20px", "fontWeight": "bold"}}>Added to Outfit!</span>
+            <span style={{ "fontSize": "20px", "marginLeft": "8px", "fontWeight": "bold"}}>You're looking good!</span>
+            </PopupOutfit>}
         </div>
       </div>
       <div className="share">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {update} from '../../../store/actions/product.js';
 import axios from 'axios';
@@ -17,7 +17,7 @@ import PhotoParent from './Photo-Parent.jsx';
     <div className="overview">
 			<LogoSearch />
 			<Announcement />
-			<PhotoParent setCurrentChosenStyle={props.setCurrentChosenStyle}/>
+			<PhotoParent setCurrentChosenStyle={props.setCurrentChosenStyle} togglePopupOutfit={props.togglePopupOutfit} isOpenOutfit={props.isOpenOutfit}/>
 			<Description />
 		</div>
 		</div>

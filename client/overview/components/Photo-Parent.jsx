@@ -6,7 +6,7 @@ import CarouselMain from './Carousel-Main.jsx';
 import ProductInfo from './ProductInfo.jsx';
 import { updateStyle } from '../../../store/actions/updateStyle.js';
 
-const PhotoParent = () => {
+const PhotoParent = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
   const currentStyle = useSelector(state => state.currentStyle) || {data: {results: []}};
   // const currentStyle = useSelector(state => state.currentProductStyles) || {data: {results: []}};
@@ -24,7 +24,7 @@ const PhotoParent = () => {
   return (
     <div className="overview-main">
       <CarouselMain style={style}/>
-      <ProductInfo  productStyles={productStyles} style={style} setStyle={setStyle}/>
+      <ProductInfo  productStyles={productStyles} style={style} setStyle={setStyle} togglePopupOutfit={props.togglePopupOutfit} isOpenOutfit={props.isOpenOutfit}/>
     </div>
   )
 };
