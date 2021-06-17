@@ -7,9 +7,9 @@ import CarouselThumbs from './Carousel-Thumbs.jsx';
 
 const Carousel = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
-  const[photos, setPhotos] = useState( [] );
-  const[imageUrl, setImageUrl] = useState("");
-  const [zoomed, setZoomed] = useState(false);
+  const [photos, setPhotos] = useState( [] );
+  const [imageUrl, setImageUrl] = useState( '' );
+  const [zoomed, setZoomed] = useState( false );
 
   useEffect(() => {
     if (props.style.photos) {

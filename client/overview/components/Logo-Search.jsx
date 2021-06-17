@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LogoSearch = () => (
-  <div className="topOfPage">
+  <header className="topOfPage">
     <div className="logo">
       <img alt="logo" src="./images/logo.jpg" height="120px" width="120px"/>
     </div>
@@ -12,7 +12,7 @@ const LogoSearch = () => (
     <button className="search-button" type="submit">
       <img alt="search" src="./images/search.png" height="30px" width="30px"/>
     </button>
-  </div>
+  </header>
 );
 
 export default LogoSearch;

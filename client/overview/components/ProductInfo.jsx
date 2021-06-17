@@ -13,13 +13,13 @@ import customStyles from '../../ratings_and_reviews/customStyles/customStyles.js
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
-  const[productStyle, setProductStyle] = useState( );
-  const[productPrice, setProductPrice] = useState( );
-  const[productSkus, setProductSkus] = useState( {} );
-  const[currentSize, setCurrentSize] = useState( '' );
-  const[quantity, setQuantity] = useState( [] );
-  const[isOpenBag, setIsOpenBag] = useState(false);
-  const[isOpenShare, setIsOpenShare] = useState(false);
+  const [productStyle, setProductStyle] = useState( );
+  const [productPrice, setProductPrice] = useState( );
+  const [productSkus, setProductSkus] = useState( {} );
+  const [currentSize, setCurrentSize] = useState( '' );
+  const [quantity, setQuantity] = useState( [] );
+  const [isOpenBag, setIsOpenBag] = useState(false);
+  const [isOpenShare, setIsOpenShare] = useState(false);
   const [modalIsOpen,setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -48,19 +48,10 @@ const ProductInfo = (props) => {
     Modal.setAppElement('#modal');
   }, [])
 
-  const selectSize = (e) => {
-    setCurrentSize(e.target.value);
-    console.log(e.target.value)
-    // selectQuantity();
-  }
-
   const selectQuantity = () => {
-    if (currentSize === 'L') {
-      console.log('This is the currentSize', currentSize)
-    }
     let skus = Object.values(productSkus);
     for (let i = 0; i < skus.length; i++) {
-      if (skus[i].size === currentSize) {
+      if (skus[i].size === 'XS') {
         var qty;
         if (skus[i].quantity === 0) {
           qty = ['Out of Stock'];
@@ -113,6 +104,11 @@ const ProductInfo = (props) => {
     setIsOpen(false);
   }
 
+  const test = () => {
+    return 'hi'
+    console.log('hi')
+  }
+
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -141,8 +137,8 @@ const ProductInfo = (props) => {
       </div>
       <div className="size-quantity">
         <select
-          className="selectSize" onChange={selectSize}>
-            <option key={0}>-</option>
+          className="selectSize" onChange={(e) => {setCurrentSize(e.target.value); selectQuantity()}}>
+            <option key={0}>Select Size</option>
           {Object.values(productSkus).map((sku, i) =>
             <option key={i}>{sku.size}</option>
           )}
