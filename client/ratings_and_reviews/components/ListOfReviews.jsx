@@ -10,7 +10,7 @@ function ListOfReviews() {
   const currentProduct = useSelector(state => state.currentProduct) || { data: { id: 11004 } };
   const[reviews, setReviews] = useState([]);
   const[currentCount, setCurentCount] = useState(4);
-  const[currentSort, setCurrentSort] = useState('newest');
+  const[currentSort, setCurrentSort] = useState(undefined);
   const[toggleReport, setToggleReport] = useState(0);
   const[helpfulToggle, setHelpfulToggle] = useState(false);
 
@@ -34,7 +34,7 @@ function ListOfReviews() {
     params: {
       page: 1,
       count: currentCount,
-      sort: currentSort,
+      sort: currentSort || 'newest',
       product_id: currentProduct.data.id || 11004
     }
   })
@@ -60,9 +60,11 @@ function ListOfReviews() {
       <header className="reviewsHeader">
         {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
-      {reviews.map((review, i) => {
-        return <Review key={i} review={review} getReviews={getReviews}/>
-      })}
+      <div className="scroll">
+        {reviews.map((review, i) => {
+          return <Review key={i} review={review} getReviews={getReviews}/>
+        })}
+      </div>
       <div className="buttons">
         <button className="button"
         onClick={() => {

@@ -5,6 +5,11 @@
   text-align: left;
 }
 
+.scroll {
+  height: 600px;
+  overflow: auto;
+}
+
 .barContainer {
   display: flex;
   font-family: Cormorant;
@@ -141,7 +146,7 @@
 }
 .ratingsAndReviews .review {
   width: 600px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 .ratingsAndReviews .review .summary {
   margin-bottom: 15px;
@@ -161,6 +166,9 @@
   margin-right: 10px;
   color: #494949;
 }
+.ratingsAndReviews .breakLine {
+  margin-right: 15px;
+}
 .ratingsAndReviews .topOfReview {
   display: flex;
   align-items: flex-start;
@@ -168,6 +176,7 @@
 }
 .ratingsAndReviews .topOfReview .reviewerName {
   font-size: small;
+  margin-right: 15px;
 }
 .ratingsAndReviews .actions {
   display: flex;
@@ -186,6 +195,79 @@
 .report:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.modalHeading {
+  margin-top: 10px;
+}
+
+#starButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.on {
+  color: #494949;
+}
+
+.off {
+  color: #ccc;
+}
+
+.star2 {
+  margin-right: 2px;
+}
+
+.star-rating {
+  margin-top: 10px;
+}
+
+input[type=text] {
+  width: 275px;
+  height: 15px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  width: 275px;
+  height: 100px;
+  padding: 12px 20px;
+  resize: none;
+  overflow-y: scroll;
+}
+
+.fitLengthContainer {
+  display: flex;
+}
+.fitLengthContainer .lengthContainer {
+  margin-left: 50px;
+}
+
+.comfortAndQualityContainer {
+  display: flex;
+}
+.comfortAndQualityContainer .qualityContainer {
+  margin-left: 50px;
+}
+
+.formButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.formButtonContainer .formButton {
+  font-family: Cormorant;
+  font-size: 15px;
+  color: #494949;
+  font-weight: bolder;
+  margin-top: 5px;
+  border: 1px solid #494949;
+  background-color: white;
+  padding: 10px 20px;
+  text-align: center;
 }
 
 .stars {
