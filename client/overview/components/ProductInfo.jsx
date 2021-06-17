@@ -105,6 +105,7 @@ const ProductInfo = (props) => {
   }
 
   const test = () => {
+    return 'hi'
     console.log('hi')
   }
 
