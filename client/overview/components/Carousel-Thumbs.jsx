@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 
 var begin = 0;
 var end = 7;
+
 const CarouselThumbs = ({ photos, clickImage }) => {
-  const[urls, setUrls] = useState( [] );
+  const [urls, setUrls] = useState( [] );
 
   let showSeven = urls.map(url => url);
 

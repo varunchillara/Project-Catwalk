@@ -13,13 +13,13 @@ import customStyles from '../../ratings_and_reviews/customStyles/customStyles.js
 const ProductInfo = (props) => {
   const currentProduct = useSelector(state => state.currentProduct) || { data: {style: {category: null, name: null}} };
   const currentRating = useSelector(state => state.currentRating);
-  const[productStyle, setProductStyle] = useState( );
-  const[productPrice, setProductPrice] = useState( );
-  const[productSkus, setProductSkus] = useState( {} );
-  const[currentSize, setCurrentSize] = useState( '' );
-  const[quantity, setQuantity] = useState( [] );
-  const[isOpenBag, setIsOpenBag] = useState(false);
-  const[isOpenShare, setIsOpenShare] = useState(false);
+  const [productStyle, setProductStyle] = useState( );
+  const [productPrice, setProductPrice] = useState( );
+  const [productSkus, setProductSkus] = useState( {} );
+  const [currentSize, setCurrentSize] = useState( '' );
+  const [quantity, setQuantity] = useState( [] );
+  const [isOpenBag, setIsOpenBag] = useState(false);
+  const [isOpenShare, setIsOpenShare] = useState(false);
   const [modalIsOpen,setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -66,11 +66,6 @@ const ProductInfo = (props) => {
     setQuantity(qty);
   }
 
-  const selectSize = (e) => {
-    setCurrentSize(e.target.value);
-    selectQuantity();
-  }
-
   const clickImage = (photo) => {
     props.setStyle(photo);
   }
@@ -109,6 +104,10 @@ const ProductInfo = (props) => {
     setIsOpen(false);
   }
 
+  const test = () => {
+    console.log('hi')
+  }
+
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -137,7 +136,7 @@ const ProductInfo = (props) => {
       </div>
       <div className="size-quantity">
         <select
-          className="selectSize" onChange={selectSize}>
+          className="selectSize" onChange={(e) => {setCurrentSize(e.target.value); selectQuantity()}}>
             <option key={0}>Select Size</option>
           {Object.values(productSkus).map((sku, i) =>
             <option key={i}>{sku.size}</option>
