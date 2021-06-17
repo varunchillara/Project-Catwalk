@@ -60,9 +60,11 @@ function ListOfReviews() {
       <header className="reviewsHeader">
         {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
-      {reviews.map((review, i) => {
-        return <Review key={i} review={review} getReviews={getReviews}/>
-      })}
+      <div className="scroll">
+        {reviews.map((review, i) => {
+          return <Review key={i} review={review} getReviews={getReviews}/>
+        })}
+      </div>
       <div className="buttons">
         <button className="button"
         onClick={() => {

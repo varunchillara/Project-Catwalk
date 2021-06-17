@@ -5,6 +5,11 @@
   text-align: left;
 }
 
+.scroll {
+  height: 600px;
+  overflow: auto;
+}
+
 .barContainer {
   display: flex;
   font-family: Cormorant;
