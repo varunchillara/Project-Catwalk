@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import Card from './Card.jsx'
+import Card from '../Card.jsx'
 
 
 class Carousel extends React.Component {
@@ -68,12 +68,7 @@ class Carousel extends React.Component {
       let newNext = slide + 1;
       let oldPrevious = slide - 2
       let oldNext = slide + 2;
-      // console.log({
-      //   newPrevious: newPrevious,
-      //   newPrevious: newNext,
-      //   newPrevious: oldPrevious,
-      //   newPrevious: oldNext
-      // })
+
       if ((this.state.totalCards - 1) > 3) {
         if (newPrevious <= 0) {
           oldPrevious = (this.state.totalCards - 1);
@@ -89,14 +84,21 @@ class Carousel extends React.Component {
           newNext = 0;
           oldNext = 1;
         }
-        let cardsArrayCopy = this.state.cardHTMLCollection;
-        console.log('cardsArrayCopy', cardsArrayCopy)
+        let cardsArrayCopy = this.state.cardsHTMLCollection;
+        console.log(cardsArrayCopy)
 
         cardsArrayCopy[oldPrevious].className = cardClassName;
         cardsArrayCopy[oldNext].className = cardClassName;
         cardsArrayCopy[newPrevious].className = cardClassName + ' prev';
+        cardsArrayCopy[newPrevious].style.transform = 'translateX(-100%)'
+        cardsArrayCopy[newPrevious].style.zIndex = 800
         cardsArrayCopy[slide].className = cardClassName + ' active';
+        cardsArrayCopy[slide].style.opacity = 1
+        cardsArrayCopy[slide].style.position = 'relative'
+        cardsArrayCopy[slide].style.zIndex = 900
         cardsArrayCopy[newNext].className = cardClassName + ' next';
+        cardsArrayCopy[newNext].style.transform = 'translateX(100%)'
+        cardsArrayCopy[newNext].style.zIndex = 800
       }
     }
   }
@@ -111,7 +113,6 @@ class Carousel extends React.Component {
       let collection = Array.from(document.getElementsByClassName(targetClassName))
       let collectionHTML = []
       collection.forEach((element, i) => {if (i % 2 === 0) {collectionHTML.push(element)} })
-      console.log(collectionHTML, this.state.cardsHTMLCollection)
 
       if(collectionHTML.length === this.state.cardsHTMLCollection.length && collectionHTML.length > 0) {
         if (collectionHTML.every((element, i) => element.outerHTML === this.state.cardsHTMLCollection[i].outerHTML ? true : false)) {
@@ -120,7 +121,9 @@ class Carousel extends React.Component {
       } else {
         console.log('STATE IS SET')
         this.setState({
-          cardsHTMLCollection: collectionHTML
+          cardsHTMLCollection: collectionHTML,
+          totalCards: collectionHTML.length,
+          cardClassName: collectionHTML[0].className
         });
       }
     }
@@ -129,41 +132,9 @@ class Carousel extends React.Component {
 
 
   render () {
-    console.log(this.state)
-    // let targetClassName = this.props.cards.length ? this.props.cards[0].props.uniqClassName : null;
-    // if (targetClassName === null) {
-    //   return (
-    //     <CarouselContainer cards={this.props.cards} style={carouselContainerInlineStyle} movePrevHandler={this.movePrevHandler} moveNextHandler={this.moveNextHandler}/>
-    //   )
-    // }
-
-    // if (this.props.cards.length) {
-    //   let targetClassName = this.props.cards[0].props.uniqClassName
-    //   let collection = Array.from(document.getElementsByClassName(targetClassName))
-    //   let collectionHTML = []
-    //   collection.forEach((element, i) => {if (i % 2 === 0) {collectionHTML.push(element)} })
-    //   console.log(collectionHTML, this.state.cardsHTMLCollection)
-
-    //   if(collectionHTML.length === this.state.cardsHTMLCollection.length && collectionHTML.length > 0) {
-    //     if (collectionHTML.every((element, i) => element.outerHTML === this.state.cardsHTMLCollection[i].outerHTML ? true : false)) {
-    //       return (
-    //         <CarouselContainer cards={this.props.cards} style={carouselContainerInlineStyle} movePrevHandler={this.movePrevHandler} moveNextHandler={this.moveNextHandler}/>
-    //       )
-    //     }
-    //   } else {
-    //     console.log('STATE IS SET')
-    //     this.setState({
-    //       cardsHTMLCollection: collectionHTML
-    //     });
-    //   }
-    // }
-
-    let carouselContainerInlineStyle = {
-      transformStyle: 'preserve-3d'
-    }
 
     return (
-      <CarouselContainer cards={this.props.cards} style={carouselContainerInlineStyle} movePrevHandler={this.movePrevHandler} moveNextHandler={this.moveNextHandler}/>
+      <CarouselContainer cards={this.props.cards} movePrevHandler={this.movePrevHandler} moveNextHandler={this.moveNextHandler}/>
       )
   }
 }
@@ -178,30 +149,12 @@ const CarouselContainer = (props) => {
 
 const CarouselContainerInner = (props) => {
 
-  let carouselLeftButton = {
-    width: '70px',
-    height: '70px',
-    alignSelf: 'center',
-    position: 'relative',
-    left: '30px',
-    zIndex: 1001
-  }
-  let carouselRightButton = {
-    width: '70px',
-    height: '70px',
-    alignSelf: 'center',
-    position: 'relative',
-    right: '30px',
-    zIndex: 1001,
-  }
-
-
   return (
-    <>
-      <img src="./assets/carouselLeft.png" style={carouselLeftButton} onClick={props.movePrevHandler}></img>
+    <div className="carousel-container-inner" >
+      <img className="carousel-prev-button" src="./assets/carouselLeft.png" onClick={props.movePrevHandler}></img>
       {props.cards}
-      <img src="./assets/carouselRight.png" style={carouselRightButton} onClick={props.moveNextHandler}></img>
-    </>
+      <img  className="carousel-next-button" src="./assets/carouselRight.png" onClick={props.moveNextHandler}></img>
+    </div>
   )
 }
 

@@ -436,4 +436,259 @@
   margin-bottom: 60px;
 }
 
+.related-products-wrapper {
+  margin: auto;
+  width: 920px;
+}
+.related-products-wrapper .related-products-carousel-title {
+  font-family: "Cormorant";
+  font-weight: bolder;
+  font-size: 16px;
+}
+.related-products-wrapper .related-products-carousel {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.related-products-wrapper .related-products-card-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .carousel-prev-button {
+  width: "70px";
+  height: "70px";
+  align-self: "center";
+  position: "relative";
+  left: "30px";
+  z-index: 100;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard {
+  border: 1px solid grey;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  z-index: 100;
+  transition: "transform .5s, opacity.5s, z-index .5s";
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+  height: 255px;
+  background-color: "rgb(240, 237, 228)";
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .image-container .image {
+  align-self: center;
+  width: 170px;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .image-container .action-modal {
+  position: absolute;
+  top: 5%;
+  left: 80%;
+  width: 23px;
+  opacity: 50%;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .product-info {
+  margin-left: "8px";
+  margin-right: "8px";
+  margin-bottom: "10px";
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .product-info .category {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: "normal";
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .product-info .name {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: 900;
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .product-info .price {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: "normal";
+}
+.related-products-wrapper .related-products-card-row .carousel-container-inner .relatedProdCard .product-info .rating {
+  color: "white";
+}
+.related-products-wrapper .related-products-card-row .carousel-next-button {
+  width: "70px";
+  height: "70px";
+  align-self: "center";
+  position: "relative";
+  right: "30px";
+  z-index: 1001;
+}
+.related-products-wrapper .my-outfit-carousel-title {
+  font-family: "Cormorant";
+  font-weight: bolder;
+  font-size: 16px;
+}
+.related-products-wrapper .my-outfit-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card {
+  width: 170px;
+  flex: 1;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  flex-direction: row;
+  justify-content: left;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard {
+  border: 1px solid grey;
+  opacity: 50%;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  z-index: 100;
+  transition: "transform .5s, opacity.5s, z-index .5s";
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+  height: 255px;
+  background-color: "rgb(240, 237, 228)";
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container .image {
+  align-self: center;
+  width: 170px;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container .action-modal {
+  position: absolute;
+  top: 5%;
+  left: 80%;
+  width: 23px;
+  opacity: 50%;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .product-info {
+  margin-left: "8px";
+  margin-right: "8px";
+  margin-bottom: "10px";
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .product-info .category {
+  font-family: "Cormorant";
+  justify-content: center;
+  font-weight: normal;
+  text-align: center;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .product-info .name {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: 900;
+  text-align: center;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .product-info .price {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: "normal";
+  text-align: center;
+}
+.related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .product-info .rating {
+  color: "white";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .carousel-prev-button {
+  width: "70px";
+  height: "70px";
+  align-self: "center";
+  position: "relative";
+  left: "30px";
+  z-index: 100;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard {
+  border: 1px solid grey;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  z-index: 100;
+  transition: "transform .5s, opacity.5s, z-index .5s";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+  height: 255px;
+  background-color: "rgb(240, 237, 228)";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .image-container .image {
+  align-self: center;
+  width: 170px;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .image-container .action-modal {
+  position: absolute;
+  top: 5%;
+  left: 80%;
+  width: 23px;
+  opacity: 50%;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .product-info {
+  margin-left: "8px";
+  margin-right: "8px";
+  margin-bottom: "10px";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .product-info .category {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: "normal";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .product-info .name {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: 900;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .product-info .price {
+  font-family: "Cormorant";
+  justify-content: "center";
+  font-weight: "normal";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .myOutfitCard .product-info .rating {
+  color: "white";
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container-inner .carousel-next-button {
+  width: "70px";
+  height: "70px";
+  align-self: "center";
+  position: "relative";
+  right: "30px";
+  z-index: 1001;
+}
+
 /*# sourceMappingURL=styles.css.map */

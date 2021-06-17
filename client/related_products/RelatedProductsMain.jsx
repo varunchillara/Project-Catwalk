@@ -5,9 +5,8 @@ import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js';
 import Card from './components/Card.jsx';
-import Carousel from './components/Carousel.jsx';
-import MyOutfitCarousel from './components/MyOutfitCarousel.jsx';
-import RelatedProductsCarousel from './components/RelatedProductsCarousel.jsx';
+import MyOutfitCarousel from './components/Carousels/MyOutfitCarousel.jsx';
+import RelatedProductsCarousel from './components/Carousels/RelatedProductsCarousel.jsx';
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -289,12 +288,12 @@ class RelatedProductsMain extends React.Component {
         />
       }
 
-    let relatedProductsWrapperInlineStyle = {
-      margin: 'auto',
-      width : '920px',
-    }
+    // let relatedProductsWrapperInlineStyle = {
+    //   margin: 'auto',
+    //   width : '920px',
+    // }
     return (
-      <div className="related-products-wrapper" style={relatedProductsWrapperInlineStyle}>
+      <div className="related-products-wrapper">
         <RelatedProductsCarousel
           relatedProductsCards={relatedProductsCards}
           modalCompareButton={modalCompareButton}

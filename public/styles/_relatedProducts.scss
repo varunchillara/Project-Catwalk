@@ -1,0 +1,270 @@
+
+.related-products-wrapper {
+  margin: auto;
+  width: 920px;
+  .related-products-carousel-title {
+    font-family: 'Cormorant';
+    font-weight: bolder;
+    font-size: 16px
+  }
+  .related-products-carousel {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+  }
+  .related-products-card-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    .carousel-container-inner {
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      .carousel-prev-button {
+        width: '70px';
+        height: '70px';
+        align-self: 'center';
+        position: 'relative';
+        left: '30px';
+        z-index: 100;
+      }
+      .relatedProdCard {
+        border: 1px solid grey;
+        top: 0;
+        width: 100%;
+        margin: auto;
+        z-index: 100;
+        transition: 'transform .5s, opacity.5s, z-index .5s';
+        .image-container {
+          flex: 1;
+          display: flex;
+          justify-content:center;
+          margin-bottom: 10px;
+          position: relative;
+          height: 255px;
+          background-color: 'rgb(240, 237, 228)';
+          .image {
+            align-self: center;
+            width: 170px;
+          }
+          .action-modal {
+            position: absolute;
+            top:5%;
+            left:80%;
+            width: 23px;
+            opacity: 50%;
+          }
+        }
+        .product-info {
+          margin-left: '8px';
+          margin-right: '8px';
+          margin-bottom: '10px';
+          .category {
+            font-family: 'Cormorant';
+            justify-content: 'center';
+            font-weight: 'normal';
+          }
+          .name {
+            font-family: 'Cormorant';
+            justify-content: 'center';
+            font-weight: 900;
+          }
+          .price {
+            font-family: 'Cormorant';
+            justify-content: 'center';
+            font-weight: 'normal';
+          }
+          .rating {
+            color: 'white';
+          }
+        }
+      }
+    }
+    .carousel-next-button {
+      width: '70px';
+      height: '70px';
+      align-self: 'center';
+      position: 'relative';
+      right: '30px';
+      z-index: 1001;
+    }
+
+  }
+  .my-outfit-carousel-title {
+    font-family: 'Cormorant';
+    font-weight: bolder;
+    font-size: 16px;
+  }
+  .my-outfit-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+
+    .add-outfit-card {
+      width: 170px;
+      flex: 1;
+      margin-top: 30px;
+      margin-bottom: 50px;
+      flex-direction: row;
+      justify-content: left;
+      .addOutfitCard {
+        border: 1px solid grey;
+        opacity: 50%;
+        top: 0;
+        width: 100%;
+        margin: auto;
+        z-index: 100;
+        transition: 'transform .5s, opacity.5s, z-index .5s';
+        .image-container {
+          flex: 1;
+          display: flex;
+          justify-content:center;
+          margin-bottom: 10px;
+          position: relative;
+          height: 255px;
+          background-color: 'rgb(240, 237, 228)';
+          .image {
+            align-self: center;
+            width: 170px;
+          }
+          .action-modal {
+            position: absolute;
+            top:5%;
+            left:80%;
+            width: 23px;
+            opacity: 50%;
+          }
+        }
+        .product-info {
+          margin-left: '8px';
+          margin-right: '8px';
+          margin-bottom: '10px';
+          .category {
+            font-family: 'Cormorant';
+            justify-content: center;
+            font-weight: normal;
+            text-align: center;
+          }
+          .name {
+            font-family: 'Cormorant';
+            justify-content: 'center';
+            font-weight: 900;
+            text-align: center;
+          }
+          .price {
+            font-family: 'Cormorant';
+            justify-content: 'center';
+            font-weight: 'normal';
+            text-align: center;
+          }
+          .rating {
+            color: 'white';
+          }
+        }
+      }
+    }
+    .my-outfit-carousel {
+      overflow: hidden;
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+
+      .my-outfit-card-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        .carousel-container-inner {
+          -webkit-transform-style: preserve-3d;
+          -moz-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+          .carousel-prev-button {
+            width: '70px';
+            height: '70px';
+            align-self: 'center';
+            position: 'relative';
+            left: '30px';
+            z-index: 100;
+          }
+          .myOutfitCard {
+            border: 1px solid grey;
+            top: 0;
+            width: 100%;
+            margin: auto;
+            z-index: 100;
+            transition: 'transform .5s, opacity.5s, z-index .5s';
+            .image-container {
+              flex: 1;
+              display: flex;
+              justify-content:center;
+              margin-bottom: 10px;
+              position: relative;
+              height: 255px;
+              background-color: 'rgb(240, 237, 228)';
+              .image {
+                align-self: center;
+                width: 170px;
+              }
+              .action-modal {
+                position: absolute;
+                top:5%;
+                left:80%;
+                width: 23px;
+                opacity: 50%;
+              }
+            }
+            .product-info {
+              margin-left: '8px';
+              margin-right: '8px';
+              margin-bottom: '10px';
+              .category {
+                font-family: 'Cormorant';
+                justify-content: 'center';
+                font-weight: 'normal';
+              }
+              .name {
+                font-family: 'Cormorant';
+                justify-content: 'center';
+                font-weight: 900;
+              }
+              .price {
+                font-family: 'Cormorant';
+                justify-content: 'center';
+                font-weight: 'normal';
+              }
+              .rating {
+                color: 'white';
+              }
+            }
+          }
+          .carousel-next-button {
+            width: '70px';
+            height: '70px';
+            align-self: 'center';
+            position: 'relative';
+            right: '30px';
+            z-index: 1001;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
