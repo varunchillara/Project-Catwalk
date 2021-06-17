@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "live-server public/",
     "build": "webpack --watch",
-    "sass": "sass --watch ./public/styles/styles.scss:./public/styles/styles.css"
+    "sass": "sass --watch ./public/styles/styles.scss:./public/styles/styles.css",
+    "server": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "express": "^4.17.1",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "react": "^17.0.2",
