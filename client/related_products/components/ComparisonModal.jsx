@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-
-
-
+import Modal from 'react-modal';
+// import styles from 'ratings_and_reviews/customStyles/customStyles.jsx'
 
 const ComparisonModal = (props) => {
 
@@ -12,21 +11,31 @@ const ComparisonModal = (props) => {
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: 'rgba(0, 0, 0, .5)',
-    zIndex: 1000
+    backgroundColor: ' rgba(255, 255, 255, .7 )',
+    zIndex: 1002
   }
   let modalInlineStyle = {
     position: 'fixed',
-    borderRadius: '10%',
+    borderRadius: '2%',
+    border: '1px solid rgba(0, 0, 0, 0.27)',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'white',
     padding: '20px',
-    zIndex: 1000
+    zIndex: 1002
   };
-  let modalSpanInlineStyle = {
-    visibility: 'visible',
+  let modalCloseInlineStyle = {
+    marginTop: '5px',
+    fontFamily: 'Cormorant',
+    marginRight: '5px',
+    fontSize: '18px',
+    color: 'rgb( 73, 73, 73)',
+    fontWeight: 'bolder',
+    border: '1px solid rgb(73, 73, 73)',
+    backgroundColor: 'white',
+    padding: '7px 10px',
+    textAlign: 'center',
     textAlign: 'right'
   };
   let modalSpecsInlineStyle = {visibility: 'visible'};
@@ -54,7 +63,7 @@ const ComparisonModal = (props) => {
     <>
       <div className="modal-overlay" style={modalOverlayInlineStyle}>
         <div className="comparison-modal" style={modalInlineStyle}>
-          <span className="close" style={modalSpanInlineStyle} onClick={props.closeCompareModal}>X</span>
+          <div className="close" style={modalCloseInlineStyle} onClick={props.closeCompareModal}>Close</div>
           <div className="specs" style={modalSpecsInlineStyle}>
             <ComparisonTable currentProductName={props.currentProductData.nameWithText} relatedProductName={props.relatedProductData.nameWithText} comparisonData={generateCompareModalData(props.currentProductData.features, props.relatedProductData.features)}/>
           </div>
@@ -82,9 +91,7 @@ const ComparisonTable = (props) => {
 
   let comparisonData = props.comparisonData
   let comparisonKeys = Object.keys(comparisonData);
-  console.log(props)
-  console.log(comparisonData)
-  console.log(comparisonKeys)
+
   return (
     <table width="500px">
       <thead>

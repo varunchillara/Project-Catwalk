@@ -48,7 +48,7 @@ const ProductInfo = (props) => {
   }, [props.style.skus])
 
   const selectSize = () => {
-    console.log('selected')
+    // console.log('selected')
     // setCurrentSku(sku)
   }
 
@@ -68,7 +68,7 @@ const ProductInfo = (props) => {
 
   const clickImage = (photo) => {
     props.setStyle(photo);
-    console.log('style', props.style)
+    // console.log('style', props.style)
   }
 
   const priceCheck = () => {
@@ -100,7 +100,6 @@ const ProductInfo = (props) => {
     setIsOpenShare(!isOpenShare);
   }
 
-console.log('isopenOutfit***', props.isOpenOutfit)
   return (
     <div className="styleSide">
       <div className="ratings">

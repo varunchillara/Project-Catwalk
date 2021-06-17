@@ -251,6 +251,7 @@ class RelatedProductsMain extends React.Component {
     if (relatedProductsCards !== null) {
         relatedProductsCards = relatedProductsCards.map(product => <Card
           key={product.id}
+          uniqClassName={'relatedProdCard'}
           currentChosenStyleId={this.props.currentChosenStyleId}
           relatedProductData={product}
           actionButton={modalCompareButton}
@@ -262,10 +263,11 @@ class RelatedProductsMain extends React.Component {
           comparisonId={this.state.modalId}
           currentProductData={currentProductData}
           />)
-      }
+        }
       if (myOutfitCards !== null) {
         myOutfitCards = myOutfitCards.map(product => <Card
           key={product.id}
+          uniqClassName={'myOutfitCard'}
           relatedProductData={product}
           currentProductData={currentProductData}
           actionButton={removeOutfitButton}
@@ -278,6 +280,7 @@ class RelatedProductsMain extends React.Component {
       if (this.state.currentProductData.id) {
         addOutfitCard =  <Card
           key={this.state.currentProductData.product_id}
+          uniqClassName={'addOutfitCard'}
           currentProductData={this.state.currentProductData}
           cardClickHandler={this.cardClickHandler}
           onMouseEnterHandler={this.onMouseEnterHandler}

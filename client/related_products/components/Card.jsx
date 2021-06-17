@@ -56,7 +56,7 @@ const Card = (props) => {
     color : 'white',
   }
   let cls = {
-    cardClass: 'card',
+    cardClass: props.uniqClassName,
     imageContainerClass: 'image-container',
     imageClass: 'image',
     productInfoClass: 'product-info',
@@ -99,7 +99,7 @@ const Card = (props) => {
 
 
   return (
-    <div className="card">
+    <div className={cls.cardClass} >
       {modal}
       <div id={id} className={cls.cardClass} style={cardInlineStyle} onClick={cardClickHandler} onMouseEnter={props.onMouseEnterHandler} onMouseLeave={props.onMouseLeaveHandler} >
         <div id={id} className={cls.imageContainerClass} style={imageContainerInlineStyle}>

@@ -23,11 +23,11 @@ const CarouselThumbs = ({ photos, clickImage }) => {
     }
 
     setUrls(photos.slice(start + 1, end + 1));
-    console.log('start click', start)
+    // console.log('start click', start)
   }
 
-  console.log('start', start);
-  console.log('end', end);
+  // console.log('start', start);
+  // console.log('end', end);
 
   const arrowUp = () => {
     if (start === 0) {
@@ -40,7 +40,7 @@ const CarouselThumbs = ({ photos, clickImage }) => {
     setUrls(photos.slice(start, end));
   }
 
-  console.log('urls', urls)
+  // console.log('urls', urls)
 
   return (
     <div className="imageThumbs">
