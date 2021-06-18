@@ -51,7 +51,7 @@ const ProductInfo = (props) => {
   const selectQuantity = () => {
     let skus = Object.values(productSkus);
     for (let i = 0; i < skus.length; i++) {
-      if (skus[i].size === 'XS') {
+      if (skus[i].size === 'XS' || '11') {
         var qty;
         if (skus[i].quantity === 0) {
           qty = ['Out of Stock'];
@@ -104,11 +104,6 @@ const ProductInfo = (props) => {
     setIsOpen(false);
   }
 
-  const test = () => {
-    return 'hi'
-    console.log('hi')
-  }
-
   return (
     <div className="styleSide">
       <div className="ratings">
@@ -126,7 +121,7 @@ const ProductInfo = (props) => {
       </div>
       <div className="productStyleHeader">
         <span>Selected Style: </span>
-        <span style={{ 'color': 'rgb(59, 158, 189)', 'fontWeight': 'bold' }}> {productStyle}</span>
+        <span style={{ 'color': 'rgb(59, 158, 189)', 'fontWeight': 'bold' }}>{productStyle}</span>
       </div>
       <div className="styleThumbsMain">
         {props.productStyles.map((style, i) =>
