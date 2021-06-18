@@ -1,21 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
-const RadioSelection = () => {
+function RadioSelection(props) {
+  const [selectedOption, setSelectedOption] = useState(1);
+
+  function radioChange(e) {
+    setSelectedOption(e.currentTarget.value);
+    props.set(e.currentTarget.value);
+  }
+
   return (
-    <div id="debt-amount-slider">
-      <input type="radio" name="debt-amount" id="1" value="1" required/>
-      <label data-debt-amount="< $10k"></label>
-      <input type="radio" name="debt-amount" id="2" value="2" required/>
-      <label data-debt-amount="$10k-25k"></label>
-      <input type="radio" name="debt-amount" id="3" value="3" required/>
-      <label data-debt-amount="$25k-50k"></label>
-      <input type="radio" name="debt-amount" id="4" value="4" required/>
-      <label data-debt-amount="$50k-100k"></label>
-      <input type="radio" name="debt-amount" id="5" value="5" required/>
-      <label data-debt-amount="$100k+"></label>
-      <div id="debt-amount-pos"></div>
+    <div>
+      <input type="radio"
+             value="1"
+             checked={selectedOption === "1"}
+             onChange={radioChange} />
+
+      <input type="radio"
+             value="2"
+             checked={selectedOption === "2"}
+             onChange={radioChange}/>
+
+      <input type="radio"
+             value="3"
+             checked={selectedOption === "3"}
+             onChange={radioChange} />
+
+      <input type="radio"
+             value="4"
+             checked={selectedOption === "4"}
+             onChange={radioChange}/>
+
+      <input type="radio"
+             value="5"
+             checked={selectedOption === "5"}
+             onChange={radioChange}/>
     </div>
   );
-};
+}
 
 export default RadioSelection;

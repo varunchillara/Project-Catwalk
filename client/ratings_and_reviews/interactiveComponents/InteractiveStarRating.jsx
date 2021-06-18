@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const InteractiveStarRating = () => {
+const InteractiveStarRating = (props) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
 
@@ -14,7 +14,10 @@ const InteractiveStarRating = () => {
             type="button"
             key={index}
             className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => setRating(index)}
+            onClick={() => {
+              setRating(index);
+              props.set(index);
+            }}
             onMouseEnter={() => setHover(index)}
             onMouseLeave={() => setHover(rating)}
           >

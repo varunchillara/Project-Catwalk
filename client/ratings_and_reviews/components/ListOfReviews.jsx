@@ -71,7 +71,7 @@ function ListOfReviews() {
           const newCount = currentCount + 2;
           setCurentCount(newCount);
         }}>MORE REVIEWS</button>
-        <AddAReview id={currentProduct.id} />
+        <AddAReview currentProduct={currentProduct} />
       </div>
     </div>
   )
