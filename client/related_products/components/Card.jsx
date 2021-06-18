@@ -24,7 +24,19 @@ const Card = (props) => {
   let originalPrice = props.outfitAdder ? 'TO OUTFIT' : props.relatedProductData.original_price
   let salePrice = props.outfitAdder ? null : props.relatedProductData.sale_price
   let rating = props.outfitAdder ? null : props.relatedProductData.rating
-  let photo = props.outfitAdder ? props.currentProductData.photo || "./images/logo.jpg" : props.relatedProductData.photo || "./images/logo.jpg"
+
+  // console.log(props.currentProductData.photo)
+  if (props.uniqClassName === 'addOutfitCard') {
+    // console.log(props.currentProductData)
+  } else if (props.uniqClassName === 'myOutfitCard') {
+    // console.log(props.currentProductData)
+  }
+  let photo;
+  if (props.uniqClassName === 'addOutfitCard') {
+    photo = props.currentP
+  }
+
+  photo = props.outfitAdder ? props.currentProductData.photo || "./images/logo.jpg" : props.relatedProductData.photo || "./images/logo.jpg"
   let name = props.outfitAdder ? props.currentProductData.nameWithText : props.relatedProductData.nameWithText
   let modal = props.outfitAdder ? null : <ComparisonModal
     id={id}

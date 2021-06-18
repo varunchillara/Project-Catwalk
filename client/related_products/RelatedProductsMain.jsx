@@ -62,8 +62,10 @@ class RelatedProductsMain extends React.Component {
       return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
     })
     .then(results => {
+      console.log('RESULTS IN THEN',results)
       let currentProductStyles = {}
       results[0][1] = results[0][1].data
+      console.log(results[0])
       results[1] = results[1].map(result => result.data)
       results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
 
@@ -72,7 +74,7 @@ class RelatedProductsMain extends React.Component {
 
 
       this.setState ({
-          currentProductData: this.formatData(results[0]),
+          currentProductData: this.formatData(results[0].concat(results[2].data)),
           relatedProductsData: this.formatData(results[1]),
           currentProductStyles: currentProductStyles
         })
@@ -81,12 +83,14 @@ class RelatedProductsMain extends React.Component {
   }
 
   formatData (results) {
+    console.log('results in formatData', results)
     let formattedData = {}
     let formattingCurrentProduct = results[0] === 'currentProduct' ? true : false;
     results = formattingCurrentProduct ? results.slice(1) : results;
 
     for (let i = 0; i < results.length; i++) {
       let data = results[i];
+      console.log(data)
       let id = data.product_id || data.id.toString();
       if (formattingCurrentProduct) {
         if (formattedData.id === undefined) {
@@ -97,11 +101,17 @@ class RelatedProductsMain extends React.Component {
           formattedData[id] = {id: id}
         }
       }
+
       let currentlyFormatting = formattingCurrentProduct ? formattedData : formattedData[id]
+      if (formattingCurrentProduct) {
+        console.log('imhere')
+        console.log('currentlyFormatting', currentlyFormatting)
+      }
       if (data.ratings) {
         currentlyFormatting.rating = averageReviewsCalculator.getAverageRating(data.ratings)
       } else if (data.product_id) {
         let styleIndex = this.findDefaultStyleIndex(data)
+        console.log('styleIndex', styleIndex)
         currentlyFormatting.original_price = `$${Number(data.results[styleIndex].original_price)}`;
         currentlyFormatting.sale_price = data.results[styleIndex].sale_price;
         currentlyFormatting.photo = data.results[styleIndex].photos[0].url;
@@ -232,7 +242,7 @@ class RelatedProductsMain extends React.Component {
   render () {
 
     if (this.props.isOpenOutfit) {
-      console.log('YAAAAY')
+      // console.log('YAAAAY')
     }
 
     let modalCompareButton = "./assets/relatedProductACTION.png";
@@ -242,7 +252,7 @@ class RelatedProductsMain extends React.Component {
     let myOutfitCards = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : []
     let currentProductData = (this.state.currentProductData);
 
-
+    console.log('CURRENT PRODUCT DATA IN MAIN', currentProductData)
     if (relatedProductsCards !== null) {
         relatedProductsCards = relatedProductsCards.map(product => <Card
           key={product.id}
