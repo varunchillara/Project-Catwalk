@@ -13,6 +13,7 @@ const ComparisonModal = (props) => {
     backgroundColor: ' rgba(255, 255, 255, .7 )',
     zIndex: 1002
   }
+
   let modalInlineStyle = {
     position: 'fixed',
     borderRadius: '2%',

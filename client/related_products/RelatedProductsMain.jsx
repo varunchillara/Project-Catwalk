@@ -72,7 +72,7 @@ class RelatedProductsMain extends React.Component {
 
 
       this.setState ({
-          currentProductData: this.formatData(results[0]),
+          currentProductData: this.formatData(results[0].concat(results[2].data)),
           relatedProductsData: this.formatData(results[1]),
           currentProductStyles: currentProductStyles
         })
@@ -97,7 +97,10 @@ class RelatedProductsMain extends React.Component {
           formattedData[id] = {id: id}
         }
       }
+
       let currentlyFormatting = formattingCurrentProduct ? formattedData : formattedData[id]
+      if (formattingCurrentProduct) {
+      }
       if (data.ratings) {
         currentlyFormatting.rating = averageReviewsCalculator.getAverageRating(data.ratings)
       } else if (data.product_id) {
@@ -232,7 +235,7 @@ class RelatedProductsMain extends React.Component {
   render () {
 
     if (this.props.isOpenOutfit) {
-      console.log('YAAAAY')
+      // console.log('YAAAAY')
     }
 
     let modalCompareButton = "./assets/relatedProductACTION.png";
@@ -241,7 +244,6 @@ class RelatedProductsMain extends React.Component {
     let relatedProductsCards = Object.values(this.state.relatedProductsData).length ? Object.values(this.state.relatedProductsData) : [];
     let myOutfitCards = Object.values(this.state.myOutfit).length ? Object.values(this.state.myOutfit) : []
     let currentProductData = (this.state.currentProductData);
-
 
     if (relatedProductsCards !== null) {
         relatedProductsCards = relatedProductsCards.map(product => <Card
