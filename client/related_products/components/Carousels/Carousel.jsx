@@ -94,10 +94,10 @@ class Carousel extends React.Component {
       let cardRow = document.getElementsByClassName(cardRowClassName)
       if (slide > oldSlide) {
         //move carousel div leftwards
-        cardRow[0].style.transform = 'translateX(-120px)';
+        cardRow[0].style.transform = 'translateX(-220px)';
       } else {
         //move carousel div rightwards
-        cardRow[0].style.transform = 'translateX(120px)';
+        cardRow[0].style.transform = 'translateX(0px)';
       }
 
       let prevButton = document.getElementsByClassName(this.props.buttonClass + 'prev-button')[0]
@@ -121,12 +121,16 @@ class Carousel extends React.Component {
   }
 
   populateCollection () {
-
     let targetClassName = this.props.cards[0].props.uniqClassName
     let collection = Array.from(document.getElementsByClassName(targetClassName))
     let collectionHTML = []
+    let j = 0
     collection.forEach((element, i) => {
       if (i % 2 === 0) {
+        let id = i - j
+        j++
+        element.id = id
+        console.log(element)
         collectionHTML.push(element)
       }
     })

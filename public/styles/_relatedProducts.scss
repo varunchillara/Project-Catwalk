@@ -30,27 +30,33 @@
     z-index: 1000;
   }
   .related-products-card-row {
+    overflow: scroll;
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    width: 920px;
+    margin-left: 100px;
+    transition-duration: 1s;
     .carousel-container {
       display: flex;
       flex-direction: row;
-      gap: 5px;
+      gap: 20px;
       -webkit-transform-style: preserve-3d;
       -moz-transform-style: preserve-3d;
       transform-style: preserve-3d;
+
       .hidden {
-        visibility: hidden;
-        transition: transform .5s, opacity .5s
+        opacity: 0;
+        transition: visibility 1s, opacity 0.5s linear;
       }
+
       .relatedProdCard {
         border: 1px solid grey;
         top: 0;
         width: 100%;
         margin: auto;
         z-index: 100;
-        transition: transform .5s, opacity .5s, z-index .5s;
+        transition-duration: 1s;
+        transition: transform 1s, opacity 1s, z-index 1s;
         .image-container {
           flex: 1;
           display: flex;
@@ -202,10 +208,11 @@
         display: flex;
         flex-direction: row;
         justify-content: left;
+        transition-duration: 1s;
+
         .carousel-container {
           display: flex;
           flex-direction: row;
-          gap: 5px;
           -webkit-transform-style: preserve-3d;
           -moz-transform-style: preserve-3d;
           transform-style: preserve-3d;

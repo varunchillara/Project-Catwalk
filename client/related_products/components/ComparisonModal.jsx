@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import Modal from 'react-modal';
-// import styles from 'ratings_and_reviews/customStyles/customStyles.jsx'
 
 const ComparisonModal = (props) => {
 
@@ -25,19 +24,6 @@ const ComparisonModal = (props) => {
     padding: '20px',
     zIndex: 1002
   };
-  let modalCloseInlineStyle = {
-    marginTop: '5px',
-    fontFamily: 'Cormorant',
-    marginRight: '5px',
-    fontSize: '18px',
-    color: 'rgb( 73, 73, 73)',
-    fontWeight: 'bolder',
-    border: '1px solid rgb(73, 73, 73)',
-    backgroundColor: 'white',
-    padding: '7px 10px',
-    textAlign: 'center',
-    textAlign: 'right'
-  };
   let modalSpecsInlineStyle = {visibility: 'visible'};
 
   if (props.comparisonId !== props.relatedProductData.id) {
@@ -49,13 +35,38 @@ const ComparisonModal = (props) => {
   const generateCompareModalData = (curProdFeatures, relProdFeatures) => {
     let modalData = {};
     for (let item in curProdFeatures) {
-      modalData[item] = {currentProduct: curProdFeatures[item], relatedProduct: null}
-    }
-    for (let item in relProdFeatures) {
-      modalData[item] ? modalData[item].relatedProduct = relProdFeatures[item]
-        : modalData[item] = {currentProduct: null, relatedProduct: relProdFeatures[item]}
+      modalData[item] = {currentProduct: ' ✓ ' + curProdFeatures[item], relatedProduct: null}
     }
 
+    // for (let item in relProdFeatures) {
+    //   if (modalData[item]) {
+    //     modalData[item].relatedProduct = relProdFeatures[item]
+    //   } else {
+    //     modalData[item] = {currentProduct: null, relatedProduct: relProdFeatures[item] + ' ✓ '}
+    //   }
+    // }
+
+    for (let item in relProdFeatures) {
+      if (modalData[item]) {
+        if (relProdFeatures[item] === null) {
+          modalData[item].relatedProduct = relProdFeatures[item]
+        } else {
+          modalData[item].relatedProduct = relProdFeatures[item] +  ' ✓ '
+        }
+      } else {
+        if (relProdFeatures[item] === null) {
+          modalData[item] = {
+            currentProduct: null,
+            relatedProduct: relProdFeatures[item]
+          }
+        } else {
+          modalData[item] = {
+            currentProduct: null,
+            relatedProduct: relProdFeatures[item] +  ' ✓ '
+          }
+        }
+      }
+    }
     return modalData;
   }
 
@@ -63,9 +74,8 @@ const ComparisonModal = (props) => {
     <>
       <div className="modal-overlay" style={modalOverlayInlineStyle}>
         <div className="comparison-modal" style={modalInlineStyle}>
-          <div className="close" style={modalCloseInlineStyle} onClick={props.closeCompareModal}>Close</div>
           <div className="specs" style={modalSpecsInlineStyle}>
-            <ComparisonTable currentProductName={props.currentProductData.nameWithText} relatedProductName={props.relatedProductData.nameWithText} comparisonData={generateCompareModalData(props.currentProductData.features, props.relatedProductData.features)}/>
+            <ComparisonTable currentProductName={props.currentProductData.nameWithText} relatedProductName={props.relatedProductData.nameWithText} comparisonData={generateCompareModalData(props.currentProductData.features, props.relatedProductData.features)} closeCompareModal={props.closeCompareModal}/>
           </div>
         </div>
       </div>
@@ -76,19 +86,34 @@ const ComparisonModal = (props) => {
 
 const ComparisonTable = (props) => {
   let currentProductHeaderInlineStyle = {
-    background: '#e6e6e6',
     fontFamily: 'Cormorant',
     fontWeight: 'bolder',
+    fontSize: '20px',
     textAlign: 'left'
   }
   let relatedProductHeaderInlineStyle = {
-    background: '#e6e6e6',
     fontFamily: 'Cormorant',
     fontWeight: 'bolder',
+    fontSize: '20px',
     textAlign: 'right'
   }
 
-
+  let modalCloseInlineStyle = {
+    fontFamily: 'Cormorant',
+    fontSize: '18px',
+    color: 'rgb( 73, 73, 73)',
+    fontWeight: 'bolder',
+    border: '1px solid rgb(73, 73, 73)',
+    backgroundColor: 'white',
+    padding: '7px 10px',
+    alignSelf: 'center'
+  };
+  let modalCloseContainerInlineStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: 'center',
+    cursor: 'pointer'
+  }
   let comparisonData = props.comparisonData
   let comparisonKeys = Object.keys(comparisonData);
 
@@ -113,6 +138,15 @@ const ComparisonTable = (props) => {
           relatedProductValue={comparisonData[feature].relatedProduct}
           />
         )}
+        <tr>
+          <td></td>
+          <td>
+            <div className="close-container" style={modalCloseContainerInlineStyle}>
+              <div className="close" style={modalCloseInlineStyle} onClick={props.closeCompareModal}>Close</div>
+            </div>
+          </td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
   )
