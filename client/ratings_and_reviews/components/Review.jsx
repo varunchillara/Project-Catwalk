@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Recommendation from './Recommendation.jsx';
-import Stars from '../../sharedComponents/Stars.jsx';
+import Stars2 from '../../Stars2.jsx';
 import Report from './Report.jsx';
 import axios from 'axios';
 import token from '../../env/config.js';
@@ -20,7 +20,7 @@ function Review(props) {
   return (
     <div className="review">
       <div className="topOfReview">
-        <Stars rating={props.review.rating} />
+        <Stars2 width="17px" rating={props.review.rating} />
         <div className="reivewRightSide">
           <div className="reviewerName">{props.review.reviewer_name}, {`${new Date(props.review.date).toDateString()}`}</div>
         </div>

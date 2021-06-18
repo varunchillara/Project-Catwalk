@@ -3,6 +3,9 @@ import Stars from '../../sharedComponents/Stars.jsx';
 import helperFunctions from '../../helperFunctions.js';
 import {useDispatch} from 'react-redux';
 import {updateRating} from '../../../store/actions/updateRating.js';
+import Stars2 from '../../Stars2.jsx';
+
+
 
 function Rating (props) {
   let currentRating = helperFunctions.getAverageRating(props.ratings);
@@ -15,9 +18,8 @@ function Rating (props) {
 
   return (
     <div className="rating">
-      {/* {console.log('****************!!!!', currentRating)} */}
       <div className="overallRating">{JSON.stringify(currentRating)}</div>
-      <div className="starsContainer"><Stars rating={currentRating} /></div>
+      <div className="starsContainer"><Stars2 width={"17px"} rating={currentRating} /></div>
     </div>
   )
 }

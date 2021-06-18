@@ -17,10 +17,10 @@
 //   outline: 1px solid slategrey;
 // }
 
-.scroll {
-  height: 600px;
-  overflow:auto;
-}
+// .scroll {
+//   height: 600px;
+//   overflow:auto;
+// }
 
 .barContainer {
   display: flex;
@@ -250,9 +250,11 @@
 }
 .on {
   color: rgb(73, 73, 73);
+  margin-right: 3px;
 }
 .off {
   color: #ccc;
+  margin-right: 3px;
 }
 
 .star2 {
@@ -260,7 +262,6 @@
 }
 
 .star-rating {
-  margin-top: 10px;
 }
 
 
@@ -309,4 +310,11 @@ textarea {
     padding: 10px 20px;
     text-align: center;
   }
+}
+
+input[type=email] {
+  width: 275px;
+  height: 15px;
+  padding: 12px 20px;
+  box-sizing: border-box;
 }
