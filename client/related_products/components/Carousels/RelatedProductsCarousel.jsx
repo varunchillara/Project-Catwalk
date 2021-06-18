@@ -2,17 +2,16 @@ import React from 'react';
 import Carousel from './Carousel.jsx'
 
 const RelatedProductsCarousel = (props) => {
+  let buttonClass = 'relatedProds-';
+  let prevButtonClass = props.buttonClass + 'prev-button';
+  let nextButtonClass = props.buttonClass + 'next-button';
 
   return (
     <div className="related-products-carousel-wrapper">
       <div className="related-products-carousel-title" >
         RELATED PRODUCTS
       </div>
-      <div className="related-products-carousel">
-        <div className="related-products-card-row">
-          <Carousel cards={props.relatedProductsCards}/>
-        </div>
-      </div>
+      <Carousel cards={props.relatedProductsCards} buttonClass={buttonClass}/>
     </div>
   )
 }

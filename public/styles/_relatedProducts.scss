@@ -1,14 +1,19 @@
 
 .related-products-wrapper {
   margin: auto;
-  width: 920px;
+  width: 1000px;
   .related-products-carousel-title {
     font-family: 'Cormorant';
     font-weight: bolder;
-    font-size: 16px
+    font-size: 20px
   }
+  /*
+
+          RELATED PRODUCTS CAROUSEL
+
+  */
   .related-products-carousel {
-    overflow: hidden;
+    overflow: visible;
     width: 100%;
     margin-top: 30px;
     margin-bottom: 50px;
@@ -16,21 +21,28 @@
     flex-direction: row;
     justify-content: left;
   }
+  .relatedProds-prev-button {
+    width: 70px;
+    height: 70px;
+    left: px;
+    align-self: center;
+    position: absolute;
+    z-index: 1000;
+  }
   .related-products-card-row {
     display: flex;
     flex-direction: row;
     justify-content: left;
-    .carousel-container-inner {
+    .carousel-container {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
       -webkit-transform-style: preserve-3d;
       -moz-transform-style: preserve-3d;
       transform-style: preserve-3d;
-      .carousel-prev-button {
-        width: '70px';
-        height: '70px';
-        align-self: 'center';
-        position: 'relative';
-        left: '30px';
-        z-index: 100;
+      .hidden {
+        visibility: hidden;
+        transition: transform .5s, opacity .5s
       }
       .relatedProdCard {
         border: 1px solid grey;
@@ -38,66 +50,69 @@
         width: 100%;
         margin: auto;
         z-index: 100;
-        transition: 'transform .5s, opacity.5s, z-index .5s';
+        transition: transform .5s, opacity .5s, z-index .5s;
         .image-container {
           flex: 1;
           display: flex;
           justify-content:center;
           margin-bottom: 10px;
-          position: relative;
           height: 255px;
-          background-color: 'rgb(240, 237, 228)';
+          background-color: rgb(240, 237, 228);
           .image {
             align-self: center;
             width: 170px;
           }
           .action-modal {
-            position: absolute;
+            position: relative;
             top:5%;
-            left:80%;
-            width: 23px;
+            width: 26px;
+            height: 26px;
             opacity: 50%;
           }
         }
         .product-info {
-          margin-left: '8px';
-          margin-right: '8px';
-          margin-bottom: '10px';
+          margin-left: 8px;
+          margin-right: 8px;
+          margin-bottom: 10px;
           .category {
             font-family: 'Cormorant';
-            justify-content: 'center';
-            font-weight: 'normal';
+            justify-content: center;
+            font-weight: normal;
           }
           .name {
             font-family: 'Cormorant';
-            justify-content: 'center';
+            justify-content: center;
             font-weight: 900;
           }
           .price {
             font-family: 'Cormorant';
-            justify-content: 'center';
-            font-weight: 'normal';
+            justify-content: center;
+            font-weight: normal;
           }
           .rating {
-            color: 'white';
+            color: white;
           }
         }
       }
     }
-    .carousel-next-button {
-      width: '70px';
-      height: '70px';
-      align-self: 'center';
-      position: 'relative';
-      right: '30px';
-      z-index: 1001;
-    }
-
   }
+  .relatedProds-next-button {
+    width: 70px;
+    height: 70px;
+    align-self: center;
+    position: relative;
+    right: 30px;
+    z-index: 1002;
+  }
+  /********************
+
+      MY OUTFIT CAROUSEL
+
+*********************/
   .my-outfit-carousel-title {
     font-family: 'Cormorant';
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 20px;
   }
   .my-outfit-container {
     display: flex;
@@ -126,7 +141,7 @@
           margin-bottom: 10px;
           position: relative;
           height: 255px;
-          background-color: 'rgb(240, 237, 228)';
+          background-color: rgb(240, 237, 228);
           .image {
             align-self: center;
             width: 170px;
@@ -140,9 +155,9 @@
           }
         }
         .product-info {
-          margin-left: '8px';
-          margin-right: '8px';
-          margin-bottom: '10px';
+          margin-left: 8px;
+          margin-right: 8px;
+          margin-bottom: 10px;
           .category {
             font-family: 'Cormorant';
             justify-content: center;
@@ -151,54 +166,57 @@
           }
           .name {
             font-family: 'Cormorant';
-            justify-content: 'center';
+            justify-content: center;
             font-weight: 900;
             text-align: center;
           }
           .price {
             font-family: 'Cormorant';
-            justify-content: 'center';
-            font-weight: 'normal';
+            justify-content: center;
+            font-weight: normal;
             text-align: center;
           }
           .rating {
-            color: 'white';
+            color: white;
           }
         }
       }
     }
     .my-outfit-carousel {
-      overflow: hidden;
+      overflow: visible;
       width: 100%;
       margin-top: 30px;
       margin-bottom: 50px;
       display: flex;
       flex-direction: row;
       justify-content: left;
-
+      .myOutfit-prev-button {
+        width: 70px;
+        height: 70px;
+        align-self: center;
+        position: relative;
+        left: 10px;
+        z-index: 100;
+      }
       .my-outfit-card-row {
         display: flex;
         flex-direction: row;
         justify-content: left;
-        .carousel-container-inner {
+        .carousel-container {
+          display: flex;
+          flex-direction: row;
+          gap: 5px;
           -webkit-transform-style: preserve-3d;
           -moz-transform-style: preserve-3d;
           transform-style: preserve-3d;
-          .carousel-prev-button {
-            width: '70px';
-            height: '70px';
-            align-self: 'center';
-            position: 'relative';
-            left: '30px';
-            z-index: 100;
-          }
+          gap: 20px;
           .myOutfitCard {
             border: 1px solid grey;
             top: 0;
             width: 100%;
             margin: auto;
             z-index: 100;
-            transition: 'transform .5s, opacity.5s, z-index .5s';
+            transition: transform .5s, opacity .5s, z-index .5s;
             .image-container {
               flex: 1;
               display: flex;
@@ -206,52 +224,53 @@
               margin-bottom: 10px;
               position: relative;
               height: 255px;
-              background-color: 'rgb(240, 237, 228)';
+              background-color: rgb(240, 237, 228);
               .image {
                 align-self: center;
                 width: 170px;
               }
-              .action-modal {
+              .action-remove-outfit {
                 position: absolute;
                 top:5%;
                 left:80%;
                 width: 23px;
+                height: 23px;
                 opacity: 50%;
               }
             }
             .product-info {
-              margin-left: '8px';
-              margin-right: '8px';
-              margin-bottom: '10px';
+              margin-left: 8px;
+              margin-right: 8px;
+              margin-bottom: 10px;
               .category {
                 font-family: 'Cormorant';
-                justify-content: 'center';
-                font-weight: 'normal';
+                justify-content: center;
+                font-weight: normal;
               }
               .name {
                 font-family: 'Cormorant';
-                justify-content: 'center';
+                justify-content: center;
                 font-weight: 900;
               }
               .price {
                 font-family: 'Cormorant';
-                justify-content: 'center';
-                font-weight: 'normal';
+                justify-content: center;
+                font-weight: normal;
               }
               .rating {
-                color: 'white';
+                color: white;
               }
             }
           }
-          .carousel-next-button {
-            width: '70px';
-            height: '70px';
-            align-self: 'center';
-            position: 'relative';
-            right: '30px';
-            z-index: 1001;
-          }
         }
+      }
+      .myOutfit-next-button {
+        width: 70px;
+        height: 70px;
+        align-self: center;
+        position: relative;
+        right: 20px;
+        z-index: 1001;
       }
     }
   }
