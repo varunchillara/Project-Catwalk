@@ -238,6 +238,7 @@
 
 
 
+
 .modalHeading {
   margin-top: 10px;
 }
@@ -309,6 +310,9 @@ textarea {
     background-color: white;
     padding: 10px 20px;
     text-align: center;
+  }
+  .formButton:hover {
+    background-color: rgb(243, 243, 243);
   }
 }
 
