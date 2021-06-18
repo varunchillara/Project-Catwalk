@@ -44,9 +44,10 @@ const ProductInfo = (props) => {
     }
   }, [props.style.skus])
 
-  useEffect(() => {
-    Modal.setAppElement('#modal');
-  }, [])
+  const selectSize = () => {
+    // console.log('selected')
+    // setCurrentSku(sku)
+  }
 
   const selectQuantity = () => {
     let skus = Object.values(productSkus);

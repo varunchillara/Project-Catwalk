@@ -5,9 +5,8 @@ import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js';
 import Card from './components/Card.jsx';
-import Carousel from './components/Carousel.jsx';
-import MyOutfitCarousel from './components/MyOutfitCarousel.jsx';
-import RelatedProductsCarousel from './components/RelatedProductsCarousel.jsx';
+import MyOutfitCarousel from './components/Carousels/MyOutfitCarousel.jsx';
+import RelatedProductsCarousel from './components/Carousels/RelatedProductsCarousel.jsx';
 
 axios.defaults.headers = {
   'Content-Type': 'application/json',
@@ -191,9 +190,7 @@ class RelatedProductsMain extends React.Component {
   onMouseEnterHandler (e) {
     let id = this.state.currentProductData.id
     if (e.target.className.includes('overview-linked')) {
-      // console.log('OPEN THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      // console.log('OVER ACTION')
       e.target.style.opacity='100%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -203,9 +200,7 @@ class RelatedProductsMain extends React.Component {
 
   onMouseLeaveHandler (e) {
     if (e.target.className.includes('overview-linked')) {
-      // console.log('CLOSE THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      // console.log('EXIT ACTION')
       e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -251,6 +246,7 @@ class RelatedProductsMain extends React.Component {
     if (relatedProductsCards !== null) {
         relatedProductsCards = relatedProductsCards.map(product => <Card
           key={product.id}
+          uniqClassName={'relatedProdCard'}
           currentChosenStyleId={this.props.currentChosenStyleId}
           relatedProductData={product}
           actionButton={modalCompareButton}
@@ -262,10 +258,11 @@ class RelatedProductsMain extends React.Component {
           comparisonId={this.state.modalId}
           currentProductData={currentProductData}
           />)
-      }
+        }
       if (myOutfitCards !== null) {
         myOutfitCards = myOutfitCards.map(product => <Card
           key={product.id}
+          uniqClassName={'myOutfitCard'}
           relatedProductData={product}
           currentProductData={currentProductData}
           actionButton={removeOutfitButton}
@@ -278,6 +275,7 @@ class RelatedProductsMain extends React.Component {
       if (this.state.currentProductData.id) {
         addOutfitCard =  <Card
           key={this.state.currentProductData.product_id}
+          uniqClassName={'addOutfitCard'}
           currentProductData={this.state.currentProductData}
           cardClickHandler={this.cardClickHandler}
           onMouseEnterHandler={this.onMouseEnterHandler}
@@ -286,12 +284,12 @@ class RelatedProductsMain extends React.Component {
         />
       }
 
-    let relatedProductsWrapperInlineStyle = {
-      margin: 'auto',
-      width : '920px',
-    }
+    // let relatedProductsWrapperInlineStyle = {
+    //   margin: 'auto',
+    //   width : '920px',
+    // }
     return (
-      <div className="related-products-wrapper" style={relatedProductsWrapperInlineStyle}>
+      <div className="related-products-wrapper">
         <RelatedProductsCarousel
           relatedProductsCards={relatedProductsCards}
           modalCompareButton={modalCompareButton}
