@@ -262,6 +262,9 @@ textarea {
   padding: 10px 20px;
   text-align: center;
 }
+.formButtonContainer .formButton:hover {
+  background-color: #f3f3f3;
+}
 
 input[type=email] {
   width: 275px;
@@ -278,11 +281,6 @@ input[type=email] {
 .stars .checked {
   color: #494949;
 }
-
-.stars .star {
-  margin-right: 3px;
-}
-
 .stars .star {
   margin-right: 3px;
 }

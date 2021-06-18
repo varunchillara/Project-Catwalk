@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import {useSelector} from 'react-redux';
 import token from '../../env/config.js';
 import axios from 'axios';
-import Stars from '../../sharedComponents/Stars.jsx';
+import Stars from '../../Stars2.jsx';
 import PopupBag from './PopupBag.jsx';
 import PopupOutfit from './PopupOutfit.jsx';
 import PopupShare from './PopupShare.jsx';
