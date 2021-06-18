@@ -205,18 +205,16 @@
 
 .on {
   color: #494949;
+  margin-right: 3px;
 }
 
 .off {
   color: #ccc;
+  margin-right: 3px;
 }
 
 .star2 {
   margin-right: 2px;
-}
-
-.star-rating {
-  margin-top: 10px;
 }
 
 input[type=text] {
