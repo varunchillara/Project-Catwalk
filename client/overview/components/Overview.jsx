@@ -7,8 +7,8 @@ import Description from './Description.jsx';
 import LogoSearch from './Logo-Search.jsx';
 import PhotoParent from './Photo-Parent.jsx';
 
-	function Overview(props) {
-		const currentProduct = useSelector(state => state.currentProduct);
+function Overview(props) {
+	const currentProduct = useSelector(state => state.currentProduct);
 
 	return (
 		<div className="overviewContainer">
