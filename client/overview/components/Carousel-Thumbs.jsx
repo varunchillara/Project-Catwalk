@@ -43,11 +43,11 @@ const CarouselThumbs = ({ photos, clickImage }) => {
 
   return (
     <div className="imageThumbs">
-      <button style={{ "marginTop": "10px", "marginBottom": "20px" }} onClick={arrowUp}>/\</button>
+      <button className="arrow-btn" style={{ "marginTop": "10px", "marginBottom": "20px" }} onClick={arrowUp}>⏫</button>
       {showSeven.map((image, i) =>
         <img key={i} style={{ "borderRadius": "10px", "height": "65px", "minWidth": "65px" }} src={image.thumbnail_url}  onClick={() => {clickImage(image.url)}}/>
       )}
-      <button style={{ "marginTop": "-10px" }} onClick={arrowDown}>\/</button>
+      <button className="arrow-btn" style={{ "marginTop": "-10px" }} onClick={arrowDown}>⏬</button>
     </div>
   )
 };

@@ -396,6 +396,18 @@ textarea {
   transform: scale(1.4);
   border: 2px solid #3b9ebd;
 }
+.overview .overview-main .arrow-btn {
+  font-size: 26px;
+  opacity: 75%;
+  border: 0.25px solid #3b9ebd;
+  margin-left: 28px;
+  width: 44px;
+  height: 36px;
+  border-radius: 16px;
+}
+.overview .overview-main .arrow-btn:hover {
+  background-color: #3b9ebd;
+}
 .overview .overview-main .imageMain {
   border: 2px solid #555;
 }
