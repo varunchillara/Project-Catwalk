@@ -1,25 +1,31 @@
 import React, {useState, useEffect} from 'react';
 
-const CarouselThumbs = ({ photos, clickImage }) => {
-  const[urls, setUrls] = useState( [] );
+var begin = 0;
+var end = 7;
 
-  var start = 0;
-  var end = 4;
-  let showFour = urls.map(url => url.thumbnail_url);
+const CarouselThumbs = ({ photos, clickImage }) => {
+  const [urls, setUrls] = useState( [] );
+
+  let showSeven = urls.map(url => url);
 
   useEffect(() => {
     if (photos) {
-      setUrls(photos.slice(start, end));
+      setUrls(photos.slice(begin, end));
     }
   }, [photos])
 
   const arrowDown = () => {
-    if (start === urls.length - 4) {
-      start = urls.length - 4;
-      end = urls.length;
+    if (photos.length < 7) {
+      begin = 0;
+      end = photos.length;
     } else {
-      start++;
-      end++;
+      if (begin === photos.length - 7) {
+        begin = photos.length - 7;
+        end = photos.length;
+      } else {
+        begin++;
+        end++;
+      }
     }
 
     setUrls(photos.slice(start + 1, end + 1));
@@ -30,25 +36,25 @@ const CarouselThumbs = ({ photos, clickImage }) => {
   // console.log('end', end);
 
   const arrowUp = () => {
-    if (start === 0) {
-      start = 0
-      end = 4;
+    if (begin === 0) {
+      begin = 0;
+      end = 7;
     } else {
-      start--;
+      begin--;
       end--;
     }
-    setUrls(photos.slice(start, end));
+    setUrls(photos.slice(begin, end));
   }
 
   // console.log('urls', urls)
 
   return (
     <div className="imageThumbs">
-      <button style={{ 'marginBottom': '20px' }} onClick={() => {arrowUp()}}>/\</button>
-      {showFour.map((image, i) =>
-        <img key={i} style={{ "borderRadius": "10px" }} src={image} height="100px" width="100px" onClick={() => {clickImage(image)}}/>
+      <button className="arrow-btn" style={{ "marginTop": "10px", "marginBottom": "20px" }} onClick={arrowUp}>⏫</button>
+      {showSeven.map((image, i) =>
+        <img key={i} style={{ "borderRadius": "10px", "height": "65px", "minWidth": "65px" }} src={image.thumbnail_url}  onClick={() => {clickImage(image.url)}}/>
       )}
-      <button style={{ "marginTop": "-10px" }} onClick={() => {arrowDown()}}>\/</button>
+      <button className="arrow-btn" style={{ "marginTop": "-10px" }} onClick={arrowDown}>⏬</button>
     </div>
   )
 };

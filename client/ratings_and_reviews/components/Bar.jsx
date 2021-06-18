@@ -3,7 +3,7 @@ import React from 'react';
 function Bar(props) {
 
   let style = {
-    background: 'rgb(73, 73, 73)',
+    background: 'rgb(158,181,168)',
     width: props.precent + '%',
     height: '7px',
     position: 'relative',
@@ -11,7 +11,10 @@ function Bar(props) {
   }
 
   return (
-    <div className="bar"><div className="status" style={style}/></div>
+    <div className="barContainer">
+      <div className="bar"><div className="status" style={style}/></div>
+      <div className="numOfReviews">({props.count})</div>
+    </div>
   )
 }
 

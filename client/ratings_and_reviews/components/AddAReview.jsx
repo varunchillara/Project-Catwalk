@@ -1,10 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import Modal from 'react-modal';
-import token from '../../env/config.js';
 import customStyles from '../customStyles/customStyles.jsx';
+import InteractiveStarRating from '../interactiveComponents/InteractiveStarRating.jsx';
+import RadioSelection from '../interactiveComponents/RadioSelection.jsx';
+import RadioSelectionYesNo from '../interactiveComponents/RadioSelectionYesNo.jsx';
+import axios from 'axios';
+import token from '../../env/config.js';
 
 function AddAReview(props){
-  const [modalIsOpen,setIsOpen] = React.useState(false);
+  const [modalIsOpen,setIsOpen] = useState(false);
+
+  const [currentRating, setRating] = useState(1);
+  const [currentRecommend, setRecommend] = useState(false);
+
+  const [currentSummary, setSummary] = useState('');
+  const [currentBody, setBody] = useState('');
+  const [currentName, setName] = useState('');
+  const [currentEmail, setEmail] = useState('');
+
+  const [currentFit, setFit] = useState(1);
+  const [currentComfort, setComfort] = useState(1);
+  const [currentLength, setLength] = useState(1);
+  const [currentQuality, setQuality] = useState(1);
 
   useEffect(() => {
     Modal.setAppElement('#modal');
@@ -18,23 +35,45 @@ function AddAReview(props){
     setIsOpen(false);
   }
 
-  function postReview(productId, rating, summary, body, recommend, name, email, photos, characteristics) {
+  function postReview() {
     axios.defaults.headers = {
       'Content-Type': 'application/json',
-      Authorization: config.token
+      Authorization: token
     };
 
     axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews', {
-      product_id: productId,
-      rating: rating,
-      summary: summary,
-      body: body,
-      recommend: recommend,
-      name: name,
-      email: email,
-      photos: photos,
-      characteristics: characteristics
-    });
+      product_id: props.currentProduct.data.id,
+      rating: currentRating,
+      summary: currentSummary,
+      body: currentBody,
+      recommend: currentRecommend,
+      name: currentName,
+      email: currentEmail,
+      photos: [],
+      characteristics: {}
+    })
+    .then(() => {
+      props.getReviews();
+    })
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    postReview();
+    closeModal();
+
+    //default state
+    setRating(1);
+    setRecommend(false);
+    setSummary('');
+    setBody('');
+    setName('');
+    setEmail('');
+
+    setFit(1);
+    setComfort(1);
+    setLength(1);
+    setQuality(1);
   }
 
     return (
@@ -46,37 +85,49 @@ function AddAReview(props){
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <button onClick={closeModal}>close</button>
-          <form className="modalForm" style={customStyles.modalForm}>
-            <div className="block">
-              <label className="label">rating:</label>
-              <input type="text" />
+          <form className="modalForm" style={customStyles.modalForm} onSubmit={handleSubmit}>
+            <div className="modalHeading">YOUR OVERALL RATING</div>
+            <InteractiveStarRating set={setRating}/>
+            <hr className="breakLine"/>
+            <div className="modalHeading">WOULD YOU RECOMMEND THIS PRODUCT?</div>
+            <div>
+              <RadioSelectionYesNo set={setRecommend}/>
             </div>
-            <div className="block">
-              <label className="label">summary:</label>
-              <input type="text" />
+            <hr className="breakLine"/>
+            <div className="FitLengthComfortQualityContainer">
+              <div className="fitLengthContainer">
+                <div>
+                  <div className="modalHeading">FIT</div>
+                  <RadioSelection set={setFit}/>
+                </div>
+                <div className="lengthContainer">
+                  <div className="modalHeading">LENGTH</div>
+                  <RadioSelection set={setComfort}/>
+                </div>
+              </div>
+              <div className="comfortAndQualityContainer">
+                <div>
+                  <div className="modalHeading">COMFORT</div>
+                  <RadioSelection set={setLength}/>
+                </div>
+                <div className="qualityContainer">
+                  <div className="modalHeading">QUALITY</div>
+                  <RadioSelection set={setQuality}/>
+                </div>
+              </div>
             </div>
-            <div className="block">
-              <label className="label">body:</label>
-              <input type="text" />
-            </div>
-            <div className="block">
-              <label className="label">recommend:</label>
-              <input type="text" />
-            </div>
-            <div className="block">
-              <label className="label">name:</label>
-              <input type="text" />
-            </div>
-            <div className="block">
-              <label className="label">email:</label>
-              <input type="text" />
-            </div>
-            <div className="block">
-              <label className="label">photos:</label>
-              <input type="text" />
-            </div>
-            <input className="button" type="submit" value="Submit" />
+            <hr className="breakLine"/>
+            <div className="modalHeading">SUMMARY</div>
+            <input type="text" id="fname" name="fname" onChange={(e) => {setSummary(e.target.value)}}/>
+            <div className="modalHeading">YOUR REVIEW</div>
+            <textarea type="text" id="fname" name="fname" onChange={(e) => {setBody(e.target.value)}}/>
+            <hr className="breakLine"/>
+            <div className="modalHeading">NAME</div>
+            <input type="text" id="fname" name="fname" onChange={(e) => {setName(e.target.value)}}/>
+            <div className="modalHeading">EMAIL</div>
+            <input type="email" id="fname" name="fname" onChange={(e) => {setEmail(e.target.value)}}/>
+            <hr className="breakLine"/>
+            <div className="formButtonContainer"><button className="formButton">SUBMIT</button></div>
           </form>
         </Modal>
       </div>

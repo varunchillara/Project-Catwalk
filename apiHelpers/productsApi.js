@@ -24,13 +24,16 @@ const getRelatedProducts = (id) => {
 
 
 
+
 //test api's manually
 
 // getListOfProducts()
 // .then((result) => {console.log(result.data)});
-getProduct(11001)
-.then((result) => {console.log(result.data)});
+// getProduct(11001)
+// .then((result) => {console.log(result.data)});
 // getProductStyles(11001)
 // .then((result) => {console.log(result.data)})
 // getRelatedProducts(1001)
 // .then((result) => {console.log(result.data)})
+
+module.exports.getListOfProducts = getListOfProducts;

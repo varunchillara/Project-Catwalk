@@ -9,8 +9,6 @@ const customStyles = {
   },
   modalForm : {
     fontFamily: 'Cormorant',
-    display: 'flex',
-    flexDirection: 'column'
   }
 }
 

@@ -4,6 +4,30 @@
   text-align: left;
 }
 
+// .scroll::-webkit-scrollbar {
+//   width: 8px;
+// }
+
+// .scroll::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+// }
+
+// .scroll::-webkit-scrollbar-thumb {
+//   background-color: darkgrey;
+//   outline: 1px solid slategrey;
+// }
+
+// .scroll {
+//   height: 600px;
+//   overflow:auto;
+// }
+
+.barContainer {
+  display: flex;
+  font-family: Cormorant;
+  color: rgb(73, 73, 73);
+}
+
 .ratingsAndReviews {
   display: flex;
   font-family: Cormorant;
@@ -110,13 +134,19 @@
       margin-right: 10px;
       font-weight: normal;
     }
+
+    .numOfReviews {
+      color: lightgray;
+    }
+
     .bar {
       background-color: rgb(233, 233, 233);
-      width: 200px;
+      width: 184px;
       height: 7px;
       position: relative;
       transition: width .5s linear;
       margin-top: 8px;
+      margin-right: 2px;
       .status {
         background: rgb(73, 73, 73);
         width: 50%;
@@ -145,7 +175,7 @@
 
   .review {
     width: 600px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     .summary {
       margin-bottom: 15px;
       margin-top: 10px;
@@ -165,12 +195,18 @@
       }
     }
   }
+
+  .breakLine {
+    margin-right: 15px;
+  }
+
   .topOfReview {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     .reviewerName {
       font-size: small;
+      margin-right: 15px;
     }
   }
   .actions {
@@ -178,8 +214,107 @@
     font-size: small;
     margin-bottom: 15px;
     .helpful {
-      margin-right: 10px;
     }
   }
 }
 
+.report {
+  margin-left: 3px;
+}
+
+.yes:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.report:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+.modalHeading {
+  margin-top: 10px;
+}
+
+#starButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.on {
+  color: rgb(73, 73, 73);
+  margin-right: 3px;
+}
+.off {
+  color: #ccc;
+  margin-right: 3px;
+}
+
+.star2 {
+  margin-right: 2px;
+}
+
+.star-rating {
+}
+
+
+input[type=text] {
+  width: 275px;
+  height: 15px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  width: 275px;
+  height: 100px;
+  padding: 12px 20px;
+  resize: none;
+  overflow-y: scroll;
+}
+
+.fitLengthContainer {
+  display: flex;
+  .lengthContainer {
+    margin-left: 50px;
+  }
+}
+
+.comfortAndQualityContainer {
+  display: flex;
+  .qualityContainer {
+    margin-left: 50px;
+  }
+}
+
+.formButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  .formButton {
+    font-family: Cormorant;
+    font-size: 15px;
+    color: rgb(73, 73, 73);
+    font-weight: bolder;
+    margin-top: 5px;
+
+    border: 1px solid rgb(73, 73, 73);
+    background-color: white;
+    padding: 10px 20px;
+    text-align: center;
+  }
+}
+
+input[type=email] {
+  width: 275px;
+  height: 15px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}

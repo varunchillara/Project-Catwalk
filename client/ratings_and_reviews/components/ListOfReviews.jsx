@@ -10,7 +10,35 @@ function ListOfReviews() {
   const currentProduct = useSelector(state => state.currentProduct) || { data: { id: 11004 } };
   const[reviews, setReviews] = useState([]);
   const[currentCount, setCurentCount] = useState(4);
-  const[currentSort, setCurrentSort] = useState('newest');
+  const[currentSort, setCurrentSort] = useState(undefined);
+  const[toggleReport, setToggleReport] = useState(0);
+  const[helpfulToggle, setHelpfulToggle] = useState(false);
+
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  let customStyles = {
+    scroll: {
+    }
+  }
+
+  if (reviews.length > 3) {
+    customStyles = {
+      scroll: {
+        height: "600px",
+        overflow: "auto",
+      }
+    }
+  }
+
+
+  // const reviewValues = Object.values(reviews)
+  // let recs = 0;
+  // reviewValues.forEach((item) => {
+  //   if (item.recommend === true) {
+  //     recs ++;
+  //   }
+  // })
+  // console.log('**************', recs);
 
   function getReviews() {
     axios.defaults.headers = {
@@ -21,7 +49,7 @@ function ListOfReviews() {
     params: {
       page: 1,
       count: currentCount,
-      sort: currentSort,
+      sort: currentSort || 'newest',
       product_id: currentProduct.data.id || 11004
     }
   })
@@ -30,30 +58,36 @@ function ListOfReviews() {
   })
   }
 
+  function handleToggle() {
+    setToggleReport(0);
+  }
+
   function handleChange(e) {
     setCurrentSort(e.target.value);
  };
 
   useEffect(() => {
     getReviews();
-    // console.log('does this get run again?????');
-  }, [currentProduct, currentCount, currentSort])
+
+  }, [currentProduct, currentCount, currentSort, toggleReport])
 
   return (
     <div className="Reviews">
       <header className="reviewsHeader">
         {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
-      {reviews.map((review, i) => {
-        return <Review key={i} review={review} />
-      })}
+      <div className="scroll" style={customStyles.scroll}>
+        {reviews.map((review, i) => {
+          return <Review key={i} review={review} getReviews={getReviews}/>
+        })}
+      </div>
       <div className="buttons">
         <button className="button"
         onClick={() => {
-          const newCount = currentCount + 4;
+          const newCount = currentCount + 2;
           setCurentCount(newCount);
         }}>MORE REVIEWS</button>
-        <AddAReview id={currentProduct.id} />
+        <AddAReview currentProduct={currentProduct} getReviews={getReviews}/>
       </div>
     </div>
   )
