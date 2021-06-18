@@ -51,12 +51,29 @@ function AddAReview(props){
       email: currentEmail,
       photos: [],
       characteristics: {}
-    });
+    })
+    .then(() => {
+      props.getReviews();
+    })
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     postReview();
+    closeModal();
+
+    //default state
+    setRating(1);
+    setRecommend(false);
+    setSummary('');
+    setBody('');
+    setName('');
+    setEmail('');
+
+    setFit(1);
+    setComfort(1);
+    setLength(1);
+    setQuality(1);
   }
 
     return (

@@ -17,10 +17,10 @@
 //   outline: 1px solid slategrey;
 // }
 
-.scroll {
-  height: 600px;
-  overflow:auto;
-}
+// .scroll {
+//   height: 600px;
+//   overflow:auto;
+// }
 
 .barContainer {
   display: flex;
@@ -309,4 +309,11 @@ textarea {
     padding: 10px 20px;
     text-align: center;
   }
+}
+
+input[type=email] {
+  width: 275px;
+  height: 15px;
+  padding: 12px 20px;
+  box-sizing: border-box;
 }

@@ -16,6 +16,21 @@ function ListOfReviews() {
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
+  let customStyles = {
+    scroll: {
+    }
+  }
+
+  if (reviews.length > 3) {
+    customStyles = {
+      scroll: {
+        height: "600px",
+        overflow: "auto",
+      }
+    }
+  }
+
+
   // const reviewValues = Object.values(reviews)
   // let recs = 0;
   // reviewValues.forEach((item) => {
@@ -53,6 +68,7 @@ function ListOfReviews() {
 
   useEffect(() => {
     getReviews();
+
   }, [currentProduct, currentCount, currentSort, toggleReport])
 
   return (
@@ -60,7 +76,7 @@ function ListOfReviews() {
       <header className="reviewsHeader">
         {reviews.length} reviews, sorted by<SortOptions handleChange={handleChange}/>
       </header>
-      <div className="scroll">
+      <div className="scroll" style={customStyles.scroll}>
         {reviews.map((review, i) => {
           return <Review key={i} review={review} getReviews={getReviews}/>
         })}
@@ -71,7 +87,7 @@ function ListOfReviews() {
           const newCount = currentCount + 2;
           setCurentCount(newCount);
         }}>MORE REVIEWS</button>
-        <AddAReview currentProduct={currentProduct} />
+        <AddAReview currentProduct={currentProduct} getReviews={getReviews}/>
       </div>
     </div>
   )
