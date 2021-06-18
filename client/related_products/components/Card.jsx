@@ -49,7 +49,9 @@ const Card = (props) => {
       <div id={id} className={cls.cardClass} onClick={cardClickHandler} onMouseEnter={props.onMouseEnterHandler} onMouseLeave={props.onMouseLeaveHandler} >
         <div id={id} className={cls.imageContainerClass}>
           <img id={id} className={cls.imageClass} src={photo} alt="NO THUMBNAIL"></img>
-          <img id={id} className={cls.actionClass} src={overlayButton} onMouseEnter={actionButtonMouseEnter} onMouseLeave={actionButtonMouseLeave}></img>
+          <div className="action-button-container">
+            <img id={id} className={cls.actionClass} src={overlayButton} onMouseEnter={actionButtonMouseEnter} onMouseLeave={actionButtonMouseLeave}></img>
+          </div>
         </div>
         <div id={id} className={cls.productInfoClass}>
           <div id={id} className={cls.categoryClass}>

@@ -190,9 +190,7 @@ class RelatedProductsMain extends React.Component {
   onMouseEnterHandler (e) {
     let id = this.state.currentProductData.id
     if (e.target.className.includes('overview-linked')) {
-      // console.log('OPEN THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      // console.log('OVER ACTION')
       e.target.style.opacity='100%'
     } else {
       let card = document.getElementById('addOutfitCard')
@@ -202,9 +200,7 @@ class RelatedProductsMain extends React.Component {
 
   onMouseLeaveHandler (e) {
     if (e.target.className.includes('overview-linked')) {
-      // console.log('CLOSE THUMBNAIL CAROUSEL')
     } else if (e.target.className.includes('action')) {
-      // console.log('EXIT ACTION')
       e.target.style.opacity='50%'
     } else {
       let card = document.getElementById('addOutfitCard')

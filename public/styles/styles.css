@@ -582,23 +582,27 @@ input[type=email] {
 .related-products-wrapper .relatedProds-prev-button {
   width: 70px;
   height: 70px;
-  left: px;
   align-self: center;
   position: absolute;
   z-index: 1000;
 }
+.related-products-wrapper ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* make scrollbar transparent */
+}
 .related-products-wrapper .related-products-card-row {
   overflow: scroll;
+  scroll-behavior: smooth;
   display: flex;
   flex-direction: row;
-  width: 920px;
   margin-left: 100px;
   transition-duration: 1s;
 }
 .related-products-wrapper .related-products-card-row .carousel-container {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 30px;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
@@ -628,12 +632,16 @@ input[type=email] {
   align-self: center;
   width: 170px;
 }
-.related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .image-container .action-modal {
-  position: relative;
+.related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .image-container .action-button-container {
+  position: absolute;
+  opacity: 50%;
+}
+.related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .image-container .action-button-container .action-modal {
+  margin-top: 10px;
+  margin-left: 120px;
   top: 5%;
   width: 26px;
   height: 26px;
-  opacity: 50%;
 }
 .related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .product-info {
   margin-left: 8px;
@@ -663,7 +671,7 @@ input[type=email] {
   height: 70px;
   align-self: center;
   position: relative;
-  right: 30px;
+  left: 20px;
   z-index: 1002;
 }
 .related-products-wrapper .my-outfit-carousel-title {
@@ -761,6 +769,11 @@ input[type=email] {
   flex-direction: row;
   justify-content: left;
   transition-duration: 1s;
+}
+.related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* make scrollbar transparent */
 }
 .related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row .carousel-container {
   display: flex;

@@ -24,22 +24,25 @@
   .relatedProds-prev-button {
     width: 70px;
     height: 70px;
-    left: px;
     align-self: center;
     position: absolute;
     z-index: 1000;
   }
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
   .related-products-card-row {
     overflow: scroll;
+    scroll-behavior: smooth;
     display: flex;
     flex-direction: row;
-    width: 920px;
     margin-left: 100px;
     transition-duration: 1s;
     .carousel-container {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      gap: 30px;
       -webkit-transform-style: preserve-3d;
       -moz-transform-style: preserve-3d;
       transform-style: preserve-3d;
@@ -68,12 +71,16 @@
             align-self: center;
             width: 170px;
           }
-          .action-modal {
-            position: relative;
-            top:5%;
-            width: 26px;
-            height: 26px;
+          .action-button-container {
+            position: absolute;
             opacity: 50%;
+            .action-modal {
+              margin-top: 10px;
+              margin-left: 120px;
+              top:5%;
+              width: 26px;
+              height: 26px;
+            }
           }
         }
         .product-info {
@@ -107,7 +114,7 @@
     height: 70px;
     align-self: center;
     position: relative;
-    right: 30px;
+    left: 20px;
     z-index: 1002;
   }
   /********************
@@ -209,6 +216,10 @@
         flex-direction: row;
         justify-content: left;
         transition-duration: 1s;
+        ::-webkit-scrollbar {
+          width: 0px;
+          background: transparent; /* make scrollbar transparent */
+        }
 
         .carousel-container {
           display: flex;

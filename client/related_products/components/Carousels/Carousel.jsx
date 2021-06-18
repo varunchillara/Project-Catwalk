@@ -55,7 +55,6 @@ class Carousel extends React.Component {
   }
 
   disableInteraction () {
-    console.log('DISABLE INTERACTION')
     this.setState({
       isMoving: true
     });
@@ -67,9 +66,10 @@ class Carousel extends React.Component {
   }
 
   moveCarouselTo (slide, oldSlide) {
+
     let cardClassName = this.state.cardClassName
-    console.log(cardClassName)
     let cardRowClassName = (cardClassName === 'relatedProdCard overview-linked') ? 'related-products-card-row' : 'my-outfit-card-row'
+    let cardRow = document.getElementsByClassName(cardRowClassName);
 
 
     if (!this.state.isMoving) {
@@ -78,6 +78,7 @@ class Carousel extends React.Component {
       let newPrevious = slide - 1;
       let newNext = slide + 4;
       let allCards = this.state.cardsHTMLCollection;
+      let slideTo = allCards.find(element => element.id === slide.toString())
 
       allCards.forEach((card, i) => {
         if (i >= slide + 4 || i < slide) {
@@ -90,14 +91,11 @@ class Carousel extends React.Component {
           }
         }
       })
-
       let cardRow = document.getElementsByClassName(cardRowClassName)
       if (slide > oldSlide) {
-        //move carousel div leftwards
-        cardRow[0].style.transform = 'translateX(-220px)';
+        cardRow[0].scrollLeft += 210
       } else {
-        //move carousel div rightwards
-        cardRow[0].style.transform = 'translateX(0px)';
+        cardRow[0].scrollLeft -= 210;
       }
 
       let prevButton = document.getElementsByClassName(this.props.buttonClass + 'prev-button')[0]
@@ -130,13 +128,15 @@ class Carousel extends React.Component {
         let id = i - j
         j++
         element.id = id
-        console.log(element)
         collectionHTML.push(element)
       }
     })
     return collectionHTML
   }
   compareStateToProps (collectionHTML) {
+    let cardClassName = this.state.cardClassName
+    let cardRowClassName = (cardClassName === 'relatedProdCard overview-linked') ? 'related-products-card-row' : 'my-outfit-card-row'
+    let cardRow = document.getElementsByClassName(cardRowClassName)[0];
 
     let stateCollection = []
     let propsCollection = []
@@ -160,8 +160,17 @@ class Carousel extends React.Component {
           element.className = element.className + ' hidden';
         }
       })
-
+      cardRow.scrollLeft = 0;
+      if (this.props.buttonClass === 'relatedProds-') {
+        if (this.state.slide === 0) {
+          this.setRelatedProdButtonVisibility();
+        }
+      }
+      if (this.props.buttonClass === 'myOutfit-') {
+        this.setMyOutfitButtonVisibility()
+      }
       this.setState({
+        slide: 0,
         cardsHTMLCollection: collectionHTML,
         totalCards: collectionHTML.length,
         cardClassName: collectionHTML[0].className
@@ -176,10 +185,20 @@ class Carousel extends React.Component {
         collectionHTML.forEach((element, i) => {
           element.className = element.className.replace(' hidden', '')
           if(i >= 4) {
-              element.className = element.className + ' hidden';
+            element.className = element.className + ' hidden';
           }
         })
+        cardRow.scrollLeft = 0;
+        if (this.props.buttonClass === 'relatedProds-') {
+          if (this.state.slide === 0) {
+            this.setRelatedProdButtonVisibility();
+          }
+        }
+        if (this.props.buttonClass === 'myOutfit-') {
+          this.setMyOutfitButtonVisibility()
+        }
         this.setState({
+          slide: 0,
           cardsHTMLCollection: collectionHTML,
           totalCards: collectionHTML.length,
           cardClassName: collectionHTML[0].className
@@ -189,20 +208,22 @@ class Carousel extends React.Component {
   }
   setRelatedProdButtonVisibility () {
     let prevButton = document.getElementsByClassName(this.props.buttonClass + 'prev-button')
-    if (prevButton[0].className === 'myOutfit-prev-button') {
-      prevButton[0].style.opacity = '0%'
-    } else {
+    let nextButton = document.getElementsByClassName(this.props.buttonClass + 'next-button')
+    if (this.state.totalCards < 5) {
+      prevButton[0].style.opacity = '0'
+      nextButton[0].style.opacity = '0'
+    } else if(this.state.totalCards >= 5) {
       prevButton[0].style.opacity = '50%'
+      nextButton[0].style.opacity = '100%'
     }
   }
   setMyOutfitButtonVisibility () {
 
     let prevButton = document.getElementsByClassName(this.props.buttonClass + 'prev-button')
     let nextButton = document.getElementsByClassName(this.props.buttonClass + 'next-button')
-
     if (this.state.totalCards < 5) {
-      prevButton[0].style.opacity = '0%'
-      nextButton[0].style.opacity = '0%'
+      prevButton[0].style.opacity = '0'
+      nextButton[0].style.opacity = '0'
     } else if(this.state.totalCards >= 5) {
       if (prevButton[0].style.opacity !== '0') {
         return;
@@ -223,14 +244,16 @@ class Carousel extends React.Component {
     if (this.state.isMoving) {
       return;
     }
-    if (this.props.buttonClass === 'relatedProds-') {
-      if (this.state.slide === 0) {
-        this.setRelatedProdButtonVisibility();
+
+      if (this.props.buttonClass === 'relatedProds-') {
+        if (this.state.slide === 0) {
+          this.setRelatedProdButtonVisibility();
+        }
       }
-    }
-    if (this.props.buttonClass === 'myOutfit-') {
-      this.setMyOutfitButtonVisibility()
-    }
+      if (this.props.buttonClass === 'myOutfit-') {
+        this.setMyOutfitButtonVisibility()
+      }
+
     let targetClassName = this.props.cards.length ? this.props.cards[0].props.uniqClassName : null;
     if (targetClassName === null) {
       return
