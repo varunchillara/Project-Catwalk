@@ -278,11 +278,6 @@ input[type=email] {
 .stars .checked {
   color: #494949;
 }
-
-.stars .star {
-  margin-right: 3px;
-}
-
 .stars .star {
   margin-right: 3px;
 }
