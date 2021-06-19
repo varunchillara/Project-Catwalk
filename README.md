@@ -26,18 +26,18 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 
 
 ## Ratings And Reviews
-1. MetaReviews
-- bullet points
-- image if i want
+The ratings and reviews widget allow users to view reviews before purchasing a product. The meta reviews on the left side allows to user to view averaged ratings past users have given and the right hand side allows users to see individual ratings. The widget also includes a write a review feature that allows the current user to write a review.
 
-2. Reviews
--
+1. Product Breakdown and Review List
+  ![](gifs_and_images/ratingsAndReviews.gif)
+    * implemented a sorting system
+    * translated data given to me by the black box API into visual data
+    * dynamically rendered reviews from black box API
 
-3. Add A Review
-- more to thalk about
-  * i. Files
-
-
+2. Add A Review
+ ![](gifs_and_images/ratingsAndReviews_modal.png)
+    * Allows current user to add a new review
+    * Implemented a modal to contain the form information
 
 ## Build Project
 Follow these steps to run the project in a mac or linux environment.
