@@ -3,11 +3,11 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 
 ## Table of Contents
 
-1. **Product Overview:** View product with related images. Access or change style to see corresponding images and product name and product price. Includes add to cart and social media sharing features.
+1. [**Product Overview:**](#product-overview) View product with related images. Access or change style to see corresponding images and product name and product price. Includes add to cart and social media sharing features.
 
-2. **Related Products:** Browse and compare products related to the product currently displayed in overview. Includes save feature allowing users to favorite their product for future purchase or viewing.
+2. [**Related Products:**](#related-products) Browse and compare products related to the product currently displayed in overview. Includes save feature allowing users to favorite their product for future purchase or viewing.
 
-3. **Ratings And Reviews:** A page that allows users to see what other users reviews and ratings of the product they are currently viewing. Each user can add a review and contribute to the rating and reviews page.
+3. [**Ratings And Reviews:**](#ratings-and-reviews) A ratings and review widget to allow viewing and submission of reviews.
 
 ## Tech/framework used
 
@@ -55,19 +55,19 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
       Action Button: Clicking the action button on a My Outfit card removes the card from the My Outfit carousel:
       <GIF EXAMPLE>
 
-
+# Related Test
 ## Ratings And Reviews
 
 The ratings and reviews widget allow users to view reviews before purchasing a product. The meta reviews on the left side allows to user to view averaged ratings past users have given and the right hand side allows users to see individual ratings. The widget also includes a write a review feature that allows the current user to write a review.
 
 1. Product Breakdown and Review List
   ![](gifs_and_images/ratingsAndReviews.gif)
-    * implemented a sorting system
-    * translated data given to me by the black box API into visual data
-    * dynamically rendered reviews from black box API
+    * Implemented a sorting system
+    * Translated data given to me by the black box API into visual data
+    * Dynamically rendered reviews from black box API
 
 2. Add A Review
- ![](gifs_and_images/ratingsAndReviews_modal.png)
+ ![](gifs_and_images/screenshots/ratingsAndReviews_modal.png)
     * Allows current user to add a new review
     * Implemented a modal to contain the form information
 
