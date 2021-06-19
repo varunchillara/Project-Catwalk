@@ -57,16 +57,20 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 
 
 ## Ratings And Reviews
-1. MetaReviews
-- bullet points
-- image if i want
 
-2. Reviews
--
+The ratings and reviews widget allow users to view reviews before purchasing a product. The meta reviews on the left side allows to user to view averaged ratings past users have given and the right hand side allows users to see individual ratings. The widget also includes a write a review feature that allows the current user to write a review.
 
-3. Add A Review
-- more to thalk about
-  * i. Files
+1. Product Breakdown and Review List
+  ![](gifs_and_images/ratingsAndReviews.gif)
+    * implemented a sorting system
+    * translated data given to me by the black box API into visual data
+    * dynamically rendered reviews from black box API
+
+2. Add A Review
+ ![](gifs_and_images/ratingsAndReviews_modal.png)
+    * Allows current user to add a new review
+    * Implemented a modal to contain the form information
+
 
 -**DATA INTEGRATION AND COMPONENT ORGANIZATION**
 
@@ -74,6 +78,7 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
       Due to its hub-like nature, the Related Products widget controls much of the initial API calls that populate store as well as calls to the store cache.  It is the most highly interactive widget in relation to the Product Overview widget, requiring the most expense in data retrieval out of all of the widgets during any given state of the application.
 
     -Though the attached redux store allows for data cacheing in the frontend, a page reload resets the store and the cache is lost.  It is therefore recommended to persist the store cache within a backend database to further reduce the expense of API calls to the company server post reload.  This linkage can be made in App.jsx
+
 
 
 ## Build Project
