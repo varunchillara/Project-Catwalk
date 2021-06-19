@@ -65,21 +65,14 @@ function App () {
         })
         .then((results) => {
           let [currentProductData, currentProductStylesData, currentMetaReviewsData, relatedProductsData] = results;
-          console.log({
-            currentProductData: currentProductData,
-            currentProductStylesData: currentProductStylesData,
-            currentMetaReviewsData: currentMetaReviewsData,
-            relatedProductData: relatedProductsData
-          })
 
-
-        let updateAllPayload = {
-          currentProduct: currentProductData,
-          currentProductStyles: currentProductStylesData,
-          currentMetaReviews: currentMetaReviewsData,
-          relatedProductsData: relatedProductsData
-        }
-        dispatch(updateAll(updateAllPayload))
+          let updateAllPayload = {
+            currentProduct: currentProductData,
+            currentProductStyles: currentProductStylesData,
+            currentMetaReviews: currentMetaReviewsData,
+            relatedProductsData: relatedProductsData
+          }
+          dispatch(updateAll(updateAllPayload))
         })
         .catch(error => {
           console.error(error)
@@ -91,13 +84,13 @@ function App () {
     let relatedProductIds = results.data
     let relatedProductsData = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
-    let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
+    let relatedProductsStyles = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
     let relatedProductsReviews = relatedProductIds.map(relatedProduct =>
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
         product_id: relatedProduct
       }}))
-    return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
+    return Promise.all(relatedProductsData.concat(relatedProductsStyles).concat(relatedProductsReviews))
   }
 
   const togglePopupOutfit = () => {

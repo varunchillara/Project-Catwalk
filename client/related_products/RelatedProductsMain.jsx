@@ -3,11 +3,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useUpdate} from '../../store/actions/updateProduct.js';
 import axios from 'axios';
 import token from '../env/config.js';
-import averageReviewsCalculator from '../helperFunctions.js';
+import averageReviewsCalculator from '../helperFunctions/averageReviewsCalculator.js';
 import Card from './components/Card.jsx';
 import MyOutfitCarousel from './components/Carousels/MyOutfitCarousel.jsx';
 import RelatedProductsCarousel from './components/Carousels/RelatedProductsCarousel.jsx';
-
+import dataFormatter from '../helperFunctions/dataFormatter.js';
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Authorization : token
@@ -29,9 +29,6 @@ class RelatedProductsMain extends React.Component {
       currentChosenStyleId: null,
       modalId: null
     }
-    this.formatData = this.formatData.bind(this);
-    this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
-    this.findDefaultStyleIndex = this.findDefaultStyleIndex.bind(this);
     this.launchCompareModal = this.launchCompareModal.bind(this);
     this.closeCompareModal = this.closeCompareModal.bind(this);
     this.removeOutfit = this.removeOutfit.bind(this);
@@ -41,117 +38,41 @@ class RelatedProductsMain extends React.Component {
     this.cardClickHandler = this.cardClickHandler.bind(this);
     this.determineAction = this.determineAction.bind(this);
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
+    this.updateChosenStyleId = this.updateChosenStyleId.bind(this);
+  }
+
+  updateChosenStyleId (styleId) {
+    if (styleId !== this.state.currentChosenStyleId) {
+      this.setState({
+        currentChosenStyleId: styleId,
+        currentChosenStyle: this.state.currentProductStyles[`${styleId}`]
+      })
+    }
   }
 
   updateOverviewProduct (currentProductData, currentProductStylesData, currentMetaReviews, relatedProductsData, currentChosenStyleId) {
-
-    // if (Object.keys(this.state.currentProductStyles).length) {
-    //   if (currentChosenStyleId !== this.state.currentChosenStyleId) {
-    //     this.setState({
-    //       currentChosenStyleId: currentChosenStyleId,
-    //       currentChosenStyle: this.state.currentProductStyles[`${currentChosenStyleId}`]
-    //     })
-    //   }
-    // }
-    if (!currentProductStylesData) {
-      return;
-    }
-
-    console.log(currentProductStylesData)
     if (currentProductStylesData === '' || currentProductStylesData.data.product_id === this.state.currentProductData.id ) {
       return;
     }
-    // let productId = currentProductData.data.id
-    // let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
-    // return Promise.all([currentProductData, relatedProducts, currentProductStylesData])
-    // .then(results => {
-      // return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
-    // })
-    // .then(results => {
+    if (Object.keys(this.state.currentProductStyles).length) {
+      this.updateChosenStyleId(currentChosenStyleId);
+    }
+    let currentProduct = ['currentProduct', currentProductData.data]
+    if (currentProduct[1].id === this.state.currentProductData.id) {
+      return;
+    }
     let currentProductStyles = {}
     let relatedProducts = relatedProductsData.map(result => result.data)
-    let currentProduct = ['currentProduct', currentProductData.data]
-
     currentProductStylesData.data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
-    // results[0][1] = results[0][1].data
-    // results[1] = results[1].map(result => result.data)
-    // results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
-
-    let defaultStyleIndex = this.findDefaultStyleIndex(currentProductStylesData.data)
+    let defaultStyleIndex = dataFormatter.findDefaultStyleIndex(currentProductStylesData.data)
     let currentProductDefaultStyle = currentProductStylesData.data.results[defaultStyleIndex]
-
+    let formattedRelatedProductsData = dataFormatter.formatData(relatedProducts);
+    let formattedCurrentProductsData = dataFormatter.formatData(currentProduct.concat(currentProductDefaultStyle));
     this.setState({
-        currentProductData: this.formatData(currentProduct.concat(currentProductDefaultStyle)),
-        relatedProductsData: this.formatData(relatedProducts),
-        currentProductStyles: currentProductStyles
-      })
-    .catch(error => console.error(error))
-  }
-
-  formatData (results) {
-    let formattedData = {}
-    let formattingCurrentProduct = results[0] === 'currentProduct' ? true : false;
-    results = formattingCurrentProduct ? results.slice(1) : results;
-
-    for (let i = 0; i < results.length; i++) {
-      let data = results[i];
-      let id = data.product_id || data.id.toString();
-      if (formattingCurrentProduct) {
-        if (formattedData.id === undefined) {
-          formattedData.id = id
-        }
-      } else {
-        if (formattedData[id] === undefined) {
-          formattedData[id] = {id: id}
-        }
-      }
-
-      let currentlyFormatting = formattingCurrentProduct ? formattedData : formattedData[id]
-      if (formattingCurrentProduct) {
-      }
-      if (data.ratings) {
-        currentlyFormatting.rating = averageReviewsCalculator.getAverageRating(data.ratings)
-      } else if (data.product_id) {
-        let styleIndex = this.findDefaultStyleIndex(data)
-        currentlyFormatting.original_price = `$${Number(data.results[styleIndex].original_price)}`;
-        currentlyFormatting.sale_price = data.results[styleIndex].sale_price;
-        currentlyFormatting.photo = data.results[styleIndex].photos[0].url;
-        currentlyFormatting.styles = data.results
-        //ALL OTHER DATA
-      } else {
-        currentlyFormatting.category = data.category;
-        currentlyFormatting.nameWithText = data.name;
-        currentlyFormatting.features = {};
-        data.features.forEach(item => {
-          currentlyFormatting.features[item['feature']] = item.value
-        })
-      }
-    }
-    return formattedData;
-  }
-
-  findDefaultStyleIndex (data) {
-    let defaultStyleIndex = 0;
-    let defaultFound = false
-    data.results.some((style, index)=> {
-      style['default?'] ? (defaultStyleIndex = index, defaultFound = true) : defaultFound;
-      return defaultFound;
+      currentProductData: formattedCurrentProductsData,
+      relatedProductsData: formattedRelatedProductsData,
+      currentProductStyles: currentProductStyles
     })
-    return defaultStyleIndex
-  }
-
-  fetchRelatedProducts (results) {
-    let relatedProductIds = results.data
-    //check if each id for each of these pieces of data exist in cache.  if they do, pull from cache.  if not make an api call
-    let relatedProductsData = relatedProductIds.map(relatedProduct =>
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
-    let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
-    let relatedProductsReviews = relatedProductIds.map(relatedProduct =>
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
-        product_id: relatedProduct
-      }}))
-    return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
   }
 
   removeOutfit (productId) {
@@ -237,10 +158,12 @@ class RelatedProductsMain extends React.Component {
     this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentMetaReviews, this.props.relatedProductsData, this.props.currentChosenStyleId)
   }
   componentDidMount () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentChosenStyleId)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentMetaReviews, this.props.relatedProductsData, this.props.currentChosenStyleId)
   }
 
   render () {
+
+    // console.log(this.state)
 
     if (this.props.isOpenOutfit) {
       // console.log('YAAAAY')
@@ -311,6 +234,7 @@ class RelatedProductsMain extends React.Component {
     )
   }
 }
+
 
 export default RelatedProductsMain;
 
