@@ -1,6 +1,6 @@
 export const updateRating = (data) => {
   return{
-    type: 'RATING',
+    type: 'UPDATE_RATING',
     payload: data
   }
 }

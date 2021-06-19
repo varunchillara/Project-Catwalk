@@ -19,13 +19,20 @@ function App () {
   let cachedKeys = Object.keys(cachedData)
   let dataToBeCached = {
     currentProduct: useSelector(state => state.currentProduct),
-    currentStyle: useSelector(state => state.currentStyle),
+    currentProductStyles: useSelector(state => state.currentProductStyles),
     currentMetaReviews: useSelector(state => state.currentMetaReviews)
   }
   useEffect(() => {
-    // console.log(cachedData)
+
+
+
+
+
+
+
+
     if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
-      if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentStyle !== '' || dataToBeCached.currentMetaReviews !== '') {
+      if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentProductStyles !== '' || dataToBeCached.currentMetaReviews !== '') {
         cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
         dispatch(updateCache(cachedData))
       }
@@ -37,23 +44,40 @@ function App () {
       }
       dispatch(updateAll(cachedData[currentAppId]));
     } else {
+      //MAKE ALL STORE AXIOS CALLS
+
       axios.defaults.headers = {
         'Content-Type': 'application/json',
         Authorization : token
       };
+      let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
+      let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
+      let relatedProductsIds = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/related`);
       let currentMetaReviewsData = axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta', {
         params: {
           product_id: currentAppId || 11004
         }
       });
-      let currentProductData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}`);
-      let currentProductStylesData = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${currentAppId}/styles`);
-      return Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData])
-        .then((result) => {
+      return Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData, relatedProductsIds])
+        .then((results) => {
+          let [currentProductData, currentProductStylesData, currentMetaReviewsData, relatedProductsIds] = results;
+          return Promise.all([currentProductData, currentProductStylesData, currentMetaReviewsData, fetchRelatedProducts(relatedProductsIds)])
+        })
+        .then((results) => {
+          let [currentProductData, currentProductStylesData, currentMetaReviewsData, relatedProductsData] = results;
+          console.log({
+            currentProductData: currentProductData,
+            currentProductStylesData: currentProductStylesData,
+            currentMetaReviewsData: currentMetaReviewsData,
+            relatedProductData: relatedProductsData
+          })
+
+
         let updateAllPayload = {
-          currentProduct: result[0],
-          currentStyle: result[1],
-          currentMetaReviews: result[2]
+          currentProduct: currentProductData,
+          currentProductStyles: currentProductStylesData,
+          currentMetaReviews: currentMetaReviewsData,
+          relatedProductsData: relatedProductsData
         }
         dispatch(updateAll(updateAllPayload))
         })
@@ -62,6 +86,19 @@ function App () {
         })
     }
   }, [currentAppId])
+
+  const fetchRelatedProducts = (results) => {
+    let relatedProductIds = results.data
+    let relatedProductsData = relatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}`))
+    let relatedProductsThumbnails = relatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${relatedProduct}/styles`))
+    let relatedProductsReviews = relatedProductIds.map(relatedProduct =>
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/reviews/meta`, {params: {
+        product_id: relatedProduct
+      }}))
+    return Promise.all(relatedProductsData.concat(relatedProductsThumbnails).concat(relatedProductsReviews))
+  }
 
   const togglePopupOutfit = () => {
     setIsOpenOutfit(!isOpenOutfit);

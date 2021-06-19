@@ -1,14 +1,14 @@
 
-const productReducer = (state = '', action) => {
+const currentProductReducer = (state = '', action) => {
 
   switch(action.type) {
     case 'UPDATE_ALL':
       return action.payload.currentProduct;
-    case 'UPDATE' :
+    case 'UPDATE_PRODUCT' :
       return action.payload;
     default:
       return state;
   }
 }
 
-export default productReducer;
+export default currentProductReducer;

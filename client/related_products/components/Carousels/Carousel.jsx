@@ -169,6 +169,18 @@ class Carousel extends React.Component {
       if (this.props.buttonClass === 'myOutfit-') {
         this.setMyOutfitButtonVisibility()
       }
+      if (this.props.buttonClass === 'myOutfit-') {
+        let slide = 0
+        if (collectionHTML.length > 4) {
+          slide = collectionHTML.length - 4;
+        }
+        this.setState({
+          slide: slide,
+          cardsHTMLCollection: collectionHTML,
+          totalCards: collectionHTML.length,
+          cardClassName: collectionHTML[0].className
+        });
+      }
       this.setState({
         slide: 0,
         cardsHTMLCollection: collectionHTML,

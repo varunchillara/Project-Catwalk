@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {useUpdate} from '../../store/actions/product.js';
+import {useUpdate} from '../../store/actions/updateProduct.js';
 import axios from 'axios';
 import token from '../env/config.js';
 import averageReviewsCalculator from '../helperFunctions.js';
@@ -42,42 +42,50 @@ class RelatedProductsMain extends React.Component {
     this.determineAction = this.determineAction.bind(this);
     this.updateOverviewProduct = this.updateOverviewProduct.bind(this);
   }
-  updateOverviewProduct (currentProductData, currentProductStylesData, currentChosenStyleId) {
 
-    if (Object.keys(this.state.currentProductStyles).length) {
-      if (currentChosenStyleId !== this.state.currentChosenStyleId) {
-        this.setState({
-          currentChosenStyleId: currentChosenStyleId,
-          currentChosenStyle: this.state.currentProductStyles[`${currentChosenStyleId}`]
-        })
-      }
+  updateOverviewProduct (currentProductData, currentProductStylesData, currentMetaReviews, relatedProductsData, currentChosenStyleId) {
+
+    // if (Object.keys(this.state.currentProductStyles).length) {
+    //   if (currentChosenStyleId !== this.state.currentChosenStyleId) {
+    //     this.setState({
+    //       currentChosenStyleId: currentChosenStyleId,
+    //       currentChosenStyle: this.state.currentProductStyles[`${currentChosenStyleId}`]
+    //     })
+    //   }
+    // }
+    if (!currentProductStylesData) {
+      return;
     }
+
+    console.log(currentProductStylesData)
     if (currentProductStylesData === '' || currentProductStylesData.data.product_id === this.state.currentProductData.id ) {
       return;
     }
-    let productId = currentProductData.data.id
-    let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
-    return Promise.all([currentProductData, relatedProducts, currentProductStylesData])
-    .then(results => {
-      return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
-    })
-    .then(results => {
-      let currentProductStyles = {}
-      results[0][1] = results[0][1].data
-      results[1] = results[1].map(result => result.data)
-      results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
+    // let productId = currentProductData.data.id
+    // let relatedProducts = axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/products/${productId}/related`);
+    // return Promise.all([currentProductData, relatedProducts, currentProductStylesData])
+    // .then(results => {
+      // return Promise.all([['currentProduct', results[0]], this.fetchRelatedProducts(results[1]), results[2]])
+    // })
+    // .then(results => {
+    let currentProductStyles = {}
+    let relatedProducts = relatedProductsData.map(result => result.data)
+    let currentProduct = ['currentProduct', currentProductData.data]
 
+    currentProductStylesData.data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
+    // results[0][1] = results[0][1].data
+    // results[1] = results[1].map(result => result.data)
+    // results[2].data.results.forEach(style => currentProductStyles[`${style.style_id}`] = style)
 
-      //store the above results in cache
+    let defaultStyleIndex = this.findDefaultStyleIndex(currentProductStylesData.data)
+    let currentProductDefaultStyle = currentProductStylesData.data.results[defaultStyleIndex]
 
-
-      this.setState ({
-          currentProductData: this.formatData(results[0].concat(results[2].data)),
-          relatedProductsData: this.formatData(results[1]),
-          currentProductStyles: currentProductStyles
-        })
+    this.setState({
+        currentProductData: this.formatData(currentProduct.concat(currentProductDefaultStyle)),
+        relatedProductsData: this.formatData(relatedProducts),
+        currentProductStyles: currentProductStyles
       })
-      .catch(error => console.error(error))
+    .catch(error => console.error(error))
   }
 
   formatData (results) {
@@ -226,7 +234,7 @@ class RelatedProductsMain extends React.Component {
   }
 
   componentDidUpdate () {
-    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentChosenStyleId)
+    this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentMetaReviews, this.props.relatedProductsData, this.props.currentChosenStyleId)
   }
   componentDidMount () {
     this.updateOverviewProduct(this.props.currentProduct, this.props.currentProductStyles, this.props.currentChosenStyleId)
@@ -286,10 +294,6 @@ class RelatedProductsMain extends React.Component {
         />
       }
 
-    // let relatedProductsWrapperInlineStyle = {
-    //   margin: 'auto',
-    //   width : '920px',
-    // }
     return (
       <div className="related-products-wrapper">
         <RelatedProductsCarousel
