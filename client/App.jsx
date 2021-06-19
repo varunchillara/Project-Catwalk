@@ -15,6 +15,9 @@ function App () {
   const[isOpenOutfit, setIsOpenOutfit] = useState(false);
   const dispatch = useDispatch();
 
+  /***********************
+   *  DATA TO BE CACHED
+   ***********************/
   let cachedData = useSelector(state => state.cache) || null;
   let cachedKeys = Object.keys(cachedData)
   let dataToBeCached = {
@@ -23,14 +26,6 @@ function App () {
     currentMetaReviews: useSelector(state => state.currentMetaReviews)
   }
   useEffect(() => {
-
-
-
-
-
-
-
-
     if (cachedData['11004'] === undefined || cachedData[`${dataToBeCached.currentProduct.data.id}`] === undefined) {
       if (dataToBeCached.currentProduct !== '' || dataToBeCached.currentProductStyles !== '' || dataToBeCached.currentMetaReviews !== '') {
         cachedData[`${dataToBeCached.currentProduct.data.id}`] = dataToBeCached;
@@ -43,9 +38,10 @@ function App () {
         dispatch(updateCache(cachedData));
       }
       dispatch(updateAll(cachedData[currentAppId]));
+/**********************************
+ * API CALLS IN CASE NO CACHE DATA
+ **********************************/
     } else {
-      //MAKE ALL STORE AXIOS CALLS
-
       axios.defaults.headers = {
         'Content-Type': 'application/json',
         Authorization : token
@@ -79,6 +75,7 @@ function App () {
         })
     }
   }, [currentAppId])
+
 
   const fetchRelatedProducts = (results) => {
     let relatedProductIds = results.data

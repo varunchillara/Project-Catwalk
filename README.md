@@ -22,7 +22,38 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 ## Product Overview
 
 
-## Related Prodcuts
+## Related Products
+
+  -**USER EXPERIENCE:**
+
+      <Image of Carousels>
+
+      The Related Products widget is comprised of two carousels.
+
+      Product cards populate both carousels.  Each card is associated with a  product and contains its image, category, name, price (and sale price if applicable) and star rating.
+
+      A button in the top right of each card allows for a certain action made upon the card depending on the carousel.
+
+      Clicking anywhere on a product card aside from the action button will update the Product Overview to display the clicked product.
+
+      A maximum of 4 cards are displayed at any given time.
+
+      Arrows on either side of the carousels allow lateral movement by one card at a time.  If a carousel has no products, the buttons are hidden.  If a carousel has 1 to 4 products, both buttons appear but are translucent and unresponsive.  With more than 4 products on load, the arrows will be either translucent and unresponsive to click or opaque and responsive to click depending on a given position within the carousel.
+
+-**Related Products Carousel**
+
+      Comprised of all products related to the main product in Product Overview
+
+      Action Button: Clicking the action button on a Related Products card opens a modal view allowing the user to compare features of the related product with the current product in Product Overview:
+      <GIF EXAMPLE>
+
+
+-**My Outfit Carousel**
+
+      Comprised of an Add To Outfit button on the far left of the carousel followed by all products saved to the carousel by the user either through the Product Overview save feature or the clicking on the Add To Outfit button.
+
+      Action Button: Clicking the action button on a My Outfit card removes the card from the My Outfit carousel:
+      <GIF EXAMPLE>
 
 
 ## Ratings And Reviews
@@ -37,6 +68,12 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 - more to thalk about
   * i. Files
 
+-**DATA INTEGRATION AND COMPONENT ORGANIZATION**
+
+    -API and Data Retrieval
+      Due to its hub-like nature, the Related Products widget controls much of the initial API calls that populate store as well as calls to the store cache.  It is the most highly interactive widget in relation to the Product Overview widget, requiring the most expense in data retrieval out of all of the widgets during any given state of the application.
+
+    -Though the attached redux store allows for data cacheing in the frontend, a page reload resets the store and the cache is lost.  It is therefore recommended to persist the store cache within a backend database to further reduce the expense of API calls to the company server post reload.  This linkage can be made in App.jsx
 
 
 ## Build Project
