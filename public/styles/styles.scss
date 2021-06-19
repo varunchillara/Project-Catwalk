@@ -1,5 +1,6 @@
 @import './ratings';
-
+@import './overview';
+@import './relatedProducts';
 
 .stars {
   font-family: Cormorant;
@@ -30,6 +31,5 @@
   background-color: rgb(243, 243, 243);
 }
 
-@import './overview';
-@import './relatedProducts';
+
 
