@@ -1,34 +1,60 @@
-# Project-Catwalk
-# This is an <h1> tag
-## This is an <h2> tag
-###### This is an <h6> tag
-*This text will be italic*
-_This will also be italic_
+# Project Catwalk
+Project Catwalk is a front-end e-commerce store front for online shoppers
 
-**This text will be bold**
-__This will also be bold__
+## Table of Contents
 
-_You **can** combine them_
-* Item 1
-* Item 2
-  * Item 2a
-  * Item 2b
-1. Item 1
-1. Item 2
-1. Item 3
-   1. Item 3a
-   1. Item 3b
+1. **Product Overview:** View product with related images. Access or change style to see corresponding images and product name and product price. Includes add to cart and social media sharing features.
 
-![GitHub Logo](/images/logo.png)
-Format: ![Alt Text](url)
+2. **Related Products:** Browse and compare products related to the product currently displayed in overview. Includes save feature allowing users to favorite their product for future purchase or viewing.
 
-http://github.com - automatic!
-[GitHub](http://github.com)
+3. **Ratings And Reviews:** A page that allows users to see what other users reviews and ratings of the product they are currently viewing. Each user can add a review and contribute to the rating and reviews page.
 
-As Kanye West said:
+## Tech/framework used
 
-> We're living the future so
-> the present is our past.
+**Built With**
+- Javascript
+- Node.js
+- Express
+- React
+- Redux
+- SASS
 
-I think you should use an
-`<addr>` element here instead.
+## Product Overview
+
+
+## Related Prodcuts
+
+
+## Ratings And Reviews
+1. MetaReviews
+- bullet points
+- image if i want
+
+2. Reviews
+-
+
+3. Add A Review
+- more to thalk about
+  * i. Files
+
+
+
+## Build Project
+Follow these steps to run the project in a mac or linux environment.
+- Clone down the repo in the terminal
+  * `git clone https://github.com/Garganelli/Project-Catwalk.git`
+- Add personal github token
+  * inside client/env copy exampleConfig.js file and rename to config.js
+  * replace `UPDATE ME` with github key into config.js
+- Install dependencies - `npm install`
+- Run webpack - `npm run build`
+- Run server -
+  * live-server - `npm run start`
+  OR
+  * node server - `npm run server`
+
+
+## Developers
+- **Austin Miller** - Product Overview
+- **Suliman Tekalli** - Related Products
+- **Varun Chillara** - Ratings And Reviews
