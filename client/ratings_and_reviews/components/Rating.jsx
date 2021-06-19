@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Stars from '../../sharedComponents/Stars.jsx';
-import helperFunctions from '../../helperFunctions.js';
+import helperFunctions from '../../helperFunctions/averageReviewsCalculator.js';
 import {useDispatch} from 'react-redux';
 import {updateRating} from '../../../store/actions/updateRating.js';
 import Stars2 from '../../Stars2.jsx';

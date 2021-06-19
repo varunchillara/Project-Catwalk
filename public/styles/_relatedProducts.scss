@@ -39,6 +39,7 @@
     flex-direction: row;
     margin-left: 100px;
     transition-duration: 1s;
+    height: 400px;
     .carousel-container {
       display: flex;
       flex-direction: row;
@@ -51,11 +52,14 @@
         opacity: 0;
         transition: visibility 1s, opacity 0.5s linear;
       }
-
+      .relatedProdCard:hover {
+        cursor: pointer;
+      }
       .relatedProdCard {
         border: 1px solid grey;
         top: 0;
-        width: 100%;
+        width: 200px;
+        height: 350px;
         margin: auto;
         z-index: 100;
         transition-duration: 1s;
@@ -65,11 +69,14 @@
           display: flex;
           justify-content:center;
           margin-bottom: 10px;
+          // width: 200px;
           height: 255px;
-          background-color: #36454f;
           .image {
+            height: 255px;
+            width: 200px;
+            overflow: hidden;
+            object-fit: cover;
             align-self: center;
-            width: 170px;
           }
           .action-button-container {
             position: absolute;
@@ -141,12 +148,12 @@
       justify-content: left;
       .addOutfitCard {
         border: 1px solid grey;
-        opacity: 50%;
+        opacity: 100%;
         top: 0;
         width: 100%;
         margin: auto;
         z-index: 100;
-        transition: 'transform .5s, opacity.5s, z-index .5s';
+        transition: transform .5s, opacity .5s, z-index .5s;
         .image-container {
           flex: 1;
           display: flex;
@@ -156,8 +163,10 @@
           height: 255px;
           background-color: rgb(240, 237, 228);
           .image {
+            height: 255px;
+            overflow: hidden;
+            object-fit: cover;
             align-self: center;
-            width: 170px;
           }
           .action-modal {
             position: absolute;
@@ -207,11 +216,12 @@
         width: 70px;
         height: 70px;
         align-self: center;
-        position: relative;
+        position: absolute;
         left: 10px;
         z-index: 100;
       }
       .my-outfit-card-row {
+        overflow: scroll;
         display: flex;
         flex-direction: row;
         justify-content: left;
@@ -220,7 +230,6 @@
           width: 0px;
           background: transparent; /* make scrollbar transparent */
         }
-
         .carousel-container {
           display: flex;
           flex-direction: row;
@@ -288,7 +297,7 @@
         align-self: center;
         position: relative;
         right: 20px;
-        z-index: 1001;
+        z-index: 1002;
       }
     }
   }

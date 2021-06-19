@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {update} from '../../../store/actions/product.js';
+import {update} from '../../../store/actions/updateProduct.js';
 import axios from 'axios';
 import Announcement from './Announcement.jsx';
 import Description from './Description.jsx';

@@ -412,6 +412,8 @@ input[type=email] {
   background-color: #3b9ebd;
 }
 .overview .overview-main .imageMain {
+  width: 950px;
+  object-fit: cover;
   border: 2px solid #555;
 }
 .overview .overview-main .styleSide {
@@ -601,6 +603,7 @@ input[type=email] {
   flex-direction: row;
   margin-left: 100px;
   transition-duration: 1s;
+  height: 400px;
 }
 .related-products-wrapper .related-products-card-row .carousel-container {
   display: flex;
@@ -614,10 +617,14 @@ input[type=email] {
   opacity: 0;
   transition: visibility 1s, opacity 0.5s linear;
 }
+.related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard:hover {
+  cursor: pointer;
+}
 .related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard {
   border: 1px solid grey;
   top: 0;
-  width: 100%;
+  width: 200px;
+  height: 350px;
   margin: auto;
   z-index: 100;
   transition-duration: 1s;
@@ -629,11 +636,13 @@ input[type=email] {
   justify-content: center;
   margin-bottom: 10px;
   height: 255px;
-  background-color: #36454f;
 }
 .related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .image-container .image {
+  height: 255px;
+  width: 200px;
+  overflow: hidden;
+  object-fit: cover;
   align-self: center;
-  width: 170px;
 }
 .related-products-wrapper .related-products-card-row .carousel-container .relatedProdCard .image-container .action-button-container {
   position: absolute;
@@ -697,12 +706,12 @@ input[type=email] {
 }
 .related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard {
   border: 1px solid grey;
-  opacity: 50%;
+  opacity: 100%;
   top: 0;
   width: 100%;
   margin: auto;
   z-index: 100;
-  transition: "transform .5s, opacity.5s, z-index .5s";
+  transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
 }
 .related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container {
   flex: 1;
@@ -714,8 +723,10 @@ input[type=email] {
   background-color: #f0ede4;
 }
 .related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container .image {
+  height: 255px;
+  overflow: hidden;
+  object-fit: cover;
   align-self: center;
-  width: 170px;
 }
 .related-products-wrapper .my-outfit-container .add-outfit-card .addOutfitCard .image-container .action-modal {
   position: absolute;
@@ -763,11 +774,12 @@ input[type=email] {
   width: 70px;
   height: 70px;
   align-self: center;
-  position: relative;
+  position: absolute;
   left: 10px;
   z-index: 100;
 }
 .related-products-wrapper .my-outfit-container .my-outfit-carousel .my-outfit-card-row {
+  overflow: scroll;
   display: flex;
   flex-direction: row;
   justify-content: left;
@@ -844,7 +856,7 @@ input[type=email] {
   align-self: center;
   position: relative;
   right: 20px;
-  z-index: 1001;
+  z-index: 1002;
 }
 
 /*# sourceMappingURL=styles.css.map */

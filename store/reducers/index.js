@@ -1,15 +1,17 @@
-import productReducer from './product.js';
-import styleReducer from './styleReducer.js';
+import currentProductReducer from './currentProductReducer.js';
+import productStylesReducer from './productStylesReducer.js';
 import updateAllReducer from './updateAllReducer.js';
 import updateCacheReducer from './updateCacheReducer.js';
 import currentMetaReviewsReducer from './currentMetaReviewsReducer.js';
-import ratingReducer from './rating.js';
+import relatedProductsReducer from './relatedProductsReducer.js'
+import currentRatingReducer from './currentRatingReducer.js';
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
-  currentProduct: productReducer,
-  currentStyle: styleReducer,
-  currentRating: ratingReducer,
+  currentProduct: currentProductReducer,
+  currentProductStyles: productStylesReducer,
+  currentRating: currentRatingReducer,
+  relatedProductsData: relatedProductsReducer,
   currentMetaReviews: currentMetaReviewsReducer,
   cache: updateCacheReducer,
 });

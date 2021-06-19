@@ -6,7 +6,7 @@ import Image from 'react-image-enlarger';
 import CarouselThumbs from './Carousel-Thumbs.jsx';
 
 const Carousel = (props) => {
-  const currentProduct = useSelector(state => state.currentProduct);
+  const currentProduct = useSelector(state => state.currentProductData);
   const [photos, setPhotos] = useState( [] );
   const [imageUrl, setImageUrl] = useState( '' );
   const [zoomed, setZoomed] = useState( false );

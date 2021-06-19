@@ -5,13 +5,20 @@ import {useSelector, useDispatch} from 'react-redux';
 
 const RelatedProductsContainer = (props) => {
   const currentProduct = useSelector(state => state.currentProduct);
-  const currentStyle = useSelector(state => state.currentStyle);
+  const currentProductStyles = useSelector(state => state.currentProductStyles);
+  const currentMetaReviews = useSelector(state => state.currentMetaReviews);
+  const relatedProductsData = useSelector(state=> state.relatedProductsData);
+
   return (
     <div className="relatedProductsContainer">
       <RelatedProductsMain
-      currentChosenStyleId={props.currentChosenStyleId}
       currentProduct={currentProduct}
-      currentProductStyles={currentStyle}
+      currentProductStyles={currentProductStyles}
+      currentMetaReviews={currentMetaReviews}
+      relatedProductsData={relatedProductsData}
+
+      isOpenOutfit={props.isOpenOutfit}
+      currentChosenStyleId={props.currentChosenStyleId}
       setCurrentAppId={props.setCurrentAppId}/>
     </div>
   )

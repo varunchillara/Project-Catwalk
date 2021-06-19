@@ -1,6 +1,6 @@
 export const updateMetaReviews = (data) => {
   return{
-    type: 'METAREVIEW',
+    type: 'UPDATE_META_REVIEWS',
     payload: data
   }
 }
