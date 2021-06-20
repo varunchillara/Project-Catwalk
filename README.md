@@ -1,6 +1,8 @@
 # Project Catwalk
 Project Catwalk is a front-end e-commerce store front for online shoppers
 
+![Summary](gifs_and_images/overviewMain1.gif)
+
 ## Table of Contents
 
 1. [**Product Overview:**](#product-overview) View product with related images. Access or change style to see corresponding images and product name and product price. Includes add to cart and social media sharing features.
@@ -20,7 +22,34 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 - SASS
 
 ## Product Overview
+1. ### Main image and Carousel
+  * Thumbnail carousel holds up to seven images at a time
+  * Zoom feature allows user to view enhanced image size
+ ![zoom](gifs_and_images/overviewScroll.gif)
+  * If selected style contains more then seven images, the carousel feature allows the user to move forward and backward to view remaining images
+  * The carousel works such that it always shows seven images (or max number of images if less than seven)
 
+2. Style selection
+- Visually pleasing set of thumbnails for different available styles
+- When different style selected:
+  * Main image and image carousel update
+  * Price, selected style, size availability update (if applicable)
+![style](gifs_and_images/screenshots/overview3.png)
+
+3. Size and quantity dropdown
+- Size dropown indicates available sizes for particular style
+- Default quantity for dropdown is 15, but will update to number available if less than 15
+
+4. Add to Bag, Add to Outfit
+- Clickable icons that show item has been added
+ ![mainImage](gifs_and_images/overviewCarousel.gif)
+
+5. Social media share
+- Clickable icon that renders pop-up to share product on social media (not intended to function)
+
+6. Description and features
+- Updates for selected product
+- Style corresponds to related products pop-up modal
 
 ## Related Products
 
@@ -55,7 +84,6 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
       Action Button: Clicking the action button on a My Outfit card removes the card from the My Outfit carousel:
       <GIF EXAMPLE>
 
-# Related Test
 ## Ratings And Reviews
 
 The ratings and reviews widget allow users to view reviews before purchasing a product. The meta reviews on the left side allows to user to view averaged ratings past users have given and the right hand side allows users to see individual ratings. The widget also includes a write a review feature that allows the current user to write a review.
