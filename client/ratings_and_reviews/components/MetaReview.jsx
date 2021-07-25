@@ -27,8 +27,9 @@ function MetaReview() {
     })
     .then((result) => {
       setMetaReview(result.data);
+      console.log('how many times does this run??');
     })
-  }, [currentProduct])
+  }, [])
 
   return (
     <div className="metaReview">

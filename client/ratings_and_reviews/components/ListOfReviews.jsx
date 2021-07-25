@@ -14,8 +14,6 @@ function ListOfReviews() {
   const[toggleReport, setToggleReport] = useState(0);
   const[helpfulToggle, setHelpfulToggle] = useState(false);
 
-  const reducer = (accumulator, currentValue) => accumulator + currentValue;
-
   let customStyles = {
     scroll: {
     }
@@ -29,16 +27,6 @@ function ListOfReviews() {
       }
     }
   }
-
-
-  // const reviewValues = Object.values(reviews)
-  // let recs = 0;
-  // reviewValues.forEach((item) => {
-  //   if (item.recommend === true) {
-  //     recs ++;
-  //   }
-  // })
-  // console.log('**************', recs);
 
   function getReviews() {
     axios.defaults.headers = {
@@ -54,6 +42,7 @@ function ListOfReviews() {
     }
   })
   .then((result) => {
+    console.log('how many times does this run?');
     setReviews(result.data.results);
   })
   }
@@ -66,10 +55,7 @@ function ListOfReviews() {
     setCurrentSort(e.target.value);
  };
 
-  useEffect(() => {
-    getReviews();
-
-  }, [currentProduct, currentCount, currentSort, toggleReport])
+ useEffect(() => {getReviews();}, [toggleReport, currentSort, currentCount])
 
   return (
     <div className="Reviews">
