@@ -1,13 +1,9 @@
 # Project Catwalk
 Project Catwalk is a front-end e-commerce store front for online shoppers
 
-![Summary](gifs_and_images/overviewMain1.gif)
-
 ## Table of Contents
 
 1. [**Product Overview:**](#product-overview) View product with related images. Access or change style to see corresponding images and product name and product price. Includes add to cart and social media sharing features.
-
-2. [**Related Products:**](#related-products) Browse and compare products related to the product currently displayed in overview. Includes save feature allowing users to favorite their product for future purchase or viewing.
 
 3. [**Ratings And Reviews:**](#ratings-and-reviews) A ratings and review widget to allow viewing and submission of reviews.
 
@@ -50,39 +46,6 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 6. Description and features
 - Updates for selected product
 - Style corresponds to related products pop-up modal
-
-## Related Products
-
-  -**USER EXPERIENCE:**
-
-      <Image of Carousels>
-
-      The Related Products widget is comprised of two carousels.
-
-      Product cards populate both carousels.  Each card is associated with a  product and contains its image, category, name, price (and sale price if applicable) and star rating.
-
-      A button in the top right of each card allows for a certain action made upon the card depending on the carousel.
-
-      Clicking anywhere on a product card aside from the action button will update the Product Overview to display the clicked product.
-
-      A maximum of 4 cards are displayed at any given time.
-
-      Arrows on either side of the carousels allow lateral movement by one card at a time.  If a carousel has no products, the buttons are hidden.  If a carousel has 1 to 4 products, both buttons appear but are translucent and unresponsive.  With more than 4 products on load, the arrows will be either translucent and unresponsive to click or opaque and responsive to click depending on a given position within the carousel.
-
--**Related Products Carousel**
-
-      Comprised of all products related to the main product in Product Overview
-
-      Action Button: Clicking the action button on a Related Products card opens a modal view allowing the user to compare features of the related product with the current product in Product Overview:
-      <GIF EXAMPLE>
-
-
--**My Outfit Carousel**
-
-      Comprised of an Add To Outfit button on the far left of the carousel followed by all products saved to the carousel by the user either through the Product Overview save feature or the clicking on the Add To Outfit button.
-
-      Action Button: Clicking the action button on a My Outfit card removes the card from the My Outfit carousel:
-      <GIF EXAMPLE>
 
 ## Ratings And Reviews
 
