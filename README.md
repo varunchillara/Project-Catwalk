@@ -58,16 +58,6 @@ The ratings and reviews widget allow users to view reviews before purchasing a p
     * Allows current user to add a new review
     * Implemented a modal to contain the form information
 
-
--**DATA INTEGRATION AND COMPONENT ORGANIZATION**
-
-    -API and Data Retrieval
-      Due to its hub-like nature, the Related Products widget controls much of the initial API calls that populate store as well as calls to the store cache.  It is the most highly interactive widget in relation to the Product Overview widget, requiring the most expense in data retrieval out of all of the widgets during any given state of the application.
-
-    -Though the attached redux store allows for data cacheing in the frontend, a page reload resets the store and the cache is lost.  It is therefore recommended to persist the store cache within a backend database to further reduce the expense of API calls to the company server post reload.  This linkage can be made in App.jsx
-
-
-
 ## Build Project
 Follow these steps to run the project in a mac or linux environment.
 - Clone down the repo in the terminal
@@ -81,7 +71,6 @@ Follow these steps to run the project in a mac or linux environment.
   * live-server - `npm run start`
   OR
   * node server - `npm run server`
-
 
 ## Developers
 - **Austin Miller** - Product Overview
