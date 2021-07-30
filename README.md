@@ -56,7 +56,6 @@ The ratings and reviews widget allow users to view reviews before purchasing a p
     * Dynamically rendered reviews from black box API
 
 2. Add A Review
- ![](gifs_and_images/screenshots/ratingsAndReviews_modal.png)
     * Allows current user to add a new review
     * Implemented a modal to contain the form information
 
