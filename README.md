@@ -18,6 +18,7 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 - SASS
 
 ## Product Overview
+![style](gifs_and_images/screenshots/overview3.png)
 1. ### Main image and Carousel
   * Thumbnail carousel holds up to seven images at a time
   * Zoom feature allows user to view enhanced image size
@@ -29,7 +30,6 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 - When different style selected:
   * Main image and image carousel update
   * Price, selected style, size availability update (if applicable)
-![style](gifs_and_images/screenshots/overview3.png)
 
 3. Size and quantity dropdown
 - Size dropown indicates available sizes for particular style
@@ -46,11 +46,10 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 - Style corresponds to related products pop-up modal
 
 ## Ratings And Reviews
-
+![](gifs_and_images/ratingsAndReviews.gif)
 The ratings and reviews widget allow users to view reviews before purchasing a product. The meta reviews on the left side allows to user to view averaged ratings past users have given and the right hand side allows users to see individual ratings. The widget also includes a write a review feature that allows the current user to write a review.
 
 1. Product Breakdown and Review List
-  ![](gifs_and_images/ratingsAndReviews.gif)
     * Implemented a sorting system
     * Translated data given to me by the black box API into visual data
     * Dynamically rendered reviews from black box API
