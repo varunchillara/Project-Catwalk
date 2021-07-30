@@ -61,7 +61,6 @@ The ratings and reviews widget allow users to view reviews before purchasing a p
 ## Build Project
 Follow these steps to run the project in a mac or linux environment.
 - Clone down the repo in the terminal
-  * `git clone https://github.com/Garganelli/Project-Catwalk.git`
 - Add personal github token
   * inside client/env copy exampleConfig.js file and rename to config.js
   * replace `UPDATE ME` with github key into config.js
