@@ -73,5 +73,4 @@ Follow these steps to run the project in a mac or linux environment.
 
 ## Developers
 - **Austin Miller** - Product Overview
-- **Suliman Tekalli** - Related Products
 - **Varun Chillara** - Ratings And Reviews
