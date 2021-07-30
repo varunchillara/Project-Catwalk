@@ -21,7 +21,6 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 1. ### Main image and Carousel
   * Thumbnail carousel holds up to seven images at a time
   * Zoom feature allows user to view enhanced image size
- ![zoom](gifs_and_images/overviewScroll.gif)
   * If selected style contains more then seven images, the carousel feature allows the user to move forward and backward to view remaining images
   * The carousel works such that it always shows seven images (or max number of images if less than seven)
 
@@ -38,7 +37,6 @@ Project Catwalk is a front-end e-commerce store front for online shoppers
 
 4. Add to Bag, Add to Outfit
 - Clickable icons that show item has been added
- ![mainImage](gifs_and_images/overviewCarousel.gif)
 
 5. Social media share
 - Clickable icon that renders pop-up to share product on social media (not intended to function)
